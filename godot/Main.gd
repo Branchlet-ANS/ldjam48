@@ -16,7 +16,7 @@ func _ready():
 #	var item = scene_gatherable.instance()
 #	item.transform.origin = Vector2(100, 100)
 #	add_child(item)
-	add_character(0, 0)
+	add_character(100, 100)
 	add_character(-100, -100)
 	var interactable = scene_interactable.instance()
 	add_child(interactable)

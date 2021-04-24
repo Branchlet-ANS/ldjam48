@@ -3,7 +3,7 @@ extends Node
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
-const CHUNK_SIZE = 16
+const CHUNK_SIZE = 8
 
 enum ItemTypes {
 	FOLIAGE = 0,

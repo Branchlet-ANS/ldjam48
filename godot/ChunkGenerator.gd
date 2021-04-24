@@ -2,9 +2,9 @@ extends Node2D
 
 onready var scene_chunk = preload("res://ChunkIllustration.tscn")
 onready var scene_gatherable = preload("res://Gatherable.tscn")
-const MAP_WIDTH = 24
-const MAX_BRANCHES = 3
-const CHUNK_SIZE = 16
+const MAP_WIDTH = 84
+const MAX_BRANCHES = 1
+const CHUNK_SIZE = 8
 const TILE_SIZE = 16
 
 var map = {}
@@ -20,6 +20,11 @@ func _ready():
 		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
 			var pos = Vector2(i, j)
 			var traversable = map[pos]._traversable
+			
+			var tiles = scene_chunk.instance()
+			add_child(tiles)
+			tiles.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
+			
 			if traversable:
 				var items = map[pos].content
 				for posi in items:
@@ -27,11 +32,10 @@ func _ready():
 					gatherable.init(Food.new(items[posi]["id"], items[posi]["name"], items[posi]["value"]))
 					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE+Vector2(8, 8))
 					add_child(gatherable)
-					
 			else:
-				var ill = scene_chunk.instance()
-				add_child(ill)
-				ill.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
+				tiles.overgrow()		
+			
+			
 			
 
 func make_paths():
@@ -44,8 +48,8 @@ func make_paths():
 	for _i in range(MAX_BRANCHES):
 		scores = [0]
 		current_position = Vector2(0, 0)
-		while scores.max() < MAP_WIDTH:
-			if scores.size() > 5:
+		while scores.max() < MAP_WIDTH/2:
+			if scores.size() > 2:
 				scores.erase(scores.min())
 			randomize()
 			direction = directions[rand_range(0, 4)]
