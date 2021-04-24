@@ -14,7 +14,7 @@ enum STATE {
 var inventory : Inventory = Inventory.new()
 var _state : int
 var velocity : Vector2 = Vector2(0, 0)
-var target : Vector2 = Vector2(0, 0)
+var _target : Vector2 = Vector2(0, 0)
 var speed : float = 100
 var jobs : Array = []
 
@@ -23,23 +23,15 @@ func _init():
 
 func _process(delta):
 	if get_state() == STATE.idle and jobs.size() > 0:
-		set_state(STATE.job)
-	if get_state() == STATE.job:
 		if jobs.size() > 0 and is_instance_valid(jobs[0]):
-			target = jobs[0].transform.origin
-		else:
-			set_state(STATE.idle)
+			set_target(jobs[0].transform.origin)
 			
 func _physics_process(delta):
 	if get_state() == STATE.target or get_state() == STATE.job:
-		velocity = transform.origin.direction_to(target) * speed
+		velocity = transform.origin.direction_to(_target) * speed
 		velocity = move_and_slide(velocity)
-		if transform.origin.distance_to(target) < speed * delta:
-			if get_state() == STATE.job:
-				if jobs.size() > 0 and is_instance_valid(jobs[0]):
-					jobs[0].queue_free()
-				jobs.pop_front()
-			set_state(STATE.idle)
+		if transform.origin.distance_to(_target) < speed * delta:
+			set_state(STATE.job)
 
 func _on_Area2D_body_entered(body):
 	if body.get_filename() == "res://Gatherable.tscn":
@@ -55,5 +47,11 @@ func get_state():
 func set_state(state):
 	_state = state
 	if (state == STATE.idle):
-		target = transform.origin
+		_target = transform.origin
 
+func set_target(target):
+	_target = target
+	set_state(STATE.target)
+
+func get_target():
+	return _target

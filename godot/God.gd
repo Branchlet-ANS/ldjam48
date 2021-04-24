@@ -32,8 +32,7 @@ func _unhandled_input(event):
 					interact(interactable)
 					return
 			for character in selected_characters:
-				character.target = camera.screen_position(event)
-				character.set_state(character.STATE.target)
+				character.set_target(camera.screen_position(event))
 				
 func interact(interactable):
 	for character in get_parent().characters:
