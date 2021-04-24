@@ -43,7 +43,7 @@ func _physics_process(delta):
 
 func _on_Area2D_body_entered(body):
 	if body.get_filename() == "res://Gatherable.tscn":
-		inventory.add(body.item)
+		inventory.add(body.get_item())
 		body.queue_free()
 
 func add_job(interactable):

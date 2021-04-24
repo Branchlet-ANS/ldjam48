@@ -8,6 +8,7 @@ onready var scene_interactable = preload("res://InteractableTest.tscn")
 
 onready var god : God = $God
 
+
 var characters : Array = []
 var interactables: Array = []
 

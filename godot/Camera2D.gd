@@ -10,7 +10,7 @@ var spd_y = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	zoom = Vector2(256.0/800, 256.0/800)
 
 
 func _process(delta):
