@@ -2,9 +2,11 @@ extends KinematicBody2D
 
 class_name Character
 
-var inventory : Inventory;
-var state : int;
-var velocity : Vector2 = Vector2(0, 0);
+onready var scene_item = preload("res://Item.gd")
+
+var inventory : Inventory
+var state : int
+var velocity : Vector2 = Vector2(0, 0)
 var target : Vector2 = Vector2(0, 0)
 var speed : float = 100
 
@@ -18,10 +20,19 @@ func _init():
 	
 	inventory.remove("Apple", 2)
 	
-	print(inventory.to_string())
+	print(inventory._to_string())
 	
 func _physics_process(delta):
 	velocity = transform.origin.direction_to(target) * speed
 	velocity = move_and_slide(velocity)
 	if transform.origin.distance_to(target) < speed * delta:
 		target = transform.origin
+
+func _on_Area2D_body_entered(body):
+	print("a")
+	print(body.get_filename())
+	if body.get_filename() == "res://Item.tscn":
+		print("b")
+		inventory.add(body)
+		body.queue_free()
+	

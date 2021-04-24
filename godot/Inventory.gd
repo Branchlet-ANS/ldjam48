@@ -3,7 +3,7 @@ class_name Inventory
 
 var items : Array = []
 
-func add(item : Item) -> void:
+func add(item) -> void:
 	for i in items:
 		if i.get_id() == item.get_id():
 			var add = min(item.get_count(), i.get_count_max() - i.get_count())
@@ -24,8 +24,8 @@ func remove(id : String, count : int) -> Item:
 	assert(count == 0)
 	return Item.new(id, count)
 
-func to_string() -> String:
+func _to_string() -> String:
 	var string : String = "{Inventory["
 	for item in items:
-		string += item.to_string() + ", "
+		string += item._to_string() + ", "
 	return string.rstrip(", ") + "]}"
