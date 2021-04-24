@@ -12,7 +12,7 @@ const RAND_CAMPFIRE = 0.0
 const RAND_BED = 0.0
 const RAND_SPIKE = 0.0
 
-var n = 50
+var n = 10
 var campfire_poss = []
 
 func _ready():
