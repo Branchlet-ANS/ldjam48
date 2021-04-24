@@ -18,6 +18,7 @@ func _unhandled_input(event):
 				selected_characters = []
 				var select_pos_end = event.get_position() - get_viewport_rect().size/2
 				select_pressed = false
+				update()
 				for character in get_parent().characters:
 					if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 							min(select_pos_start.y, select_pos_end.y),
@@ -29,4 +30,14 @@ func _unhandled_input(event):
 			for character in selected_characters:
 				character.target = event.position - get_viewport_rect().size/2
 
+func _process(delta):
+	if(select_pressed):
+		update() #kaller _draw()
 
+func _draw():
+	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
+		var pos1 = select_pos_start
+		var pos2 = get_viewport().get_mouse_position() - get_viewport_rect().size/2
+		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
+				pos2, Vector2(pos2.x, pos1.y)])
+		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
