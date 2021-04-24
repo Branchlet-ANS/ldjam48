@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://God.gd" type="Script" id=1]
 [ext_resource path="res://Item.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://ChunkGenerator.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
@@ -15,3 +16,5 @@ current = true
 
 [node name="Item" parent="." instance=ExtResource( 2 )]
 position = Vector2( 103.826, -65.1273 )
+
+[node name="ChunkGenerator" parent="." instance=ExtResource( 4 )]
