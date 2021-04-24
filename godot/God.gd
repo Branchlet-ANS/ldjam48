@@ -12,11 +12,11 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if(event.get_button_index() == 1):
 			if(event.is_pressed()):
-				select_pos_start = camera.screen_position(event)
+				select_pos_start = camera.mouse_world_position()
 				select_pressed = true
 			else:
 				selected_characters = []
-				var select_pos_end = camera.screen_position(event)
+				var select_pos_end = camera.mouse_world_position()
 				select_pressed = false
 				update()
 				for character in get_parent().characters:
@@ -33,7 +33,7 @@ func _unhandled_input(event):
 		
 		elif(event.get_button_index() == 2):
 			for character in selected_characters:
-				character.target = camera.screen_position(event)
+				character.target = camera.mouse_world_position()
 
 func interact(interactable):
 	for character in get_parent().characters:
@@ -56,7 +56,7 @@ func _process(delta):
 func _draw():
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
 		var pos1 = select_pos_start
-		var pos2 = get_viewport().get_mouse_position() - get_viewport_rect().size/2 + camera.offset
+		var pos2 = camera.mouse_world_position()
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
