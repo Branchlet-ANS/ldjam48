@@ -2,7 +2,7 @@ extends Node2D
 
 class_name God
 
-onready var camera = $Camera2D
+onready var camera = $"../Camera2D"
 
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
@@ -30,10 +30,21 @@ func _unhandled_input(event):
 		elif(event.get_button_index() == 2):
 			for character in selected_characters:
 				character.target = event.position - get_viewport_rect().size/2
+			
 
 func _process(delta):
 	if(select_pressed):
 		update() #kaller _draw()
+	
+	if Input.is_action_pressed("ui_left"):
+		camera.spd_x = -5
+	if Input.is_action_pressed("ui_right"):
+		camera.spd_x = 5
+	if Input.is_action_pressed("ui_up"):
+		camera.spd_y = -5
+	if Input.is_action_pressed("ui_down"):
+		camera.spd_y = 5
+	
 
 func _draw():
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
