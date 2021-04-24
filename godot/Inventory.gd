@@ -1,20 +1,20 @@
 
 class_name Inventory
 
-var contents = []
+var items : Array = []
 
 func add(item : Item):
-	for i in contents:
+	for i in items:
 		if i.get_id() == item.get_id():
 			var add = min(item.get_count(), i.get_count_max() - i.get_count())
 			i.add(add)
 			item.remove(add)
 			if item.get_count() == 0:
 				return
-	contents.add(item)
+	items.append(item)
 	
 func remove(id : String, count : int):
-	for item in contents:
+	for item in items:
 		if item.get_id() == id:
 			var remove = min(count, item.get_count())
 			item.remove(remove)
@@ -22,3 +22,9 @@ func remove(id : String, count : int):
 			if count == 0:
 				break
 	assert(count == 0)
+
+func to_string():
+	var string : String = "{Inventory["
+	for item in items:
+		string += item.to_string() + ", "
+	return string.rstrip(", ") + "]}"

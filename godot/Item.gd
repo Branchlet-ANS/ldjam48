@@ -18,7 +18,7 @@ func get_count_max():
 	return _count_max
 		
 func set_count(count : int):
-	assert(count > 0)
+	assert(count >= 0)
 	assert(count <= get_count_max())
 	_count = count
 	
@@ -27,3 +27,7 @@ func add(count : int):
 
 func remove(count : int):
 	set_count(get_count() - count)
+
+func to_string():
+	return "{" + str(get_count()) + " "+ str(get_id()) + "}"
+
