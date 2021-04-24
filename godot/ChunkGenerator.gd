@@ -20,6 +20,11 @@ func _ready():
 		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
 			var pos = Vector2(i, j)
 			var traversable = map[pos]._traversable
+			
+			var tiles = scene_chunk.instance()
+			add_child(tiles)
+			tiles.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
+			
 			if traversable:
 				var items = map[pos].content
 				for posi in items:
@@ -27,11 +32,10 @@ func _ready():
 					gatherable.init(Food.new(items[posi]["id"], items[posi]["name"], items[posi]["value"]))
 					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE+Vector2(8, 8))
 					add_child(gatherable)
-					
 			else:
-				var ill = scene_chunk.instance()
-				add_child(ill)
-				ill.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
+				tiles.overgrow()		
+			
+			
 			
 
 func make_paths():
