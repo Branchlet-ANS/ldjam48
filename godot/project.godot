@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Item",
+"class": "Food",
+"language": "GDScript",
+"path": "res://Food.gd"
+}, {
+"base": "Reference",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://Inventory.gd"
+}, {
+"base": "Reference",
+"class": "Item",
+"language": "GDScript",
+"path": "res://Item.gd"
+} ]
+_global_script_class_icons={
+"Food": "",
+"Inventory": "",
+"Item": ""
+}
+
 [application]
 
 config/name="LDJAM48"
