@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name Character
 
 onready var scene_item = preload("res://Item.gd")
+onready var collision_shape = $"Area2D/CollisionShape2D"
 
 var inventory : Inventory
 var state : int
