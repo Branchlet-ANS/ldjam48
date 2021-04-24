@@ -1,9 +1,9 @@
 extends Camera2D
 
 
-const DEACCELERATION = 0.9
+const DEACCELERATION = 1
 const STOP_THRESHOLD = 0.5
-const CAMERA_SPEED = 3
+const CAMERA_SPEED = 200
 
 var spd_x = 0
 var spd_y = 0
@@ -14,9 +14,10 @@ func _ready():
 
 
 func _process(delta):
-	offset += Vector2(spd_x, spd_y)
-	spd_x *= DEACCELERATION
-	spd_y *= DEACCELERATION 
+	offset += Vector2(spd_x * delta, spd_y * delta)
+	
+	spd_x *= DEACCELERATION * delta
+	spd_y *= DEACCELERATION * delta
 	if (abs(spd_x) < STOP_THRESHOLD):
 		spd_x = 0
 	if (abs(spd_y) < STOP_THRESHOLD):
@@ -24,3 +25,6 @@ func _process(delta):
 	if abs(spd_x) == CAMERA_SPEED and abs(spd_y) == CAMERA_SPEED:
 		spd_x = sign(spd_x) * sqrt(1/2*pow(CAMERA_SPEED, 2))
 		spd_y = sign(spd_y) * sqrt(1/2*pow(CAMERA_SPEED, 2))
+
+func screen_position(event):
+	return event.get_position() - get_viewport_rect().size/2 + offset
