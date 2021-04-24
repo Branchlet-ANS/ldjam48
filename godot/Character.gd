@@ -22,7 +22,7 @@ var job_timer : int = 0
 func _init():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
 		if get_jobs().size() > 0 and is_instance_valid(get_jobs()[0]):
 			set_target(get_jobs()[0].transform.origin)
@@ -48,6 +48,8 @@ func add_job(interactable):
 	get_jobs().append(interactable)
 
 func get_state():
+	if _state == STATE.job and get_jobs().size() == 0:
+		set_state(STATE.idle)
 	return _state
 	
 func set_state(state):
@@ -56,6 +58,7 @@ func set_state(state):
 		_target = transform.origin
 	elif state == STATE.job:
 		job_timer = 100
+	update()
 
 func set_target(target):
 	_target = target
@@ -66,7 +69,7 @@ func perform_job():
 	if job_timer == 0:
 		get_jobs()[0].queue_free()
 		get_jobs().pop_front()
-	print(job_timer)
+	update()
 	
 func get_target():
 	return _target
@@ -79,3 +82,11 @@ func get_jobs():
 			i -= 1
 		i += 1
 	return jobs
+
+func _draw():
+	if get_state() == STATE.job:
+		z_index += 10
+		var pos = get_jobs()[0].transform.origin
+		var points = PoolVector2Array([pos + Vector2(5, 20), pos + Vector2(-5, 20), pos + Vector2(0, -15)])
+		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
+		z_index -= 10

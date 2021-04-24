@@ -38,7 +38,7 @@ func interact(interactable):
 	for character in selected_characters:
 		character.add_job(interactable)
 
-func _process(delta):
+func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
 

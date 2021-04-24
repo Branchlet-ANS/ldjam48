@@ -22,12 +22,11 @@ func _ready():
 	add_child(interactable)
 	interactables.append(interactable)
 
-func add_character(x : int, y : int) -> Character:
+func add_character(x : int, y : int):
 	var character = scene_character.instance()
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
 	add_child(character)
-	return character
 
 func get_interactables():
 	var i = 0

@@ -41,7 +41,7 @@ func make_paths():
 	var scores = [0]
 	var current_position = Vector2(0, 0)
 	map[current_position] = Chunk.new(current_position, true, current_position.length())
-	for i in range(MAX_BRANCHES):
+	for _i in range(MAX_BRANCHES):
 		scores = [0]
 		current_position = Vector2(0, 0)
 		while scores.max() < MAP_WIDTH:
