@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
-var item;
+var _item;
 
-func _ready():
-	item = Item.new("Apple")
+func init(item):
+	_item = item
+	$Sprite.texture = load("res://assets/items/" + _item.get_id() + ".png")
+	update()
+	
+func get_item():
+	return _item

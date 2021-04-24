@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var scene_chunk = preload("res://ChunkIllustration.tscn")
-onready var scene_item = preload("res://Item.tscn")
+onready var scene_gatherable = preload("res://Gatherable.tscn")
 const MAP_WIDTH = 24
 const MAX_BRANCHES = 3
 const CHUNK_SIZE = 16
@@ -22,8 +22,11 @@ func _ready():
 			var traversable = map[pos]._traversable
 			if traversable:
 				var items = map[pos].content
-				for position in items:
-					
+				for posi in items:
+					var gatherable = scene_gatherable.instance()
+					gatherable.init(Food.new(items[posi]["id"], items[posi]["name"], items[posi]["value"]))
+					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE)
+					add_child(gatherable)
 					
 			else:
 				var ill = scene_chunk.instance()

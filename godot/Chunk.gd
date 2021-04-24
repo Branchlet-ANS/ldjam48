@@ -70,13 +70,19 @@ func monster_chunk():
 	# Check corruption and add monsters to content array
 	pass
 func foraging_chunk():
-	pass
+	var available_food: Array = get_by_corruption(_corruption, food_register)
+	for i in range(CHUNK_SIZE):
+		for j in range(CHUNK_SIZE):
+			randomize()
+			if rand_range(0, 1) > 0.9: 
+				content[Vector2(i, j)] = available_food[randi() % available_food.size()]
+				
 func bland_chunk():
 	var available_foliage: Array = get_by_corruption(_corruption, foliage_register)
 	for i in range(CHUNK_SIZE):
 		for j in range(CHUNK_SIZE):
 			randomize()
-			if rand_range(0, 1) > 0.9:
+			if rand_range(0, 1) > 0.9: 
 				content[Vector2(i, j)] = available_foliage[randi() % available_foliage.size()]
 	
 func get_content() -> Array:
