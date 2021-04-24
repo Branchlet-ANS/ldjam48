@@ -23,7 +23,8 @@ func _unhandled_input(event):
 					if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 							min(select_pos_start.y, select_pos_end.y),
 							max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
-							max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).has_point(character.position)):
+							max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
+								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
 		
 		elif(event.get_button_index() == 2):
