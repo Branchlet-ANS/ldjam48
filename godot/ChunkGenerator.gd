@@ -25,15 +25,13 @@ func _ready():
 				for posi in items:
 					var gatherable = scene_gatherable.instance()
 					gatherable.init(Food.new(items[posi]["id"], items[posi]["name"], items[posi]["value"]))
-					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE)
+					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE+Vector2(8, 8))
 					add_child(gatherable)
 					
 			else:
 				var ill = scene_chunk.instance()
 				add_child(ill)
 				ill.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
-				ill.set_size(TILE_SIZE*CHUNK_SIZE)
-				ill.set_color(Color.darkgreen)
 			
 
 func make_paths():
