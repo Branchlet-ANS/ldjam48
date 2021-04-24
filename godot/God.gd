@@ -10,7 +10,7 @@ var select_pressed = false
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if(event.get_button_index() == 1):
+		if(event.get_button_index() == 2):
 			if(event.is_pressed()):
 				select_pos_start = camera.screen_position(event)
 				select_pressed = true
@@ -26,19 +26,19 @@ func _unhandled_input(event):
 							max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
-				for interactable in get_parent().interactables:
-					if (interactable.transform.origin - event.position).length() < 8:
-						interact(interactable)
-						break
-		
-		elif(event.get_button_index() == 2):
+		elif(event.get_button_index() == 1):
+			for interactable in get_parent().get_interactables():
+				if (interactable.transform.origin - camera.screen_position(event)).length() < 16:
+					interact(interactable)
+					return
 			for character in selected_characters:
 				character.target = camera.screen_position(event)
-
+				character.set_state(character.STATE.target)
+				
 func interact(interactable):
 	for character in get_parent().characters:
 		character.add_job(interactable)
-
+		
 func _process(delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
