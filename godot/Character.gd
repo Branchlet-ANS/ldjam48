@@ -7,11 +7,11 @@ var inventory;
 func _init():
 	inventory = Inventory.new()
 	
-	inventory.add(Item.new("Apple"))
-	inventory.add(Item.new("Apple"))
-	inventory.add(Item.new("Apple"))
-	inventory.add(Item.new("Banana"))
-	inventory.add(Item.new("Banana"))
+	inventory.add(Food.new("Apple"))
+	inventory.add(Food.new("Apple"))
+	inventory.add(Food.new("Apple"))
+	inventory.add(Food.new("Banana"))
+	inventory.add(Food.new("Banana"))
 	
 	inventory.remove("Apple", 2)
 	
