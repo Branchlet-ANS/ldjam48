@@ -1,8 +1,8 @@
 extends Camera2D
 
 
-const DEACCELERATION = 0.93
-const STOP_THRESHOLD = 0.75
+const DEACCELERATION = 0.9
+const STOP_THRESHOLD = 0.5
 const CAMERA_SPEED = 3
 
 var spd_x = 0
@@ -16,7 +16,7 @@ func _ready():
 func _process(delta):
 	offset += Vector2(spd_x, spd_y)
 	spd_x *= DEACCELERATION
-	spd_y *= DEACCELERATION
+	spd_y *= DEACCELERATION 
 	if (abs(spd_x) < STOP_THRESHOLD):
 		spd_x = 0
 	if (abs(spd_y) < STOP_THRESHOLD):

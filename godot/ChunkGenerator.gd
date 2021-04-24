@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var scene_chunk = preload("res://ChunkIllustration.tscn")
-const MAP_WIDTH = 32
+const MAP_WIDTH = 8
 const MAX_BRANCHES = 2
 const CHUNK_SIZE = 16
 const TILE_SIZE = 16

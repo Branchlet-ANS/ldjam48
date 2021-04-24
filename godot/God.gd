@@ -37,13 +37,13 @@ func _process(delta):
 		update() #kaller _draw()
 	
 	if Input.is_action_pressed("ui_left"):
-		camera.spd_x = -5
+		camera.spd_x = -camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_right"):
-		camera.spd_x = 5
+		camera.spd_x = camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_up"):
-		camera.spd_y = -5
+		camera.spd_y = -camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_down"):
-		camera.spd_y = 5
+		camera.spd_y = camera.CAMERA_SPEED
 	
 
 func _draw():
