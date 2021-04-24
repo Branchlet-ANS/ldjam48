@@ -2,9 +2,9 @@ extends Node2D
 
 onready var scene_chunk = preload("res://ChunkIllustration.tscn")
 onready var scene_gatherable = preload("res://Gatherable.tscn")
-const MAP_WIDTH = 24
-const MAX_BRANCHES = 3
-const CHUNK_SIZE = 16
+const MAP_WIDTH = 84
+const MAX_BRANCHES = 1
+const CHUNK_SIZE = 8
 const TILE_SIZE = 16
 
 var map = {}
@@ -48,8 +48,8 @@ func make_paths():
 	for i in range(MAX_BRANCHES):
 		scores = [0]
 		current_position = Vector2(0, 0)
-		while scores.max() < MAP_WIDTH:
-			if scores.size() > 5:
+		while scores.max() < MAP_WIDTH/2:
+			if scores.size() > 2:
 				scores.erase(scores.min())
 			randomize()
 			direction = directions[rand_range(0, 4)]

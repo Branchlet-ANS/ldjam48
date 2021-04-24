@@ -3,7 +3,7 @@ extends Node
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
-const CHUNK_SIZE = 16
+const CHUNK_SIZE = 8
 
 enum ItemTypes {
 	FOLIAGE = 0,
@@ -79,7 +79,7 @@ func bland_chunk():
 	var available_foliage: Array = get_by_corruption(_corruption, foliage_register)
 	add_items(available_foliage, 0.05);
 	
-func get_content() -> Array:
+func get_content() -> Dictionary:
 	return content
 	
 func get_by_corruption(corruption, dict: Array):
