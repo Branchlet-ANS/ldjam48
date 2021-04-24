@@ -28,7 +28,7 @@ func _unhandled_input(event):
 						selected_characters.append(character)
 		elif(event.get_button_index() == 1):
 			for interactable in get_parent().get_interactables():
-				if (interactable.transform.origin - camera.screen_position(event)).length() < 16:
+				if (interactable.transform.origin - camera.mouse_world_position()).length() < 16:
 					interact(interactable)
 					return
 			for character in selected_characters:
