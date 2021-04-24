@@ -7,6 +7,7 @@ onready var script_item = preload("res://Item.gd")
 onready var scene_character = preload("res://Character.tscn")
 onready var god : God = $God
 
+
 var characters : Array = []
 
 const WIDTH = 640

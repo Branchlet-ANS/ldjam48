@@ -3,22 +3,89 @@ extends Node
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
+const CHUNK_SIZE = 16
+
+enum ItemTypes {
+	FOLIAGE = 0,
+	FOOD = 1
+}
+
+var food_register = [
+	{
+		"name": "Wangu",
+		"id": "wangu",
+		"value": 4,
+		"corruption": 0
+	},
+	{
+		"name": "Cherry Berry",
+		"id": "cherry_berry",
+		"value": -2,
+		"corruption": 0,
+	},
+	{
+		"name": "Penis Berry",
+		"id": "penis_berry",
+		"value": -3,
+		"corruption": 3
+	}
+	
+]
+
+var foliage_register = [
+	{
+		"id": "grass",
+		"name": "Grass",
+		"value": 0,
+		"corruption": 0
+	},
+	{
+		"id": "haygrass",
+		"name": "Haygrass",
+		"value": 0,
+		"corruption": 1
+	}
+]
 
 var _coordinates: Vector2
-var _type: int
+var _traversable: bool
 var _corruption: float
+var content = {}
 
-func _init(coordinates: Vector2, type: int, corruption: float):
+func _init(coordinates: Vector2, traversable: bool, corruption: float):	
 	_coordinates = coordinates
-	_type = type
+	_traversable = traversable
 	_corruption = corruption
+	if _traversable:
+		randomize()
+		var r = rand_range(0, 7)
+		if r < 1:
+			monster_chunk()
+		elif r < 3:
+			foraging_chunk()
+		elif r < 7:
+			bland_chunk()
 
-func _to_string():
-	if _type == Type.BUSH:
-		return "BUSH"
-	elif _type == Type.OPEN:
-		return "OPEN"
-	elif _type == Type.PATH:
-		return "PATH"
-	else:
-		return "NULL"
+func monster_chunk():
+	# Check corruption and add monsters to content array
+	pass
+func foraging_chunk():
+	pass
+func bland_chunk():
+	var available_foliage: Array = get_by_corruption(_corruption, foliage_register)
+	for i in range(CHUNK_SIZE):
+		for j in range(CHUNK_SIZE):
+			randomize()
+			if rand_range(0, 1) > 0.9:
+				content[Vector2(i, j)] = available_foliage[randi() % available_foliage.size()]
+	
+func get_content() -> Array:
+	return content
+	
+func get_by_corruption(corruption, dict: Array):
+	var items = []
+	for item in dict:
+		if item["corruption"] <= corruption:
+			items.append(item)
+	return items
+		

@@ -4,4 +4,3 @@ var item;
 
 func _ready():
 	item = Item.new("Apple")
-
