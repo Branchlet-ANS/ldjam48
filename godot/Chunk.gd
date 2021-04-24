@@ -1,3 +1,5 @@
+extends Node
+
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
