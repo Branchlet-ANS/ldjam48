@@ -10,12 +10,6 @@ onready var god : God = $God
 
 var characters : Array = []
 
-func _ready():
-	var item = scene_item.instance()
-	item.transform.origin = Vector2(100, 100)
-	add_child(item)
-	add_character()
-
 enum Type {BUSH, PATH, OPEN}
 const WIDTH = 640
 const HEIGHT = 360
@@ -24,25 +18,28 @@ const MAX_BRANCHES = 3
 
 var map = {}
 
-
-var characters : Array = []
-
 func _ready():
-	for i in range(-MAP_WIDTH/2, MAP_WIDTH/2):
-		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
-			var pos = Vector2(i, j)
-			map[pos] = Chunk.new(pos, Type.BUSH, pos.length())
-	make_paths()
-
-	for i in range(-MAP_WIDTH/2, MAP_WIDTH/2):
-		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
-			var pos = Vector2(i, j)
-			var type = map[pos]._type
-			var ill = scene_chunk.instance()
-			add_child(ill)
-			ill.position = map[pos]._coordinates * 16
-			if type == 0:
-				ill.set_color(Color.green)
+	var item = scene_item.instance()
+	item.transform.origin = Vector2(100, 100)
+	add_child(item)
+	add_character()
+#
+#	for i in range(-MAP_WIDTH/2, MAP_WIDTH/2):
+#		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
+#			var pos = Vector2(i, j)
+#			map[pos] = Chunk.new(pos, Type.BUSH, pos.length())
+#
+#	make_paths()
+#
+#	for i in range(-MAP_WIDTH/2, MAP_WIDTH/2):
+#		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
+#			var pos = Vector2(i, j)
+#			var type = map[pos]._type
+#			var ill = scene_chunk.instance()
+#			add_child(ill)
+#			ill.position = map[pos]._coordinates * 16
+#			if type == 0:
+#				ill.set_color(Color.green)
 
 
 func add_character() -> Character:

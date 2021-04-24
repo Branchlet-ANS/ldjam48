@@ -29,10 +29,7 @@ func _physics_process(delta):
 		target = transform.origin
 
 func _on_Area2D_body_entered(body):
-	print("a")
-	print(body.get_filename())
 	if body.get_filename() == "res://Item.tscn":
-		print("b")
-		inventory.add(body)
+		inventory.add(body.item)
 		body.queue_free()
 	
