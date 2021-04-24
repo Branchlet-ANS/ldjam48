@@ -26,5 +26,7 @@ func _process(delta):
 		spd_x = sign(spd_x) * sqrt(1/2*pow(CAMERA_SPEED, 2))
 		spd_y = sign(spd_y) * sqrt(1/2*pow(CAMERA_SPEED, 2))
 
-func screen_position(event):
-	return event.get_position() - get_viewport_rect().size/2 + offset
+func mouse_world_position():
+	print(get_viewport().get_mouse_position() + offset)
+	return get_viewport().get_mouse_position()*zoom +offset - get_viewport().size/2*zoom
+	

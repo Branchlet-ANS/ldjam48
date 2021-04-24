@@ -10,13 +10,13 @@ var select_pressed = false
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if(event.get_button_index() == 1):
+		if(event.get_button_index() == 2):
 			if(event.is_pressed()):
-				select_pos_start = camera.screen_position(event)
+				select_pos_start = camera.mouse_world_position()
 				select_pressed = true
 			else:
 				selected_characters = []
-				var select_pos_end = camera.screen_position(event)
+				var select_pos_end = camera.mouse_world_position()
 				select_pressed = false
 				update()
 				for character in get_parent().characters:
@@ -26,14 +26,14 @@ func _unhandled_input(event):
 							max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
-				for interactable in get_parent().interactables:
-					if (interactable.transform.origin - event.position).length() < 8:
-						interact(interactable)
-						break
-		
-		elif(event.get_button_index() == 2):
+		elif(event.get_button_index() == 1):
+			for interactable in get_parent().get_interactables():
+				if (interactable.transform.origin - camera.screen_position(event)).length() < 16:
+					interact(interactable)
+					return
 			for character in selected_characters:
-				character.target = camera.screen_position(event)
+				character.target = camera.mouse_world_position()
+				character.set_state(character.STATE.target)
 
 func interact(interactable):
 	for character in get_parent().characters:
@@ -42,7 +42,7 @@ func interact(interactable):
 func _process(delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
-	
+
 	if Input.is_action_pressed("ui_left"):
 		camera.spd_x = -camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_right"):
@@ -51,12 +51,12 @@ func _process(delta):
 		camera.spd_y = -camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_down"):
 		camera.spd_y = camera.CAMERA_SPEED
-	
-	
+
+
 func _draw():
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
 		var pos1 = select_pos_start
-		var pos2 = get_viewport().get_mouse_position() - get_viewport_rect().size/2 + camera.offset
+		var pos2 = camera.mouse_world_position()
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
