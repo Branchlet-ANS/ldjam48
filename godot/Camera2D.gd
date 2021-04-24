@@ -25,3 +25,6 @@ func _process(delta):
 	if abs(spd_x) == CAMERA_SPEED and abs(spd_y) == CAMERA_SPEED:
 		spd_x = sign(spd_x) * sqrt(1/2*pow(CAMERA_SPEED, 2))
 		spd_y = sign(spd_y) * sqrt(1/2*pow(CAMERA_SPEED, 2))
+
+func screen_position(event):
+	return event.get_position() - get_viewport_rect().size/2 + offset
