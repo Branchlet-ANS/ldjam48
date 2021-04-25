@@ -60,3 +60,13 @@ func get_interactables():
 		if object.interactable:
 			interactables.append(object)
 	return interactables
+
+func current():
+	return _rooms[_index]
+
+func get_width():
+	return current().get_width() * TILE_SIZE
+
+func get_height():
+	return current().get_height() * TILE_SIZE
+	

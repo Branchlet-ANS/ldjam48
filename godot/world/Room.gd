@@ -127,3 +127,10 @@ func populate_room(collection : Array, chance : float):
 							spread *= 1.0/(2*abs(v)+1+2*abs(w))
 							if rand_range(0, 1) < spread:
 								place_real(i+w, j+v, item)
+
+func get_width():
+	return _width
+
+func get_height():
+	return _height
+	
