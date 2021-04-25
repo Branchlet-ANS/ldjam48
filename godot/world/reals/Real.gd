@@ -4,7 +4,7 @@ class_name Real
 
 var _id : String
 var _name : String
-var sprite : Sprite
+var sprite : AnimatedSprite
 var interactable : bool = false
 
 func _init(id : String, name: String = ""):
@@ -12,12 +12,15 @@ func _init(id : String, name: String = ""):
 	_name = name
 	
 func _ready():
-	sprite = Sprite.new()
+	sprite = AnimatedSprite.new()
 	add_child(sprite)	
 	
 func set_sprite(path : String):
-	sprite.texture = load("res://assets/" + path)
-
+	sprite.frames = SpriteFrames.new()
+	sprite.frames.add_animation("idle")
+	sprite.frames.add_frame("idle", load("res://assets/" + path))
+	sprite.animation = "idle"
+	
 func get_id() -> String:
 	return _id
 

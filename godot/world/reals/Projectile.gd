@@ -24,11 +24,8 @@ func _init(id : String, name: String = "", speed : float = 200,
 	_sprite_name = sprite_name
 	if(_fired):
 		fire(direction, position)
-	print("init")
 
 func _ready():
-	print("ready")
-	print(_sprite_name)
 	set_sprite("weapons/projectiles/" + _sprite_name + ".png")
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
