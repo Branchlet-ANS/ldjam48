@@ -41,4 +41,4 @@ func add_health(var amount):
 		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
 			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
 		get_parent().remove_child(self)
-		call_deferred("free")
+		call_deferred("queue_free")

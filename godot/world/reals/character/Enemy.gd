@@ -5,8 +5,8 @@ var _sense_radius
 var _attack_radius
 
 
-func _init(id : String, name: String = "", health=100, sense_radius=64, attack_radius=8).(id, name):
-	_health = health
+func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8).(id, name):
+	_resistance = resistance
 	_sense_radius = sense_radius
 	_attack_radius = attack_radius
 
@@ -47,5 +47,5 @@ func add_health(var amount):
 	.add_health(amount)
 	if _health <= 0:
 		get_parent().remove_child(self)
-		call_deferred("free")
+		queue_free()
 	

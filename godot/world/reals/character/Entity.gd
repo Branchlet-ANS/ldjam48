@@ -22,6 +22,7 @@ var attack_moving : bool = false
 var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
+var _resistance : float = 1.0
 var _power = 2
 
 var player_dead : AudioStreamPlayer2D
@@ -144,7 +145,7 @@ func get_target():
 
 func add_health(amount):
 	if (_health + amount) <= 100.0:
-		_health += amount
+		_health += amount * 1.0/_resistance
 	else:
 		_health = 100.0
 	if(amount < 0):
@@ -152,7 +153,8 @@ func add_health(amount):
 		
 		
 func _on_Area2D_body_entered(body):
-	if body is Projectile:
-		if (!body.get_owner() == self):
-			add_health(-body.get_damage())
-			body.call_deferred("free")
+	if	is_instance_valid(body):
+		if body is Projectile:
+			if (!body.get_owner() == self):
+				add_health(-body.get_damage())
+				body.call_deferred("free")
