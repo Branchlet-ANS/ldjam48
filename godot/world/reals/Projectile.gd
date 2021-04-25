@@ -15,7 +15,7 @@ func _init(id : String, name: String = "", speed : float = 200,
 		rotating : bool = false, dmg : float = 10, inaccuracy : float = 0,
 		sprite_name : String = "bullet", fired : bool = false,
 		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
-	
+
 	_speed = speed
 	_rotating = rotating
 	_dmg = dmg
@@ -42,7 +42,7 @@ func fire(direction, position):
 	var _direction = (direction * Vector2(1 + rand_range(-_inaccuracy, _inaccuracy), 1+ rand_range(-_inaccuracy, _inaccuracy))).normalized()
 	_velocity = _direction * _speed
 	self.position = position
-	
+
 	if(_rotating):
 		rotation = (atan(_velocity.y/_velocity.x) + PI/2)
 		if(_velocity.x < 0):
@@ -52,7 +52,7 @@ func fire(direction, position):
 func _physics_process(delta):
 	if(!_fired):
 		return
-	move_and_slide(_velocity)
+	velocity = move_and_slide(velocity)
 	_timer += delta
 	if _timer > 10:
 		queue_free()

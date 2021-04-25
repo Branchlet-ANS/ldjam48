@@ -15,14 +15,14 @@ func _init(width, height, corruption=0):
 	_corruption = corruption
 
 func place_real(i : int, j : int, object):
-	
+
 	if reals.has(Vector2(i, j)):
 		return
 	if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
 		return
 	if i < -_width/2 or j < -_height/2 or i >= _width/2 or j >= _height/2:
 		return
-		
+
 	reals[Vector2(i, j)] = object
 
 func place_tile(i : int, j : int, tile):
@@ -42,35 +42,40 @@ enum TILE {
 }
 
 
-func register_real(id, _name, sprite, corruption, interactable, object, subtype="", chance=1): # temp
+func register_real(id, _name, sprite, corruption, interactable, object): # temp
 	return {
 		"id": id,
 		"name": _name,
 		"sprite": sprite,
 		"corruption": corruption,
 		"interactable": interactable,
-		"object": object,
-		"subtype": subtype,
-		"chance": chance
+		"object": object
 	}
+
+func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, value=0):
+	var dict = register_real(id, _name, sprite, corruption, true, FoodPlant)
+	dict["subtype"] = subtype
+	dict["chance"] = chance
+	dict["value"] = value
+	return dict
 
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
 	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
-	register_real("o:tree", "Tree", "programmer_spike.png", 0, false, StaticReal),
-	register_real("o:wangu_berry", "Wangu", "items/wangu.png", 0, false, Item, "berry"),
-	register_real("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, false, Item, "berry", 0.7),
-	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.6),
-	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.2),
-	register_real("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, false, Item, "berry", 0.3),
+	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
+	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 1, 1),
+	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, "berry", 0.7, 2),
+	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
+	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, "berry", 0.3, -5),
 	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
 ]
 
 func get_objects_by(attribute, term):
 	var objects = []
 	for object in objects_json:
-		if object[attribute] == term:
-			objects.append(object)
+		if object.has(attribute):
+			if str(object[attribute]) == str(term):
+				objects.append(object)
 	return objects
 
 func less_corrupt_than(corruption : float, list : Array):
@@ -100,6 +105,9 @@ func walls():
 	place_real(x0 + 2, y0 + 2, get_object("o:room_entrance"))
 	place_real(x0 + w - 3, y0 + h - 3, get_object("o:room_exit"))
 	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
+	place_real(x0 + 12, y0 + 8, get_object("o:tree"))
+	place_real(x0 + 14, y0 + 8, get_object("o:tree"))
+
 
 func basic_room(): # temp
 	walls()
@@ -107,7 +115,7 @@ func basic_room(): # temp
 	foraging_room()
 
 func foraging_room():
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.01)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.015)
 
 func bland_room():
 	#generate forage
@@ -135,4 +143,3 @@ func get_width():
 
 func get_height():
 	return _height
-	

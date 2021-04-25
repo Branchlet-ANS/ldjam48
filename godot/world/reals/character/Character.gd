@@ -20,6 +20,7 @@ var interact_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
 var weapon : Weapon = null
+var _health : float = 100.0
 
 var player_step : AudioStreamPlayer2D
 var step_pos : Vector2 = Vector2.ZERO
@@ -30,7 +31,7 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	set_sprite("character.png")
+	set_sprite("characters/character.png")
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
@@ -41,10 +42,10 @@ func _ready():
 	interact_area.add_child(_collision_shape)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	add_child(interact_area)
-	
+
 	player_step = AudioStreamPlayer2D.new()
 	add_child(player_step)
-	var sfx = load("res://Assets/SFX/walk1.wav") 
+	var sfx = load("res://Assets/SFX/walk1.wav")
 	player_step.set_stream(sfx)
 	player_step.play()
 	step_dist *= rand_range(0.8, 1.2)
@@ -54,8 +55,11 @@ func _process(_delta):
 		step_pos = position
 		if(!player_step.playing):
 			player_step.play()
-	if get_state() == STATE.idle and is_instance_valid(job):
-		set_target(job.transform.origin)
+	if get_state() == STATE.idle:
+		if is_instance_valid(attack_target):
+			set_state(STATE.attack)
+		if is_instance_valid(job):
+			set_target(job.transform.origin)
 	if get_state() == STATE.job:
 		perform_job()
 	if get_state() == STATE.attack:
@@ -113,14 +117,25 @@ func attack_cycle(delta):
 	if attack_timer <= 0:
 		strike(attack_target.position)
 		attack_timer = 100
-	
+
 func strike(pos):
 	var p = weapon.get_projectile()
 	var projectile = Projectile.new("", "", p._speed, p._rotating,
 			p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
 	get_parent().add_child(projectile)
 	projectile.fire((pos-position).normalized(), position)
-	
+
 
 func get_target():
 	return _target
+
+func add_health(amount):
+	if (_health + amount) <= 100.0:
+		print(_health + amount)
+		_health += amount
+	else:
+		_health = 100.0
+
+	if _health <= 0:
+		# delete fella
+		pass
