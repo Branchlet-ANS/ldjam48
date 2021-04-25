@@ -27,6 +27,7 @@ func _ready():
 		if object.get_id() == "o:room_entrance":
 			for i in range(len(characters)):
 				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
+			break
 	
 func add_character(x : int, y : int):
 	var character = scene_character.instance()
