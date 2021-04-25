@@ -30,7 +30,7 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	set_sprite("character.png")
+	set_sprite("characters/character.png")
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
@@ -54,8 +54,11 @@ func _process(_delta):
 		step_pos = position
 		if(!player_step.playing):
 			player_step.play()
-	if get_state() == STATE.idle and is_instance_valid(job):
-		set_target(job.transform.origin)
+	if get_state() == STATE.idle:
+		if is_instance_valid(attack_target):
+			set_state(STATE.attack)
+		if is_instance_valid(job):
+			set_target(job.transform.origin)
 	if get_state() == STATE.job:
 		perform_job()
 	if get_state() == STATE.attack:
