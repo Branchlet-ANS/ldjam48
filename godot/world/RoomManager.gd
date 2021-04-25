@@ -39,7 +39,6 @@ func rebuild():
 		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
 		instance.set_sprite(real["sprite"])
 		instance.interactable = real["interactable"]
-		instance.monster = real["monster"]
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
@@ -64,9 +63,6 @@ func get_interactables():
 
 func get_monsters():
 	var monsters = []
-	for object in room_container.get_children():
-		if object.monster:
-			monsters.append(object)
 	return monsters
 
 func current():

@@ -21,6 +21,10 @@ var contact_timer : int = 0
 var contact_target : KinematicReal
 var weapon : int = 0
 
+var player_step : AudioStreamPlayer2D
+var step_pos : Vector2 = Vector2.ZERO
+var step_dist : float = 10
+
 func _init(id : String, name: String = "").(id, name):
 	pass
 
@@ -31,13 +35,26 @@ func _ready():
 	var _shape = RectangleShape2D.new()
 	_shape.set_extents(Vector2(12, 12))
 	_collision_shape.set_shape(_shape)
+	collision_layer = 1 << 1
+	collision_mask = (1 << 0) + (1 << 2)
 	interact_area.add_child(_collision_shape)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	add_child(interact_area)
-	collision_layer = 1 << 1
-	collision_mask = (1 << 0) + (1 << 2)
+	
+	player_step = AudioStreamPlayer2D.new()
+	add_child(player_step)
+	var sfx = load("res://Assets/SFX/walk1.wav") 
+	player_step.set_stream(sfx)
+	player_step.play()
+	step_dist *= rand_range(0.8, 1.2)
 
 func _process(_delta):
+	print(velocity.length())
+	if((position - step_pos).length() > 10):
+		step_pos = position
+		if(!player_step.playing):
+			player_step.play()
+	
 	if get_state() == STATE.idle and get_jobs().size() > 0:
 		if get_jobs().size() > 0 and is_instance_valid(get_jobs()[0]):
 			set_target(get_jobs()[0].transform.origin)
