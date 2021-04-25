@@ -53,6 +53,8 @@ func instance_object(info):
 		return Item.new(info["id"], info["name"])
 	if object == FoodPlant:
 		return FoodPlant.new(info["id"], info["name"], info["value"])
+	if object == Enemy:
+		return Enemy.new(info["id"])
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
@@ -63,3 +65,19 @@ func get_interactables():
 		if object.interactable:
 			interactables.append(object)
 	return interactables
+
+func get_monsters():
+	var monsters = []
+	for object in room_container.get_children():
+		if object is Enemy:
+			monsters.append(object)
+	return monsters
+
+func current():
+	return _rooms[_index]
+
+func get_width():
+	return current().get_width() * TILE_SIZE
+
+func get_height():
+	return current().get_height() * TILE_SIZE

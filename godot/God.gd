@@ -27,32 +27,38 @@ func _unhandled_input(event):
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
 		elif(event.get_button_index() == 1):
-			if !event.is_pressed():
+			if event.is_pressed():
+				for monster in get_parent().roomManager.get_monsters():
+					if (monster.get_position() - mouse_pos).length() < 16:
+						contact(monster)
+						return
 				for interactable in get_parent().roomManager.get_interactables():
 					if (interactable.get_position() - mouse_pos).length() < 16:
 						interact(interactable)
 						return
-			var n = selected_characters.size()
-			for i in range(n):
-				# Plasserer valgte karakterers i et kvadrat rundt musepekeren
-				selected_characters[i].set_target(mouse_pos +
-				(fmod(i, float(floor(sqrt(n)))) -
-				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-				(float(i) / float(floor(sqrt(n))) -
-				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+				var n = selected_characters.size()
+				for i in range(n):
+					# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+					selected_characters[i].set_target(mouse_pos +
+					(fmod(i, float(floor(sqrt(n)))) -
+					fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+					(float(i) / float(floor(sqrt(n))) -
+					float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 		elif(event.get_button_index() == 3):
 			for character in selected_characters:
 				character.strike(mouse_pos)
 
 func interact(interactable):
 	for character in selected_characters:
-		character.add_job(interactable)
+		character.set_job(interactable)
+		
+func contact(monster):
+	for character in selected_characters:
+		character.attack(monster)
 
 func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
-
-
 
 func _draw():
 	var camera = get_parent().camera

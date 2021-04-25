@@ -6,6 +6,7 @@ var velocity = Vector2(0, 0)
 var speed = 200
 var rotating : bool = true
 var damage = 10
+var timer = 0
 
 func _init(id : String, name: String = "", type : String = "", parent = null,
 		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
@@ -24,11 +25,11 @@ func _init(id : String, name: String = "", type : String = "", parent = null,
 		speed = 400
 		rotating = false
 		damage = 10
-		inaccuracy = 0.05
+		inaccuracy = 0.5
 		set_sprite("weapons/projectiles/bullet.png")
 	
 	self.rotating = rotating
-	direction *= 1 + rand_range(-inaccuracy, inaccuracy)
+	direction = (direction * Vector2(1 + rand_range(-inaccuracy, inaccuracy), 1+ rand_range(-inaccuracy, inaccuracy))).normalized()
 	self.velocity = direction * speed
 	self.position = position
 	
@@ -47,4 +48,7 @@ func _ready():
 	collision_mask = (1 << 0) + (1 << 2)
 
 func _physics_process(delta):
-	move_and_slide(velocity)
+	velocity = move_and_slide(velocity)
+	timer += delta
+	if timer > 10:
+		queue_free()
