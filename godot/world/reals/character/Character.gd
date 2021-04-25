@@ -6,7 +6,7 @@ enum STATE {
 	idle,
 	target,
 	job,
-	contact
+	attack
 }
 
 var inventory : Inventory = Inventory.new()
@@ -14,11 +14,11 @@ var _state : int
 var velocity : Vector2 = Vector2(0, 0)
 var _target : Vector2 = Vector2(0, 0)
 var speed : float = 100
-var jobs : Array = []
+var job : Real = null
 var job_timer : int = 0
 var interact_area : Area2D
-var contact_timer : int = 0
-var contact_target : KinematicReal
+var attack_timer : int = 0
+var attack_target : KinematicReal
 var weapon : int = 0
 
 func _init(id : String, name: String = "").(id, name):
@@ -38,20 +38,19 @@ func _ready():
 	collision_mask = (1 << 0) + (1 << 2)
 
 func _process(_delta):
-	if get_state() == STATE.idle and get_jobs().size() > 0:
-		if get_jobs().size() > 0 and is_instance_valid(get_jobs()[0]):
-			set_target(get_jobs()[0].transform.origin)
+	if get_state() == STATE.idle and is_instance_valid(job):
+		set_target(job.transform.origin)
 	if get_state() == STATE.job:
 		perform_job()
-	if get_state() == STATE.contact:
-		contact_cycle(_delta)
+	if get_state() == STATE.attack:
+		attack_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
 		velocity = transform.origin.direction_to(_target) * speed
 		velocity = move_and_slide(velocity)
-		if transform.origin.distance_to(_target) < speed * 4 * delta:
-			if get_jobs().size() > 0 and get_jobs()[0].transform.origin == get_target():
+		if transform.origin.distance_to(_target) < speed * 8 * delta:
+			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
 				set_state(STATE.idle)
@@ -61,16 +60,14 @@ func _on_Area2D_body_entered(body):
 		inventory.add(body)
 		body.get_parent().remove_child(body)
 
-func add_job(interactable):
-	get_jobs().append(interactable)
+func set_job(interactable):
+	job = interactable
 
-func enter_contact(monster):
-	contact_target = monster
-	set_state(STATE.contact)
+func attack(enemy):
+	attack_target = enemy
+	set_state(STATE.attack)
 
 func get_state():
-	if _state == STATE.job and get_jobs().size() == 0:
-		set_state(STATE.idle)
 	return _state
 
 func set_state(state):
@@ -79,6 +76,8 @@ func set_state(state):
 		_target = transform.origin
 	elif state == STATE.job:
 		job_timer = 100
+	elif state == STATE.attack:
+		attack_timer = 100
 
 func set_target(target):
 	_target = target
@@ -87,31 +86,24 @@ func set_target(target):
 func perform_job():
 	job_timer -= 1
 	if job_timer == 0:
-		get_jobs()[0].interact(self)
-		get_jobs().pop_front()
+		job.interact(self)
+		job = null
 		set_state(STATE.idle)
 
-func contact_cycle(delta):
-	if(!is_instance_valid(contact_target) || contact_target.position == null):
+func attack_cycle(delta):
+	if !is_instance_valid(attack_target):
 		set_state(STATE.idle)
-	contact_timer += delta
-	var weapon_max_timer = 3
-	if(contact_timer >= weapon_max_timer):
-		strike(contact_target.position)
+	attack_timer -= delta
+	print(attack_timer)
+	if attack_timer <= 0:
+		strike(attack_target.position)
+		attack_timer = 100
 	
 func strike(pos):
-	var projectile = Projectile.new("", "", "Bullet", get_parent(),
+	var _projectile = Projectile.new("", "", "Bullet", get_parent(),
 		Vector2(pos - position).normalized(), position)
-	pass
+	print("SHOOT!")
+	
 
 func get_target():
 	return _target
-
-func get_jobs():
-	var i = 0
-	while i < jobs.size():
-		if (!is_instance_valid(jobs[i])):
-			jobs.erase(jobs[i])
-			i -= 1
-		i += 1
-	return jobs

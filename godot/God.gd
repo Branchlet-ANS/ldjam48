@@ -27,15 +27,14 @@ func _unhandled_input(event):
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
 		elif(event.get_button_index() == 1):
-			if !event.is_pressed():
-				for interactable in get_parent().roomManager.get_interactables():
-					if (interactable.get_position() - mouse_pos).length() < 16:
-						interact(interactable)
-						return
 			if event.is_pressed():
 				for monster in get_parent().roomManager.get_monsters():
 					if (monster.get_position() - mouse_pos).length() < 16:
 						contact(monster)
+						return
+				for interactable in get_parent().roomManager.get_interactables():
+					if (interactable.get_position() - mouse_pos).length() < 16:
+						interact(interactable)
 						return
 				var n = selected_characters.size()
 				for i in range(n):
@@ -51,17 +50,15 @@ func _unhandled_input(event):
 
 func interact(interactable):
 	for character in selected_characters:
-		character.add_job(interactable)
+		character.set_job(interactable)
 		
 func contact(monster):
 	for character in selected_characters:
-		character.enter_contact(monster)
+		character.attack(monster)
 
 func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
-
-
 
 func _draw():
 	var camera = get_parent().camera

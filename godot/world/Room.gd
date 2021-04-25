@@ -37,8 +37,8 @@ func get_tiles():
 enum TILE {
 	jungle,
 	grass,
-	water,
 	sand,
+	water,
 }
 
 
@@ -62,7 +62,8 @@ var objects_json =  [
 	register_real("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, false, Item, "berry", 0.7),
 	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.6),
 	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.2),
-	register_real("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, false, Item, "berry", 0.3)
+	register_real("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, false, Item, "berry", 0.3),
+	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
 ]
 
 func get_objects_by(attribute, term):
@@ -98,6 +99,7 @@ func walls():
 				place_tile(x, y, TILE.grass)
 	place_real(x0 + 2, y0 + 2, get_object("o:room_entrance"))
 	place_real(x0 + w - 3, y0 + h - 3, get_object("o:room_exit"))
+	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
 
 func basic_room(): # temp
 	walls()
