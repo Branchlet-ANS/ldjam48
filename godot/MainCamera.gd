@@ -15,7 +15,7 @@ var goal_y = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	zoom = Vector2(312.0/400, 312.0/400)
+	zoom = Vector2(512.0/1200, 512.0/1200)
 
 
 func _process(delta):

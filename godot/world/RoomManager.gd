@@ -37,6 +37,7 @@ func rebuild():
 		var instance = instance_object(real["object"], real["id"])
 		room_container.add_child(instance)
 		instance.set_position(key * TILE_SIZE)
+		print(instance, real["sprite"])
 		instance.set_sprite(real["sprite"])
 	for key in tiles:
 		var tile = tiles[key]

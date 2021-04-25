@@ -13,6 +13,7 @@ var camera : MainCamera
 var characters : Array = []
 
 func _ready():
+	randomize() # butterfly effect
 	camera = MainCamera.new()
 	add_child(camera)
 	camera.current = true
