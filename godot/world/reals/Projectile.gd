@@ -2,44 +2,34 @@ extends KinematicReal
 
 class_name Projectile
 
-var velocity = Vector2(0, 0)
-var speed = 200
-var rotating : bool = true
-var damage = 10
-var timer = 0
+var _velocity = Vector2(0, 0)
+var _speed = 200
+var _rotating : bool = true
+var _dmg = 10
+var _timer = 0
+var _fired = false
+var _sprite_name : String = ""
+var _inaccuracy = 0
 
-func _init(id : String, name: String = "", type : String = "", parent = null,
+func _init(id : String, name: String = "", speed : float = 200,
+		rotating : bool = false, dmg : float = 10, inaccuracy : float = 0,
+		sprite_name : String = "bullet", fired : bool = false,
 		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
-	parent.add_child(self)
 	
-	speed = 0
-	rotating = false
-	var inaccuracy = 0
-	if(type == "Arrow"):
-		speed = 200
-		rotating = true
-		damage = 7
-		inaccuracy = 0.01
-		set_sprite("weapons/projectiles/arrow.png")
-	elif(type == "Bullet"):
-		speed = 400
-		rotating = false
-		damage = 10
-		inaccuracy = 0.5
-		set_sprite("weapons/projectiles/bullet.png")
-	
-	self.rotating = rotating
-	direction = (direction * Vector2(1 + rand_range(-inaccuracy, inaccuracy), 1+ rand_range(-inaccuracy, inaccuracy))).normalized()
-	self.velocity = direction * speed
-	self.position = position
-	
-	if(rotating):
-		rotation = (atan(velocity.y/velocity.x) + PI/2)
-		if(velocity.x < 0):
-			scale = Vector2(-scale.x, scale.y)
-			rotation = (atan(velocity.y/velocity.x) + PI/2 - PI)
+	_speed = speed
+	_rotating = rotating
+	_dmg = dmg
+	_fired = fired
+	_inaccuracy = inaccuracy
+	_sprite_name = sprite_name
+	if(_fired):
+		fire(direction, position)
+	print("init")
 
 func _ready():
+	print("ready")
+	print(_sprite_name)
+	set_sprite("weapons/projectiles/" + _sprite_name + ".png")
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
 	_shape.set_extents(Vector2(1.6, 1.6))
@@ -47,8 +37,22 @@ func _ready():
 	collision_layer = 1 << 1
 	collision_mask = (1 << 0) + (1 << 2)
 
+func fire(direction, position):
+	_fired = true
+	var _direction = (direction * Vector2(1 + rand_range(-_inaccuracy, _inaccuracy), 1+ rand_range(-_inaccuracy, _inaccuracy))).normalized()
+	_velocity = _direction * _speed
+	self.position = position
+	
+	if(_rotating):
+		rotation = (atan(_velocity.y/_velocity.x) + PI/2)
+		if(_velocity.x < 0):
+			scale = Vector2(-scale.x, scale.y)
+			rotation = (atan(_velocity.y/_velocity.x) + PI/2 - PI)
+
 func _physics_process(delta):
-	move_and_slide(velocity)
-	timer += delta
-	if timer > 10:
+	if(!_fired):
+		return
+	move_and_slide(_velocity)
+	_timer += delta
+	if _timer > 10:
 		queue_free()

@@ -19,13 +19,14 @@ var job_timer : int = 0
 var interact_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
-var weapon : int = 0
+var weapon : Weapon = null
 
 var player_step : AudioStreamPlayer2D
 var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 
 func _init(id : String, name: String = "").(id, name):
+	weapon = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.7)
 	pass
 
 func _ready():
@@ -114,8 +115,12 @@ func attack_cycle(delta):
 		attack_timer = 100
 	
 func strike(pos):
-	var _projectile = Projectile.new("", "", "Bullet", get_parent(),
-		Vector2(pos - position).normalized(), position)
+	var p = weapon.get_projectile()
+	var projectile = Projectile.new("", "", p._speed, p._rotating,
+			p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
+	get_parent().add_child(projectile)
+	projectile.fire((pos-position).normalized(), position)
+	
 
 func get_target():
 	return _target
