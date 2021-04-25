@@ -25,7 +25,7 @@ func add(room : Room):
 func select(index):
 	_index = index
 	rebuild()
-	
+
 func rebuild():
 	for child in room_container.get_children():
 		child.queue_free()
@@ -36,13 +36,13 @@ func rebuild():
 		var real = reals[key]
 		var instance = instance_object(real["object"], real["id"])
 		room_container.add_child(instance)
-		instance.set_position(key * TILE_SIZE)
+		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
 		instance.set_sprite(real["sprite"])
 		instance.interactable = real["interactable"]
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
-		
+
 func instance_object(object, id):
 	if object == Real:
 		return Real.new(id)
@@ -50,7 +50,7 @@ func instance_object(object, id):
 		return StaticReal.new(id)
 	if object == Item:
 		return Item.new(id, "Name")
-	
+
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
 
@@ -60,4 +60,3 @@ func get_interactables():
 		if object.interactable:
 			interactables.append(object)
 	return interactables
-	
