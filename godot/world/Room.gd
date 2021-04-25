@@ -42,14 +42,16 @@ enum TILE {
 }
 
 
-func register_real(id, _name, sprite, corruption, interactable, object): # temp
+func register_real(id, _name, sprite, corruption, interactable, object, subtype=""): # temp
 	return {
 		"id": id,
 		"name": _name,
 		"sprite": sprite,
 		"corruption": corruption,
 		"interactable": interactable,
-		"object": object
+		"object": object,
+		"subtype": subtype,
+		"chance": 1
 	}
 
 func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, value=0):
@@ -63,10 +65,13 @@ var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
 	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
-	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 1, 1),
-	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, "berry", 0.7, 2),
-	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
-	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, "berry", 0.3, -5),
+	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.4, 1),
+	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.3, 2),
+	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.3, 3),
+	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.3, -20),
+	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
+	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
+	register_real("o:rock", "Rock", "items/rock.png", 1, false, Real, "decoration"),
 	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
 ]
 
@@ -90,7 +95,7 @@ func get_object(id):
 		if object["id"] == id:
 			return object
 
-
+# Add walls
 func walls():
 	var x0 = -_width/2
 	var y0 = -_height/2
@@ -102,24 +107,38 @@ func walls():
 				place_tile(x, y, TILE.jungle)
 			else:
 				place_tile(x, y, TILE.grass)
-	place_real(x0 + 2, y0 + 2, get_object("o:room_entrance"))
-	place_real(x0 + w - 3, y0 + h - 3, get_object("o:room_exit"))
-	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
-	place_real(x0 + 12, y0 + 8, get_object("o:tree"))
-	place_real(x0 + 14, y0 + 8, get_object("o:tree"))
 
+	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
+	#place_real(x0 + 12, y0 + 8, get_object("o:tree"))
+	#place_real(x0 + 14, y0 + 8, get_object("o:tree"))
+
+
+# Add entrance and exit for procedurally generated room
+func proc_room_controls():
+	var possible_positions : Array = [Vector2(0, -_height/2+1), Vector2(0, _height/2-2), Vector2(-_width/2+1, 0), Vector2(_width/2-2, 0)]
+	var r = randi() % 4
+	var entrance_position = possible_positions[r]
+	possible_positions.remove(r)
+	r = randi() % 3
+	var exit_position = possible_positions[r]
+	possible_positions.remove(r)
+	print(entrance_position, exit_position)
+	place_real(entrance_position.x, entrance_position.y, get_object("o:room_entrance"))
+	place_real(exit_position.x, exit_position.y, get_object("o:room_exit"))
 
 func basic_room(): # temp
-	walls()
 	_corruption = 5
 	foraging_room()
 
 func foraging_room():
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.015)
+	walls()
+	proc_room_controls()
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.03)
 
 func bland_room():
-	#generate forage
-	pass
+	walls()
+	proc_room_controls()
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.02)
 
 func monster_room():
 	#generate forage
@@ -131,12 +150,15 @@ func populate_room(collection : Array, chance : float):
 			if rand_range(0, 1) < chance:
 				var item = collection[randi() % collection.size()]
 				if rand_range(0, 1) < item["chance"]:
-					for w in range(-2, 3):
-						for v in range(-2, 3):
-							var spread = 1
-							spread *= 1.0/(2*abs(v)+1+2*abs(w))
-							if rand_range(0, 1) < spread:
-								place_real(i+w, j+v, item)
+					if item["subtype"] == "berry" or item["subtype"] == "foliage":
+						for w in range(-2, 3):
+							for v in range(-2, 3):
+								var spread = 1
+								spread *= 1.0/(2*abs(v)+1+2*abs(w))
+								if rand_range(0, 1) < spread:
+									place_real(i+w, j+v, item)
+					else:
+						place_real(i, j, item)
 
 func get_width():
 	return _width
