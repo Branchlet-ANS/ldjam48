@@ -1,4 +1,4 @@
-extends Item
+extends Real
 
 class_name FoodPlant
 
@@ -17,9 +17,9 @@ func set_food_value(food_value : int) -> void:
 func get_food_value() -> int:
 	return _food_value
 	
-func remove_fruit():
+func interact(character):
 	if _fruits > 0:
 		_fruits -= 1
 	if _fruits == 0:
-		#set_sprite("Bush")
-		pass
+		set_sprite("terrain/bush.png")
+	character.add_health(_food_value)

@@ -20,6 +20,7 @@ var interact_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
 var weapon : int = 0
+var _health : int = 100
 
 var player_step : AudioStreamPlayer2D
 var step_pos : Vector2 = Vector2.ZERO
@@ -119,3 +120,12 @@ func strike(pos):
 
 func get_target():
 	return _target
+	
+func add_health(amount):
+	if (_health + amount) <= 100:
+		_health += amount
+	else:
+		_health = 100
+		
+	if _health <= 0:
+		queue_free()
