@@ -60,7 +60,9 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	dict["chance"] = chance
 	dict["value"] = value
 	return dict
-
+	
+func register_enemy(id, _name, sprite, corruption, health, sense_radius, attack_radius):
+	pass
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),

@@ -39,9 +39,10 @@ func _unhandled_input(event):
 						player_selected1.play()
 						return
 					var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
-					if (closest_monster.get_position() - mouse_pos).length() < 16:
-						contact(closest_monster)
-						return
+					if closest_monster != null:
+						if (closest_monster.get_position() - mouse_pos).length() < 16:
+							contact(closest_monster)
+							return
 					var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
 					if (closest_interactable.get_position() - mouse_pos).length() < 16:
 						interact(closest_interactable)
@@ -88,7 +89,8 @@ func _unhandled_input(event):
 		update()
 
 static func get_closest(objects, position):
-	assert(objects.size() >= 1)
+	if objects.size() == 0:
+		return null
 	var closest = objects[0]
 	for object in objects:
 		if position.distance_to(object.get_position()) < position.distance_to(closest.get_position()):
@@ -115,7 +117,7 @@ func _draw():
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
 
-	for character in get_parent().characters:
+	for character in (get_parent().characters + get_parent().roomManager.get_monsters()):
 		if !is_instance_valid(character):
 			get_parent().characters.erase(character)
 		if character._health < 100:

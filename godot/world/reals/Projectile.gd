@@ -10,11 +10,12 @@ var _timer = 0
 var _fired = false
 var _sprite_name : String = ""
 var _inaccuracy = 0
+var _sent_by = null
 
 func _init(id : String, name: String = "", speed : float = 200,
 		rotating : bool = false, dmg : float = 10, inaccuracy : float = 0,
 		sprite_name : String = "bullet", fired : bool = false,
-		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
+		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO, sent_by=null).(id, name):
 
 	_speed = speed
 	_rotating = rotating
@@ -22,6 +23,7 @@ func _init(id : String, name: String = "", speed : float = 200,
 	_fired = fired
 	_inaccuracy = inaccuracy
 	_sprite_name = sprite_name
+	_sent_by = sent_by
 	if(_fired):
 		fire(direction, position)
 
@@ -56,3 +58,9 @@ func _physics_process(delta):
 	_timer += delta
 	if _timer > 3:
 		queue_free()
+		
+func get_damage():
+	return _dmg
+	
+func get_owner():
+	return _sent_by

@@ -9,7 +9,6 @@ var sense_area : Area2D
 var target_object : Character = null
 var sense_radius = 64
 var attack_radius = 8
-var power = 2
 
 func _ready():
 	speed = 50
@@ -33,10 +32,16 @@ func _process(delta):
 		if distance > sense_radius:
 			set_state(STATE.idle)
 		elif distance < attack_radius:
-			target_object.add_health(-power)
+			target_object.add_health(-_power)
 			target_object.set_target((target_object.get_position() - get_position()).normalized()*5)
 		else:
 			set_target(target_object.get_position())
 	else:
 		target_object = null
+
+func add_health(var amount):
+	.add_health(amount)
+	if _health <= 0:
+		get_parent().remove_child(self)
+		call_deferred("free")
 	

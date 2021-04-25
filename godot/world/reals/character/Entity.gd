@@ -22,6 +22,7 @@ var attack_moving : bool = false
 var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
+var _power = 2
 
 var player_dead : AudioStreamPlayer2D
 var sfx_dead = preload("res://Assets/SFX/dead.wav")
@@ -134,7 +135,7 @@ func attack_cycle(delta):
 func strike(pos):
 	var p = weapon.get_projectile()
 	var projectile = Projectile.new("", "", p._speed, p._rotating,
-			p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
+			p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO, self)
 	get_parent().add_child(projectile)
 	projectile.fire((pos-position).normalized(), position)
 
@@ -149,12 +150,9 @@ func add_health(amount):
 	if(amount < 0):
 		player_hurt.play()
 		
-	if _health <= 0:
-		player_dead.play()
-		print(get_parent())
 		
-		get_parent().get_parent().get_parent().characters.erase(self)
-		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
-			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
-		get_parent().remove_child(self)
-		queue_free()
+func _on_Area2D_body_entered(body):
+	if body is Projectile:
+		if (!body.get_owner() == self):
+			add_health(-body.get_damage())
+			body.call_deferred("free")

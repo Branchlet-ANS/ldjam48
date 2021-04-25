@@ -33,3 +33,12 @@ func _on_Area2D_body_entered(body):
 	if body is Item:
 		inventory.add(body)
 		body.get_parent().remove_child(body)
+func add_health(var amount):
+	.add_health(amount)
+	if _health <= 0:
+		player_dead.play()
+		get_parent().get_parent().get_parent().characters.erase(self)
+		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
+			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
+		get_parent().remove_child(self)
+		call_deferred("free")

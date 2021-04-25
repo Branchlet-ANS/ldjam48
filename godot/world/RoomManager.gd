@@ -35,8 +35,6 @@ func previous():
 	
 	assert(_index > 0)
 	_index -= 1
-	print(_index)
-	print(_rooms[_index])
 	rebuild()
 
 func rebuild():
@@ -48,8 +46,6 @@ func rebuild():
 		else:
 			room_container.remove_child(child)
 			child.queue_free()
-	for child in room_container.get_children():
-		print(child._name)
 	
 	tile_map.clear()
 	var room = _rooms[_index]
