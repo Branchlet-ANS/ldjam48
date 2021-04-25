@@ -41,7 +41,7 @@ func _ready():
 		spike.texture = sprite_spike
 		var my_campfire_pos = campfire_poss[floor(float(i)/float(n_spike) * float(n_campfire))]
 		var angle = 2*PI * (float(i)/float(n_spike) * float(n_campfire))
-		print(abs(angle - angle_campfire))
+		#print(abs(angle - angle_campfire))
 		if(n_campfire) != 1:
 			if(floor(float(i)/float(n_spike) * float(n_campfire)) == 0):
 				if(abs(fmod(angle, 2*PI) - fmod(angle_campfire, 2*PI)) < angle_dif_spikes):
