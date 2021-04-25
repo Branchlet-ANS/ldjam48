@@ -7,6 +7,18 @@ var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
 var character_space = 15
 var clickable = null
+var player_selected1 : AudioStreamPlayer2D
+var sfx_selected1 = preload("res://Assets/SFX/selected1.wav")
+var player_selected2 : AudioStreamPlayer2D
+var sfx_selected2 = preload("res://Assets/SFX/selected2.wav")
+
+func _ready():
+	player_selected1 = AudioStreamPlayer2D.new()
+	add_child(player_selected1)
+	player_selected1.set_stream(sfx_selected1)
+	player_selected2 = AudioStreamPlayer2D.new()
+	add_child(player_selected2)
+	player_selected2.set_stream(sfx_selected2)
 
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()
@@ -22,6 +34,7 @@ func _unhandled_input(event):
 					var closest_character = get_closest(get_parent().characters, mouse_pos)
 					if (closest_character.get_position() - mouse_pos).length() < 16:
 						selected_characters = [closest_character]
+						player_selected1.play()
 						return
 					var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
 					if (closest_monster.get_position() - mouse_pos).length() < 16:
@@ -39,6 +52,7 @@ func _unhandled_input(event):
 						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
 						(float(i) / float(floor(sqrt(n))) -
 						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+					player_selected1.play()
 				else:
 					selected_characters = []
 					for character in get_parent().characters:
@@ -48,6 +62,11 @@ func _unhandled_input(event):
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
 							selected_characters.append(character)
+					if(selected_characters.size() >= 2):
+						player_selected2.play()
+					elif(selected_characters.size() >= 1):
+						player_selected1.play()
+						
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
 		elif(event.get_button_index() == 3):

@@ -9,12 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicReal",
+"base": "Entity",
 "class": "Character",
 "language": "GDScript",
 "path": "res://world/reals/character/Character.gd"
 }, {
-"base": "KinematicReal",
+"base": "Entity",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://world/reals/character/Enemy.gd"
@@ -118,6 +118,10 @@ config/icon="res://icon.png"
 
 window/size/width=1600
 window/size/height=800
+
+[global]
+
+"mix rate"=false
 
 [importer_defaults]
 
