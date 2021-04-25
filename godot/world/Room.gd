@@ -15,8 +15,15 @@ func _init(width, height, corruption=0):
 	_corruption = corruption
 
 func place_real(i : int, j : int, object):
-	if !reals.has(Vector2(i, j)):
-		reals[Vector2(i, j)] = object
+	
+	if reals.has(Vector2(i, j)):
+		return
+	if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
+		return
+	if i < -_width/2 or j < -_height/2 or i >= _width/2 or j >= _height/2:
+		return
+		
+	reals[Vector2(i, j)] = object
 
 func place_tile(i : int, j : int, tile):
 	tiles[Vector2(i, j)] = tile
@@ -98,7 +105,7 @@ func basic_room(): # temp
 	foraging_room()
 
 func foraging_room():
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.03)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.01)
 
 func bland_room():
 	#generate forage
@@ -114,4 +121,9 @@ func populate_room(collection : Array, chance : float):
 			if rand_range(0, 1) < chance:
 				var item = collection[randi() % collection.size()]
 				if rand_range(0, 1) < item["chance"]:
-					place_real(i, j, item)
+					for w in range(-2, 3):
+						for v in range(-2, 3):
+							var spread = 1
+							spread *= 1.0/(2*abs(v)+1+2*abs(w))
+							if rand_range(0, 1) < spread:
+								place_real(i+w, j+v, item)
