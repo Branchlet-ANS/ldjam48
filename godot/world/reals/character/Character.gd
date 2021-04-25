@@ -4,7 +4,6 @@ class_name Character
 
 export var scene_item : Resource
 export var scene_projectile : Resource
-onready var collision_shape = $"CollisionShape2D"
 
 enum STATE {
 	idle,
