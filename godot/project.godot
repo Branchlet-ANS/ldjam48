@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/character/Entity.gd"
 }, {
-"base": "Real",
+"base": "Item",
 "class": "FoodPlant",
 "language": "GDScript",
 "path": "res://world/reals/FoodPlant.gd"
@@ -80,6 +80,11 @@ _global_script_classes=[ {
 "path": "res://world/RoomManager.gd"
 }, {
 "base": "Real",
+"class": "RoomPortal",
+"language": "GDScript",
+"path": "res://world/reals/RoomPortal.gd"
+}, {
+"base": "Real",
 "class": "StaticReal",
 "language": "GDScript",
 "path": "res://world/reals/StaticReal.gd"
@@ -104,6 +109,7 @@ _global_script_class_icons={
 "Real": "",
 "Room": "",
 "RoomManager": "",
+"RoomPortal": "",
 "StaticReal": "",
 "Weapon": ""
 }

@@ -16,7 +16,7 @@ func _init(width, height, corruption=0):
 
 func place_real(i : int, j : int, object):
 
-	if reals.has(Vector2(i, j)):
+	if reals.has(Vector2(i, j)) and object["object"] != RoomPortal:
 		return
 	if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
 		return
@@ -42,7 +42,7 @@ enum TILE {
 }
 
 
-func register_real(id, _name, sprite, corruption, interactable, object, subtype=""): # temp
+func register_real(id, _name, sprite, corruption, interactable, object, subtype=""):
 	return {
 		"id": id,
 		"name": _name,
@@ -62,8 +62,8 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	return dict
 
 var objects_json =  [
-	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
-	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
+	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
+	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
 	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.4, 1),
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.3, 2),
@@ -115,16 +115,31 @@ func walls():
 
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
-	var possible_positions : Array = [Vector2(0, -_height/2+1), Vector2(0, _height/2-2), Vector2(-_width/2+1, 0), Vector2(_width/2-2, 0)]
+	
+	var tile_positions : Array = [
+		Vector2(0, -_height/2), 
+		Vector2(0, _height/2-1), 
+		Vector2(-_width/2, 0), 
+		Vector2(_width/2-1, 0)
+		]
+	
+	var control_block_positions = [
+		Vector2(0, -_height/2+2), 
+		Vector2(0, _height/2-3), 
+		Vector2(-_width/2+2, 0), 
+		Vector2(_width/2-3, 0)
+	]
+	
 	var r = randi() % 4
-	var entrance_position = possible_positions[r]
-	possible_positions.remove(r)
+	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
+	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_entrance"))
+	control_block_positions.remove(r)
+	tile_positions.remove(r)
 	r = randi() % 3
-	var exit_position = possible_positions[r]
-	possible_positions.remove(r)
-	print(entrance_position, exit_position)
-	place_real(entrance_position.x, entrance_position.y, get_object("o:room_entrance"))
-	place_real(exit_position.x, exit_position.y, get_object("o:room_exit"))
+	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
+	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_exit"))
+	control_block_positions.remove(r)
+	tile_positions.remove(r)
 
 func basic_room(): # temp
 	_corruption = 5
@@ -132,14 +147,14 @@ func basic_room(): # temp
 
 func foraging_room():
 	walls()
-	proc_room_controls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.03)
-
+	proc_room_controls()
+	
 func bland_room():
 	walls()
-	proc_room_controls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.02)
-
+	proc_room_controls()
+	
 func monster_room():
 	#generate forage
 	pass

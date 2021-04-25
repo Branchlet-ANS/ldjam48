@@ -30,7 +30,7 @@ func _unhandled_input(event):
 			else:
 				select_pressed = false
 				var select_pos_end = mouse_pos
-				if (select_pos_end - select_pos_start).length() < 8:
+				if (select_pos_end - select_pos_start).length() < 12:
 					var closest_character = get_closest(get_parent().characters, mouse_pos)
 					if (closest_character.get_position() - mouse_pos).length() < 16:
 						selected_characters = [closest_character]
@@ -47,6 +47,7 @@ func _unhandled_input(event):
 					var n = selected_characters.size()
 					for i in range(n):
 						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+						selected_characters[i].set_job(null)
 						selected_characters[i].set_target(mouse_pos +
 						(fmod(i, float(floor(sqrt(n)))) -
 						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
@@ -54,19 +55,20 @@ func _unhandled_input(event):
 						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 					player_selected1.play()
 				else:
-					selected_characters = []
+					var new_selection = []
 					for character in get_parent().characters:
 						if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 								min(select_pos_start.y, select_pos_end.y),
 								max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
-							selected_characters.append(character)
-					if(selected_characters.size() >= 2):
+							new_selection.append(character)
+					if new_selection.size() > 0:
+						selected_characters = new_selection
+					if(new_selection.size() >= 2):
 						player_selected2.play()
-					elif(selected_characters.size() >= 1):
+					elif(new_selection.size() >= 1):
 						player_selected1.play()
-						
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
 		elif(event.get_button_index() == 3):
@@ -81,7 +83,7 @@ func _unhandled_input(event):
 			clickable = null
 		update()
 
-func get_closest(objects, position):
+static func get_closest(objects, position):
 	assert(objects.size() >= 1)
 	var closest = objects[0]
 	for object in objects:
@@ -108,7 +110,7 @@ func _draw():
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
-		
+
 	for character in get_parent().characters:
 		if !is_instance_valid(character):
 			get_parent().characters.erase(character)
@@ -117,8 +119,8 @@ func _draw():
 			var bg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(10, -12), pos + Vector2(10, -14)])
 			var fg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(-10+character._health/5, -12), pos + Vector2(-10+character._health/5, -14)])
 			draw_colored_polygon(bg_points, Color.darkred)
-			draw_colored_polygon(fg_points, Color.red)	
-		
+			draw_colored_polygon(fg_points, Color.red)
+
 	for character in selected_characters:
 		if !is_instance_valid(character):
 			selected_characters.erase(character)

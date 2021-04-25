@@ -25,10 +25,21 @@ func add(room : Room):
 func select(index):
 	_index = index
 	rebuild()
+	
+func next():
+	print("next")
+	_index += 1
+	rebuild()
+	
+func previous():
+	print("previous")
+	_index -= 1
+	rebuild()
 
 func rebuild():
 	for child in room_container.get_children():
-		child.queue_free()
+		# free all jobs, then move room
+		pass
 	var room = _rooms[_index]
 	var reals = room.get_reals()
 	var tiles = room.get_tiles()
@@ -55,6 +66,11 @@ func instance_object(info):
 		return FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
 	if object == Enemy:
 		return Enemy.new(info["id"])
+	if object == RoomPortal:
+		if info["id"] == "o:room_entrance":
+			return RoomPortal.new(info["id"], info["name"], -1)
+		else:
+			return RoomPortal.new(info["id"], info["name"], 1)
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
