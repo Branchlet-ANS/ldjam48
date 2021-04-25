@@ -63,10 +63,10 @@ var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
 	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
-	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, false, Item, "berry"),
-	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, "berry", 0.7),
-	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6),
-	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, "berry", 0.3),
+	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 1, 1),
+	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, "berry", 0.7, 2),
+	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
+	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, "berry", 0.3, -5),
 	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
 ]
 

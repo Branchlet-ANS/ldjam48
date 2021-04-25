@@ -70,6 +70,12 @@ func _draw():
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
 	for character in selected_characters:
 		var pos = character.transform.origin
-		var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
-		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
+		if character._health < 100:
+			var bg_points = PoolVector2Array([pos + Vector2(-10, -20), pos + Vector2(-10, -17), pos + Vector2(10, -17), pos + Vector2(10, -20)])
+			var fg_points = PoolVector2Array([pos + Vector2(-10, -20), pos + Vector2(-10, -17), pos + Vector2(-10+character._health/5, -17), pos + Vector2(-10+character._health/5, -20)])
+			draw_colored_polygon(bg_points, Color.darkred)
+			draw_colored_polygon(fg_points, Color.red)
+		else:
+			var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
+			draw_colored_polygon(points, Color.lightgreen)
 		
