@@ -62,4 +62,3 @@ func basic_room(): # temp
 	place_real(x0 + 7, y0 + 7, objects_json["o:tree"])
 	place_real(x0 + 8, y0 + 8, objects_json["o:berry"])
 
-

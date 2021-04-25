@@ -4,18 +4,20 @@ class_name RoomManager
 
 export var scene_real : Resource
 export var scene_static_real : Resource
-export var tileset : TileSet
-
-onready var tile_map : TileMap = $"TileMap"
-onready var room_container : Node2D = $"RoomContainer"
 
 const TILE_SIZE = 16
+var tile_map : TileMap
+var room_container : YSort
 var _rooms : Array = []
 var _index : int
 
 func _ready():
-	set_tileset(tileset)
-	tile_map.set_position(Vector2(0.5, 0.5))
+	tile_map = TileMap.new()
+	add_child(tile_map)
+	tile_map.set_cell_size(Vector2(TILE_SIZE, TILE_SIZE))
+	tile_map.set_position(Vector2(-0.5, -0.5))
+	room_container = YSort.new()
+	add_child(room_container)
 
 func add(room : Room):
 	_rooms.append(room)

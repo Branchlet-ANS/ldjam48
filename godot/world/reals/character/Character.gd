@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends KinematicReal
 
 class_name Character
 
@@ -12,16 +12,28 @@ enum STATE {
 	job
 }
 
-var inventory : Inventory
+var inventory : Inventory = Inventory.new()
 var _state : int
 var velocity : Vector2 = Vector2(0, 0)
 var _target : Vector2 = Vector2(0, 0)
 var speed : float = 100
 var jobs : Array = []
 var job_timer : int = 0
+var interact_area : Area2D
 
-func _init():
-	inventory = Inventory.new()
+func _init(id : String, name: String = "").(id, name):
+	pass
+
+func _ready():
+	set_sprite("character.png")
+	interact_area = Area2D.new()
+	var _collision_shape = CollisionShape2D.new()
+	var _shape = RectangleShape2D.new()
+	_shape.set_extents(Vector2(12, 12))
+	_collision_shape.set_shape(_shape)
+	interact_area.add_child(collision_shape)
+	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
+	add_child(interact_area)
 
 func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
@@ -29,7 +41,7 @@ func _process(_delta):
 			set_target(get_jobs()[0].transform.origin)
 	if get_state() == STATE.job:
 		perform_job()
-	
+
 func _physics_process(delta):
 	if get_state() == STATE.target:
 		velocity = transform.origin.direction_to(_target) * speed
@@ -52,7 +64,7 @@ func get_state():
 	if _state == STATE.job and get_jobs().size() == 0:
 		set_state(STATE.idle)
 	return _state
-	
+
 func set_state(state):
 	_state = state
 	if state == STATE.idle:
@@ -78,7 +90,7 @@ func strike(pos):
 	projectile.position = position
 	projectile.velocity = projectile.speed * Vector2(pos - position).normalized()
 	projectile.late_ready()
-	
+
 func get_target():
 	return _target
 

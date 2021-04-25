@@ -28,10 +28,6 @@ func _unhandled_input(event):
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
 		elif(event.get_button_index() == 1):
-			for interactable in get_parent().get_interactables():
-				if (interactable.transform.origin - camera.mouse_world_position()).length() < 16:
-					interact(interactable)
-					return
 			var n = selected_characters.size()
 			for i in range(n):
 				var wpos = camera.mouse_world_position() # Plasserer valgte karakterers i et kvadrat rundt musepekeren
