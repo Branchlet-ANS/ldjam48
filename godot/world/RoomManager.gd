@@ -36,8 +36,7 @@ func rebuild():
 		var real = reals[key]
 		var instance = instance_object(real["object"], real["id"])
 		room_container.add_child(instance)
-		instance.set_position(key * TILE_SIZE)
-		print(instance, real["sprite"])
+		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
 		instance.set_sprite(real["sprite"])
 		instance.interactable = real["interactable"]
 	for key in tiles:
