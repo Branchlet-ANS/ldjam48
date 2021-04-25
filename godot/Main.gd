@@ -6,6 +6,8 @@ onready var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
+
+var character_space = 15
 var characters : Array = []
 
 func _ready():
@@ -23,12 +25,18 @@ func _ready():
 	roomManager.select(0)
 
 	for i in range(10):
-		add_character(i*100, i*100)
+		add_character(0, 0)
 
 	for object in roomManager.room_container.get_children():
 		if object.get_id() == "o:room_entrance":
-			for i in range(len(characters)):
-				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
+			var n = float(characters.size())
+			for i in range(n):
+				characters[i].set_position(object.get_position())
+				characters[i].set_target(object.get_position() +
+				(fmod(i, float(floor(sqrt(n)))) -
+				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+				(float(i) / float(floor(sqrt(n))) -
+				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 			break
 
 	god = God.new()

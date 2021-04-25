@@ -115,7 +115,7 @@ func walls():
 
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
-	var possible_positions : Array = [Vector2(0, -_height/2+1), Vector2(0, _height/2-2), Vector2(-_width/2+1, 0), Vector2(_width/2-2, 0)]
+	var possible_positions : Array = [Vector2(0, -_height/2+2), Vector2(0, _height/2-3), Vector2(-_width/2+2, 0), Vector2(_width/2-3, 0)]
 	var r = randi() % 4
 	var entrance_position = possible_positions[r]
 	possible_positions.remove(r)

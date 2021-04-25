@@ -51,5 +51,5 @@ func _physics_process(delta):
 		return
 	_velocity = move_and_slide(_velocity)
 	_timer += delta
-	if _timer > 10:
+	if _timer > 3:
 		queue_free()
