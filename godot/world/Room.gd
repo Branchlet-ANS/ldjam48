@@ -68,7 +68,7 @@ func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=
 	dict["value"] = value
 	return dict
 
-func register_enemy(id, _name, sprite, corruption, health, sense_radius, attack_radius):
+func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius):
 	var dict = register_real(id, _name, sprite, corruption, false, Enemy)
 	dict["resistance"] = resistance
 	dict["sense_radius"] = sense_radius
