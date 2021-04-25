@@ -44,10 +44,10 @@ func fire(direction, position):
 	self.position = position
 
 	if(_rotating):
-		rotation = (atan(_velocity.y/_velocity.x) + PI/2)
+		rotation = (atan2(_velocity.y,_velocity.x) + PI/2)
 		if(_velocity.x < 0):
 			scale = Vector2(-scale.x, scale.y)
-			rotation = (atan(_velocity.y/_velocity.x) + PI/2 - PI)
+			rotation = (atan2(_velocity.y,_velocity.x) + PI/2 - PI)
 
 func _physics_process(delta):
 	if(!_fired):
