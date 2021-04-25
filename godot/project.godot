@@ -85,6 +85,11 @@ _global_script_classes=[ {
 "path": "res://world/reals/RoomPortal.gd"
 }, {
 "base": "Real",
+"class": "RoomWeapon",
+"language": "GDScript",
+"path": "res://world/reals/RoomWeapon.gd"
+}, {
+"base": "Real",
 "class": "StaticReal",
 "language": "GDScript",
 "path": "res://world/reals/StaticReal.gd"
@@ -110,6 +115,7 @@ _global_script_class_icons={
 "Room": "",
 "RoomManager": "",
 "RoomPortal": "",
+"RoomWeapon": "",
 "StaticReal": "",
 "Weapon": ""
 }

@@ -11,6 +11,7 @@ var _projectile_rotating : bool = false
 var _projectile_inaccuracy : float = false
 var _projectile : Projectile = null
 var _desired_distance : float = 100
+var _weapon_name : String = ""
 
 func _init(id : String, name: String, dmg : float = 10,
 		attack_timer : float = 100,
@@ -19,10 +20,12 @@ func _init(id : String, name: String, dmg : float = 10,
 		projectile_sprite_name : String = "bullet",
 		projectile_rotating : bool = false,
 		projectile_inaccuracy : float = 0,
-		desired_distance : float = 100).(id, name):
+		desired_distance : float = 100,
+		weapon_name : String = "").(id, name):
 	_dmg = dmg
 	_attack_timer = attack_timer
 	_desired_distance = desired_distance
+	_weapon_name = weapon_name
 	if(has_projectile):
 		_projectile = Projectile.new("", "", projectile_speed, projectile_rotating,
 				dmg, projectile_inaccuracy, projectile_sprite_name, false,
@@ -37,7 +40,7 @@ func get_attack_timer() -> float:
 func get_desired_distance() -> float:
 	return _desired_distance
 
-func get_has_projectile() -> bool:
+func has_projectile() -> bool:
 	return _has_projectile
 
 func get_projectile() -> Projectile:
