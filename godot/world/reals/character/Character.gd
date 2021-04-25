@@ -53,7 +53,7 @@ func _physics_process(delta):
 func _on_Area2D_body_entered(body):
 	if body is Item:
 		inventory.add(body)
-		body.queue_free()
+		body.get_parent().remove_child(body)
 
 func add_job(interactable):
 	get_jobs().append(interactable)

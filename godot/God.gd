@@ -53,6 +53,7 @@ func _process(_delta):
 		update()
 
 
+
 func _draw():
 	var camera = get_parent().camera
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
