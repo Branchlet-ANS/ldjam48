@@ -7,7 +7,7 @@ var _fruits : int
 
 func _init(id : String, name : String, food_value : int).(id, name):
 	_food_value = food_value
-	_fruits = randi() % 5
+	_fruits = 1
 	
 	
 func set_food_value(food_value : int) -> void:
