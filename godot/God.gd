@@ -11,44 +11,43 @@ var clickable = null
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()
 	if event is InputEventMouseButton:
-		if(event.get_button_index() == 1) and selected_characters.size() == 0:
+		if(event.get_button_index() == 1):
 			if(event.is_pressed()):
 				select_pos_start = mouse_pos
 				select_pressed = true
 			else:
-				selected_characters = []
-				var select_pos_end = mouse_pos
 				select_pressed = false
-				update()
-				var closest_character = get_closest(get_parent().characters, mouse_pos)
-				if (closest_character.get_position() - mouse_pos).length() < 16:
-					selected_characters = [closest_character]
-				for character in get_parent().characters:
-					if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
-							min(select_pos_start.y, select_pos_end.y),
-							max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
-							max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
-								Rect2(character.position, character.collision_shape.shape.get_extents()))):
-						selected_characters.append(character)
-		elif(event.get_button_index() == 1):
-			if !event.is_pressed():
-				var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
-				if (closest_monster.get_position() - mouse_pos).length() < 16:
-					contact(closest_monster)
-					return
-				var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
-				if (closest_interactable.get_position() - mouse_pos).length() < 16:
-					interact(closest_interactable)
-					return
-				var n = selected_characters.size()
-				for i in range(n):
-					# Plasserer valgte karakterers i et kvadrat rundt musepekeren
-					selected_characters[i].set_target(mouse_pos +
-					(fmod(i, float(floor(sqrt(n)))) -
-					fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-					(float(i) / float(floor(sqrt(n))) -
-					float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
-				selected_characters.clear()
+				var select_pos_end = mouse_pos
+				if (select_pos_end - select_pos_start).length() < 8:
+					var closest_character = get_closest(get_parent().characters, mouse_pos)
+					if (closest_character.get_position() - mouse_pos).length() < 16:
+						selected_characters = [closest_character]
+						return
+					var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
+					if (closest_monster.get_position() - mouse_pos).length() < 16:
+						contact(closest_monster)
+						return
+					var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
+					if (closest_interactable.get_position() - mouse_pos).length() < 16:
+						interact(closest_interactable)
+						return
+					var n = selected_characters.size()
+					for i in range(n):
+						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+						selected_characters[i].set_target(mouse_pos +
+						(fmod(i, float(floor(sqrt(n)))) -
+						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+						(float(i) / float(floor(sqrt(n))) -
+						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+				else:
+					selected_characters = []
+					for character in get_parent().characters:
+						if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
+								min(select_pos_start.y, select_pos_end.y),
+								max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
+								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
+									Rect2(character.position, character.collision_shape.shape.get_extents()))):
+							selected_characters.append(character)
 		elif(event.get_button_index() == 3):
 			for character in selected_characters:
 				character.strike(mouse_pos)
@@ -72,16 +71,13 @@ func get_closest(objects, position):
 func interact(interactable):
 	for character in selected_characters:
 		character.set_job(interactable)
-	selected_characters.clear()
 
 func contact(monster):
 	for character in selected_characters:
 		character.attack(monster)
-	selected_characters.clear()
 
 func _process(_delta):
-	if select_pressed or selected_characters.size() > 0:
-		update()
+	update()
 
 func _draw():
 	var camera = get_parent().camera
