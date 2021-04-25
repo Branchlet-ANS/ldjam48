@@ -22,7 +22,7 @@ func place_tile(i : int, j : int, tile):
 
 func get_reals():
 	return reals
-	
+
 func get_tiles():
 	return tiles
 
@@ -33,7 +33,9 @@ enum TILE {
 	sand,
 }
 
-func register_real(id, _name, sprite, corruption, object, subtype="", chance=1): # temp
+
+func register_real(id, _name, sprite, corruption, interactable, object, subtype="", chance=1): # temp
+
 	return {
 		"id": id,
 		"name": _name,
@@ -94,15 +96,15 @@ func basic_room(): # temp
 
 func foraging_room():
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.03)
-	
+
 func bland_room():
 	#generate forage
 	pass
-	
+
 func monster_room():
 	#generate forage
 	pass
-	
+
 func populate_room(collection : Array, chance : float):
 	for i in range(-_width/2, _width/2):
 		for j in range(-_height/2, _height/2):

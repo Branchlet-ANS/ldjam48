@@ -23,3 +23,8 @@ func get_id() -> String:
 
 func get_name() -> String:
 	return _name
+
+func interact(character):
+	print(character.get_id() + " has completed an interaction with " + _id)
+	
+	

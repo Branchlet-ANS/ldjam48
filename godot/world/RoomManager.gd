@@ -39,6 +39,7 @@ func rebuild():
 		instance.set_position(key * TILE_SIZE)
 		print(instance, real["sprite"])
 		instance.set_sprite(real["sprite"])
+		instance.interactable = real["interactable"]
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
@@ -53,3 +54,11 @@ func instance_object(object, id):
 	
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
+
+func get_interactables():
+	var interactables = []
+	for object in room_container.get_children():
+		if object.interactable:
+			interactables.append(object)
+	return interactables
+	

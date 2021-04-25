@@ -2,11 +2,7 @@ extends Node
 
 class_name Main
 
-export var scene_character : Resource
-export var scene_projectile : Resource
-export var scene_interactable : Resource
-
-onready var god : God
+onready var god : God = $God
 var roomManager : RoomManager
 var camera : MainCamera
 
@@ -34,7 +30,7 @@ func _ready():
 			for i in range(len(characters)):
 				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
 			break
-	
+
 	god = God.new()
 	add_child(god)
 
@@ -42,6 +38,5 @@ func _ready():
 func add_character(x : int, y : int):
 	var character = Character.new("character")
 	roomManager.room_container.add_child(character)
-	character.scene_projectile = scene_projectile
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)

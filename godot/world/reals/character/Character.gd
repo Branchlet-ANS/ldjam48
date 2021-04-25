@@ -2,9 +2,6 @@ extends KinematicReal
 
 class_name Character
 
-export var scene_item : Resource
-export var scene_projectile : Resource
-
 enum STATE {
 	idle,
 	target,
@@ -33,6 +30,8 @@ func _ready():
 	interact_area.add_child(_collision_shape)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	add_child(interact_area)
+	collision_layer = 1 << 1
+	collision_mask = (1 << 0) + (1 << 2)
 
 func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
@@ -70,8 +69,7 @@ func set_state(state):
 		_target = transform.origin
 	elif state == STATE.job:
 		job_timer = 100
-	update()
-
+		
 func set_target(target):
 	_target = target
 	set_state(STATE.target)
@@ -79,16 +77,14 @@ func set_target(target):
 func perform_job():
 	job_timer -= 1
 	if job_timer == 0:
-		get_jobs()[0].queue_free()
+		get_jobs()[0].interact(self)
 		get_jobs().pop_front()
-	update()
-
+		set_state(STATE.idle)
+	
 func strike(pos):
-	var projectile = scene_projectile.instance()
-	get_parent().add_child(projectile)
-	projectile.position = position
-	projectile.velocity = projectile.speed * Vector2(pos - position).normalized()
-	projectile.late_ready()
+	var projectile = Projectile.new("", "", get_parent(), true, 200,
+		Vector2(pos - position).normalized(), position)
+	pass
 
 func get_target():
 	return _target
@@ -101,11 +97,3 @@ func get_jobs():
 			i -= 1
 		i += 1
 	return jobs
-
-func _draw():
-	if get_state() == STATE.job:
-		z_index += 10
-		var pos = get_jobs()[0].transform.origin
-		var points = PoolVector2Array([pos + Vector2(5, 20), pos + Vector2(-5, 20), pos + Vector2(0, -15)])
-		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
-		z_index -= 10
