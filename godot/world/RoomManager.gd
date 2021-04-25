@@ -81,7 +81,7 @@ func instance_object(info):
 	if object == RoomWeapon:
 		return RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:
-		return Enemy.new(info["id"])
+		return Enemy.new(info["id"], info["name"], info["health"], info["sense_radius"], info["attack_radius"])
 	if object == RoomPortal:
 		if info["id"] == "o:room_entrance":
 			return RoomPortal.new(info["id"], info["name"], -1)
