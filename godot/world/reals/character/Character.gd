@@ -82,7 +82,7 @@ func perform_job():
 		set_state(STATE.idle)
 	
 func strike(pos):
-	var projectile = Projectile.new("", "", get_parent(), true, 200,
+	var projectile = Projectile.new("", "", "Bullet", get_parent(),
 		Vector2(pos - position).normalized(), position)
 	pass
 
