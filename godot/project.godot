@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/character/Character.gd"
 }, {
-"base": "Node",
-"class": "Chunk",
-"language": "GDScript",
-"path": "res://chunks (deprecated)/Chunk.gd"
-}, {
 "base": "Item",
 "class": "Food",
 "language": "GDScript",
@@ -81,7 +76,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Character": "",
-"Chunk": "",
 "Food": "",
 "God": "",
 "Inventory": "",

@@ -68,3 +68,12 @@ func get_monsters():
 		if object.monster:
 			monsters.append(object)
 	return monsters
+
+func current():
+	return _rooms[_index]
+
+func get_width():
+	return current().get_width() * TILE_SIZE
+
+func get_height():
+	return current().get_height() * TILE_SIZE
