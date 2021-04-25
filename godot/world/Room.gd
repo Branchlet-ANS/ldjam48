@@ -31,19 +31,20 @@ enum TILE {
 	sand,
 }
 
-func register_real(id, sprite, corruption, object): # temp
+func register_real(id, sprite, corruption, interactable, object): # temp
 	return {
 		"id": id,
 		"sprite": sprite,
 		"corruption": corruption,
-		"object": object
+		"interactable": interactable,
+		"object": object,
 	}
 
 var objects_json =  {
-	"o:room_entrance": register_real("o:room_entrance", "programmer_bed.png", 0, Real),
-	"o:room_exit": register_real("o:room_exit", "programmer_campfire.png", 0, Real),
-	"o:tree": register_real("o:tree", "programmer_spike.png", 0, StaticReal),
-	"o:berry": register_real("o:berry", "items/wangu.png", 0, Item),
+	"o:room_entrance": register_real("o:room_entrance", "programmer_bed.png", 0, true, Real),
+	"o:room_exit": register_real("o:room_exit", "programmer_campfire.png", 0, true, Real),
+	"o:tree": register_real("o:tree", "programmer_spike.png", 0, false, StaticReal),
+	"o:berry": register_real("o:berry", "items/wangu.png", 0, false, Item),
 }
 
 func basic_room(): # temp

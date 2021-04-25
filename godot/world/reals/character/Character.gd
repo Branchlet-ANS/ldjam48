@@ -70,8 +70,7 @@ func set_state(state):
 		_target = transform.origin
 	elif state == STATE.job:
 		job_timer = 100
-	update()
-
+		
 func set_target(target):
 	_target = target
 	set_state(STATE.target)
@@ -79,10 +78,10 @@ func set_target(target):
 func perform_job():
 	job_timer -= 1
 	if job_timer == 0:
-		get_jobs()[0].queue_free()
+		get_jobs()[0].interact(self)
 		get_jobs().pop_front()
-	update()
-
+		set_state(STATE.idle)
+	
 func strike(pos):
 	var projectile = scene_projectile.instance()
 	get_parent().add_child(projectile)
@@ -101,11 +100,3 @@ func get_jobs():
 			i -= 1
 		i += 1
 	return jobs
-
-func _draw():
-	if get_state() == STATE.job:
-		z_index += 10
-		var pos = get_jobs()[0].transform.origin
-		var points = PoolVector2Array([pos + Vector2(5, 20), pos + Vector2(-5, 20), pos + Vector2(0, -15)])
-		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
-		z_index -= 10
