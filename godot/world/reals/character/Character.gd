@@ -24,6 +24,11 @@ func _ready():
 	sfx_step.set_stereo(true)
 
 	step_dist *= rand_range(0.8, 1.2)
+	
+	player_hurt.set_stream(sfx_hurt)
+	sfx_hurt.set_stereo(true)
+	player_dead.set_stream(sfx_dead)
+	sfx_dead.set_stereo(true)
 
 func _process(_delta):
 	if((position - step_pos).length() > 10):

@@ -45,12 +45,8 @@ func _init(id : String, name: String = "").(id, name):
 func _ready():
 	player_dead = AudioStreamPlayer2D.new()
 	add_child(player_dead)
-	player_dead.set_stream(sfx_dead)
-	sfx_dead.set_stereo(true)
 	player_hurt = AudioStreamPlayer2D.new()
 	add_child(player_hurt)
-	player_hurt.set_stream(sfx_hurt)
-	sfx_hurt.set_stereo(true)
 
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
@@ -173,6 +169,9 @@ func add_health(amount):
 		_health = 100.0
 	if(amount < 0):
 		player_hurt.play()
+		print(sfx_hurt)
+	if(_health <= 0):
+		player_dead.play()
 
 
 func _on_Area2D_body_entered(body):
