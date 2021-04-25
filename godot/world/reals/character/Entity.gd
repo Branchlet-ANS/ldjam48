@@ -139,7 +139,13 @@ func add_health(amount):
 		_health = 100.0
 	if(amount < 0):
 		player_hurt.play()
+		
 	if _health <= 0:
 		player_dead.play()
-		# delete fella
-		pass
+		print(get_parent())
+		
+		get_parent().get_parent().get_parent().characters.erase(self)
+		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
+			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
+		get_parent().remove_child(self)
+		queue_free()
