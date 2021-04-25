@@ -20,6 +20,9 @@ func _unhandled_input(event):
 				var select_pos_end = mouse_pos
 				select_pressed = false
 				update()
+				var closest_character = get_closest(get_parent().characters, mouse_pos)
+				if (closest_character.get_position() - mouse_pos).length() < 16:
+					selected_characters = [closest_character]
 				for character in get_parent().characters:
 					if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 							min(select_pos_start.y, select_pos_end.y),
