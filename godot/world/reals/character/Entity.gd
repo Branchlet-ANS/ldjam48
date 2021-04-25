@@ -23,6 +23,7 @@ var attack_moving : bool = false
 var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
+var _resistance : float = 1.0
 var melee_in_range : Array = []
 var _power = 2
 
@@ -93,6 +94,10 @@ func _physics_process(delta):
 			else:
 				set_state(STATE.idle)
 	if get_state() == STATE.attack:
+		if !(is_instance_valid(attack_target)):
+			attack_target = null
+			set_state(STATE.idle)
+			return
 		var margin = 10
 		if(attack_moving):
 			margin = 5
@@ -163,7 +168,7 @@ func get_target():
 
 func add_health(amount):
 	if (_health + amount) <= 100.0:
-		_health += amount
+		_health += amount * 1.0/_resistance
 	else:
 		_health = 100.0
 	if(amount < 0):
@@ -171,7 +176,8 @@ func add_health(amount):
 
 
 func _on_Area2D_body_entered(body):
-	if body is Projectile:
-		if (!body.get_owner() == self):
-			add_health(-body.get_damage())
-			body.call_deferred("free")
+	if	is_instance_valid(body):
+		if body is Projectile:
+			if (!body.get_owner() == self):
+				add_health(-body.get_damage())
+				body.call_deferred("free")
