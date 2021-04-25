@@ -5,6 +5,7 @@ class_name Character
 var inventory : Inventory = Inventory.new()
 
 var player_step : AudioStreamPlayer2D
+var sfx_step = preload("res://Assets/SFX/walk1.wav")
 var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 
@@ -17,9 +18,8 @@ func _ready():
 
 	player_step = AudioStreamPlayer2D.new()
 	add_child(player_step)
-	var sfx = load("res://Assets/SFX/walk1.wav")
-	player_step.set_stream(sfx)
-	player_step.play()
+	player_step.set_stream(sfx_step)
+	
 	step_dist *= rand_range(0.8, 1.2)
 
 func _process(_delta):

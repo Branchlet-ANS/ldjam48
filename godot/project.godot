@@ -125,6 +125,10 @@ config/icon="res://icon.png"
 window/size/width=1600
 window/size/height=800
 
+[global]
+
+"mix rate"=false
+
 [importer_defaults]
 
 texture={

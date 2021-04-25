@@ -7,6 +7,18 @@ var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
 var character_space = 15
 var clickable = null
+var player_selected1 : AudioStreamPlayer2D
+var sfx_selected1 = preload("res://Assets/SFX/selected1.wav")
+var player_selected2 : AudioStreamPlayer2D
+var sfx_selected2 = preload("res://Assets/SFX/selected2.wav")
+
+func _ready():
+	player_selected1 = AudioStreamPlayer2D.new()
+	add_child(player_selected1)
+	player_selected1.set_stream(sfx_selected1)
+	player_selected2 = AudioStreamPlayer2D.new()
+	add_child(player_selected2)
+	player_selected2.set_stream(sfx_selected2)
 
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()
@@ -22,6 +34,7 @@ func _unhandled_input(event):
 					var closest_character = get_closest(get_parent().characters, mouse_pos)
 					if (closest_character.get_position() - mouse_pos).length() < 16:
 						selected_characters = [closest_character]
+						player_selected1.play()
 						return
 					var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
 					if (closest_monster.get_position() - mouse_pos).length() < 16:
@@ -32,7 +45,7 @@ func _unhandled_input(event):
 						interact(closest_interactable)
 						return
 					var n = selected_characters.size()
-					
+
 					get_parent().grid_entities(selected_characters, mouse_pos, character_space)
 #					for i in range(n):
 #						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
@@ -42,6 +55,7 @@ func _unhandled_input(event):
 #						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
 #						(float(i) / float(floor(sqrt(n))) -
 #						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+					player_selected1.play()
 				else:
 					var new_selection = []
 					for character in get_parent().characters:
@@ -53,6 +67,10 @@ func _unhandled_input(event):
 							new_selection.append(character)
 					if new_selection.size() > 0:
 						selected_characters = new_selection
+					if(new_selection.size() >= 2):
+						player_selected2.play()
+					elif(new_selection.size() >= 1):
+						player_selected1.play()
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
 		elif(event.get_button_index() == 3):
@@ -94,7 +112,7 @@ func _draw():
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
-		
+
 	for character in get_parent().characters:
 		if !is_instance_valid(character):
 			get_parent().characters.erase(character)
@@ -103,8 +121,8 @@ func _draw():
 			var bg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(10, -12), pos + Vector2(10, -14)])
 			var fg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(-10+character._health/5, -12), pos + Vector2(-10+character._health/5, -14)])
 			draw_colored_polygon(bg_points, Color.darkred)
-			draw_colored_polygon(fg_points, Color.red)	
-		
+			draw_colored_polygon(fg_points, Color.red)
+
 	for character in selected_characters:
 		if !is_instance_valid(character):
 			selected_characters.erase(character)

@@ -22,10 +22,22 @@ var attack_moving : bool = false
 var weapon : Weapon = null
 var _health : float = 100.0
 
+var player_dead : AudioStreamPlayer2D
+var sfx_dead = preload("res://Assets/SFX/dead.wav")
+var player_hurt : AudioStreamPlayer2D
+var sfx_hurt = preload("res://Assets/SFX/hurt.wav")
+
 func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
+	player_dead = AudioStreamPlayer2D.new()
+	add_child(player_dead)
+	player_dead.set_stream(sfx_dead)
+	player_hurt = AudioStreamPlayer2D.new()
+	add_child(player_hurt)
+	player_hurt.set_stream(sfx_hurt)
+	
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
@@ -125,7 +137,9 @@ func add_health(amount):
 		_health += amount
 	else:
 		_health = 100.0
-
+	if(amount < 0):
+		player_hurt.play()
 	if _health <= 0:
+		player_dead.play()
 		# delete fella
 		pass
