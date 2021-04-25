@@ -7,6 +7,7 @@ onready var camera = $"../Camera2D"
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
+var character_space = 15
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -31,8 +32,14 @@ func _unhandled_input(event):
 				if (interactable.transform.origin - camera.mouse_world_position()).length() < 16:
 					interact(interactable)
 					return
-			for character in selected_characters:
-				character.set_target(camera.mouse_world_position())
+			var n = selected_characters.size()
+			for i in range(n):
+				var wpos = camera.mouse_world_position() # Plasserer valgte karakterers i et kvadrat rundt musepekeren
+				selected_characters[i].set_target(camera.mouse_world_position() +
+				(fmod(i, float(floor(sqrt(n)))) -
+				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+				(float(i) / float(floor(sqrt(n))) -
+				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 
 func interact(interactable):
 	for character in selected_characters:

@@ -15,6 +15,15 @@ func _ready():
 	
 	add_character(100, 100)
 	add_character(-100, -100)
+	add_character(100, 100)
+	add_character(-100, -100)
+	add_character(100, 100)
+	add_character(-100, -100)
+	add_character(100, 100)
+	add_character(-100, -100)
+	add_character(100, 100)
+	add_character(-100, -100)
+	add_character(100, 100)
 	
 #	var interactable = scene_interactable.instance()
 #	add_child(interactable)
