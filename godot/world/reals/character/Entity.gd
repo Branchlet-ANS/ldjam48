@@ -94,6 +94,10 @@ func _physics_process(delta):
 			else:
 				set_state(STATE.idle)
 	if get_state() == STATE.attack:
+		if !(is_instance_valid(attack_target)):
+			attack_target = null
+			set_state(STATE.idle)
+			return
 		var margin = 10
 		if(attack_moving):
 			margin = 5
