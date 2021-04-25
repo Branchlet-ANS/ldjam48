@@ -18,6 +18,7 @@ var jobs : Array = []
 var job_timer : int = 0
 var interact_area : Area2D
 var contact_timer : int = 0
+var contact_target : KinematicReal
 var weapon : int = 0
 
 func _init(id : String, name: String = "").(id, name):
@@ -43,7 +44,7 @@ func _process(_delta):
 	if get_state() == STATE.job:
 		perform_job()
 	if get_state() == STATE.contact:
-		contact_cycle()
+		contact_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
@@ -86,12 +87,13 @@ func perform_job():
 		get_jobs().pop_front()
 		set_state(STATE.idle)
 
-func contact_cycle():
-	job_timer -= 1
-	if job_timer == 0:
-		get_jobs()[0].interact(self)
-		get_jobs().pop_front()
+func contact_cycle(delta):
+	if(!is_instance_valid(contact_target) || contact_target.position == null):
 		set_state(STATE.idle)
+	contact_timer += delta
+	var weapon_max_timer = 3
+	if(contact_timer >= weapon_max_timer):
+		strike(contact_target.position)
 	
 func strike(pos):
 	var projectile = Projectile.new("", "", "Bullet", get_parent(),
