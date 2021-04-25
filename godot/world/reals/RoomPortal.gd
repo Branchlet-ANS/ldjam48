@@ -16,4 +16,5 @@ func interact(character):
 	if _operation == 1:
 		get_parent().get_parent().next()
 	else:
-		get_parent().get_parent().previous()
+		#get_parent().get_parent().previous()
+		pass

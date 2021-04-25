@@ -10,6 +10,16 @@ var camera : MainCamera
 var character_space = 15
 var characters : Array = []
 
+
+static func grid_entities(entities, around_position : Vector2, character_space):
+	var n = float(entities.size())
+	for i in range(n):
+		entities[i].set_target(around_position +
+		(fmod(i, float(floor(sqrt(n)))) -
+		fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+		(float(i) / float(floor(sqrt(n))) -
+		float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+
 func _ready():
 	randomize() # butterfly effect
 	camera = MainCamera.new()
@@ -27,18 +37,10 @@ func _ready():
 
 	for i in range(10):
 		add_character(0, 0)
+	roomManager.rebuild()
 	
-	for object in roomManager.room_container.get_children():
-		if object.get_id() == "o:room_entrance":
-			var n = float(characters.size())
-			for i in range(n):
-				characters[i].set_position(object.get_position())
-				characters[i].set_target(object.get_position() +
-				(fmod(i, float(floor(sqrt(n)))) -
-				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-				(float(i) / float(floor(sqrt(n))) -
-				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
-			break
+	
+
 
 	god = God.new()
 	add_child(god)
