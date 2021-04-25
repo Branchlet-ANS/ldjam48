@@ -34,7 +34,7 @@ func rebuild():
 	var tiles = room.get_tiles()
 	for key in reals:
 		var real = reals[key]
-		var instance = instance_object(real["object"], real["id"])
+		var instance = instance_object(real)
 		room_container.add_child(instance)
 		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
 		instance.set_sprite(real["sprite"])
@@ -43,13 +43,16 @@ func rebuild():
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
 
-func instance_object(object, id):
+func instance_object(info):
+	var object = info["object"]
 	if object == Real:
-		return Real.new(id)
+		return Real.new(info["id"])
 	if object == StaticReal:
-		return StaticReal.new(id)
+		return StaticReal.new(info["id"])
 	if object == Item:
-		return Item.new(id, "Name")
+		return Item.new(info["id"], info["name"])
+	if object == FoodPlant:
+		return FoodPlant.new(info["id"], info["name"], info["value"])
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
