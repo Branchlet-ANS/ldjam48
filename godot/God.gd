@@ -62,7 +62,7 @@ func _unhandled_input(event):
 			clickable = null
 		update()
 
-func get_closest(objects, position):
+static func get_closest(objects, position):
 	assert(objects.size() >= 1)
 	var closest = objects[0]
 	for object in objects:
