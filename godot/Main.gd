@@ -2,26 +2,29 @@ extends Node
 
 class_name Main
 
-onready var scene_gatherable = preload("res://Gatherable.tscn")
-onready var scene_character = preload("res://Character.tscn")
-onready var scene_interactable = preload("res://InteractableTest.tscn")
+export var scene_gatherable : Resource
+export var scene_character : Resource
+export var scene_interactable : Resource
 
 onready var god : God = $God
-
+onready var roomManager : RoomManager = $RoomManager
 
 var characters : Array = []
 var interactables: Array = []
 
 func _ready():
-#	var item = scene_gatherable.instance()
-#	item.transform.origin = Vector2(100, 100)
-#	add_child(item)
+	
 	add_character(100, 100)
 	add_character(-100, -100)
-	var interactable = scene_interactable.instance()
-	add_child(interactable)
-	interactables.append(interactable)
-
+	
+#	var interactable = scene_interactable.instance()
+#	add_child(interactable)
+#	interactables.append(interactable)
+	var room = Room.new(16, 16)
+	room.basic_room()
+	roomManager.add(room)
+	roomManager.select(0)
+	
 func add_character(x : int, y : int):
 	var character = scene_character.instance()
 	character.transform.origin = Vector2(x, y)

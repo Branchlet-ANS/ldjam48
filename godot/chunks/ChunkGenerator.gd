@@ -1,7 +1,8 @@
 extends Node2D
 
-onready var scene_chunk = preload("res://ChunkIllustration.tscn")
-onready var scene_gatherable = preload("res://Gatherable.tscn")
+export var scene_chunk_illustration : Resource
+export var scene_gatherable : Resource
+
 const MAP_WIDTH = 84
 const MAX_BRANCHES = 1
 const CHUNK_SIZE = 8
@@ -21,7 +22,7 @@ func _ready():
 			var pos = Vector2(i, j)
 			var traversable = map[pos]._traversable
 			
-			var tiles = scene_chunk.instance()
+			var tiles = scene_chunk_illustration.instance()
 			add_child(tiles)
 			tiles.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
 			

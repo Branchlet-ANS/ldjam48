@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 class_name Character
 
-onready var scene_item = preload("res://Item.gd")
+export var scene_item : Resource
 onready var collision_shape = $"CollisionShape2D"
 
 enum STATE {
@@ -11,7 +11,7 @@ enum STATE {
 	job
 }
 
-var inventory : Inventory = Inventory.new()
+var inventory : Inventory
 var _state : int
 var velocity : Vector2 = Vector2(0, 0)
 var _target : Vector2 = Vector2(0, 0)
@@ -20,7 +20,7 @@ var jobs : Array = []
 var job_timer : int = 0
 
 func _init():
-	pass
+	 inventory = Inventory.new()
 
 func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
