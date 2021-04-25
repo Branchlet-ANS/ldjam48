@@ -28,8 +28,8 @@ func interact(character):
 		player_food.play()
 		var weapon_old = character.weapon
 		character.weapon = character.weapon_list[_weapon_name]
-		set_weapon_name(weapon_old)
-		set_sprite("items/" + get_weapon_name())
+		set_weapon_name(weapon_old.get_weapon_name())
+		set_sprite("items/" + get_weapon_name().to_lower() + ".png")
 	else:
 		character.weapon = character.weapon_list[_weapon_name]
 		get_parent().remove_child(self)

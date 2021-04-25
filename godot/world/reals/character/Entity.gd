@@ -132,7 +132,7 @@ func set_target(target):
 	set_state(STATE.target)
 
 func perform_job():
-	if job == null:
+	if job == null or !is_instance_valid(job):
 		set_state(STATE.idle)
 		return
 	job_timer -= 1
