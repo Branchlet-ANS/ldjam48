@@ -35,26 +35,26 @@ enum TILE {
 
 
 func register_real(id, _name, sprite, corruption, interactable, object, subtype="", chance=1): # temp
-
 	return {
 		"id": id,
 		"name": _name,
 		"sprite": sprite,
 		"corruption": corruption,
+		"interactable": interactable,
 		"object": object,
 		"subtype": subtype,
 		"chance": chance
 	}
 
 var objects_json =  [
-	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, Real),
-	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, Real),
-	register_real("o:tree", "Tree", "programmer_spike.png", 0, StaticReal),
-	register_real("o:wangu_berry", "Wangu", "items/wangu.png", 0, Item, "berry"),
-	register_real("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, Item, "berry", 0.7),
-	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, Item, "berry", 0.6),
-	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, Item, "berry", 0.2),
-	register_real("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, Item, "berry", 0.3)
+	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
+	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
+	register_real("o:tree", "Tree", "programmer_spike.png", 0, false, StaticReal),
+	register_real("o:wangu_berry", "Wangu", "items/wangu.png", 0, false, Item, "berry"),
+	register_real("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, false, Item, "berry", 0.7),
+	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.6),
+	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.2),
+	register_real("o:penis_berry", "Penis Berry", "items/penis_berry.png", 3, false, Item, "berry", 0.3)
 ]
 
 func get_objects_by(attribute, term):

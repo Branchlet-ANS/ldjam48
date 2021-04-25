@@ -2,7 +2,7 @@ extends Node
 
 class_name Main
 
-onready var god : God = $God
+onready var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
