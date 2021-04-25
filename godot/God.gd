@@ -47,17 +47,11 @@ func _unhandled_input(event):
 					if (closest_interactable.get_position() - mouse_pos).length() < 16:
 						interact(closest_interactable)
 						return
-					var n = selected_characters.size()
-
+					
+					for character in selected_characters:
+						character.set_job(null)
+						character.set_state(character.STATE.idle)
 					get_parent().grid_entities(selected_characters, mouse_pos, character_space)
-#					for i in range(n):
-#						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
-#						selected_characters[i].set_job(null)
-#						selected_characters[i].set_target(mouse_pos +
-#						(fmod(i, float(floor(sqrt(n)))) -
-#						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-#						(float(i) / float(floor(sqrt(n))) -
-#						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 					player_selected1.play()
 				else:
 					var new_selection = []

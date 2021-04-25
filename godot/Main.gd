@@ -41,7 +41,7 @@ func _ready():
 		roomManager.add(_room)
 	roomManager.select(0)
 
-	for i in range(10):
+	for i in range(9):
 		add_character(0, 0)
 	roomManager.rebuild()
 	

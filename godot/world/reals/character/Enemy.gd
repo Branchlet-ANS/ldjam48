@@ -58,6 +58,6 @@ func add_health(var amount):
 		player_hurt.set_stream(sfx_hurt)
 		sfx_hurt.set_stereo(true)
 	if _health <= 0:
-		get_parent().remove_child(self)
+		#get_parent().remove_child(self)
 		queue_free()
 	
