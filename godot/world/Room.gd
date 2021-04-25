@@ -62,7 +62,13 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	return dict
 	
 func register_enemy(id, _name, sprite, corruption, health, sense_radius, attack_radius):
-	pass
+	var dict = register_real(id, _name, sprite, corruption, false, Enemy)
+	dict["health"] = health
+	dict["sense_radius"] = sense_radius
+	dict["attack_radius"] = attack_radius
+	return dict
+	
+	
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
@@ -74,7 +80,7 @@ var objects_json =  [
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
-	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10000, 64, 8)
 ]
 
 func get_objects_by(attribute, term):
