@@ -49,7 +49,10 @@ func fire(direction, position):
 func _physics_process(delta):
 	if(!_fired):
 		return
+	var velocity_prev = _velocity
 	_velocity = move_and_slide(_velocity)
+	if velocity_prev != _velocity:
+		_velocity = Vector2.ZERO
 	_timer += delta
 	if _timer > 3:
 		queue_free()

@@ -18,7 +18,7 @@ func _unhandled_input(event):
 			else:
 				select_pressed = false
 				var select_pos_end = mouse_pos
-				if (select_pos_end - select_pos_start).length() < 8:
+				if (select_pos_end - select_pos_start).length() < 12:
 					var closest_character = get_closest(get_parent().characters, mouse_pos)
 					if (closest_character.get_position() - mouse_pos).length() < 16:
 						selected_characters = [closest_character]
@@ -34,20 +34,23 @@ func _unhandled_input(event):
 					var n = selected_characters.size()
 					for i in range(n):
 						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+						selected_characters[i].set_job(null)
 						selected_characters[i].set_target(mouse_pos +
 						(fmod(i, float(floor(sqrt(n)))) -
 						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
 						(float(i) / float(floor(sqrt(n))) -
 						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 				else:
-					selected_characters = []
+					var new_selection = []
 					for character in get_parent().characters:
 						if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 								min(select_pos_start.y, select_pos_end.y),
 								max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
-							selected_characters.append(character)
+							new_selection.append(character)
+					if new_selection.size() > 0:
+						selected_characters = new_selection
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
 		elif(event.get_button_index() == 3):
@@ -62,7 +65,7 @@ func _unhandled_input(event):
 			clickable = null
 		update()
 
-func get_closest(objects, position):
+static func get_closest(objects, position):
 	assert(objects.size() >= 1)
 	var closest = objects[0]
 	for object in objects:

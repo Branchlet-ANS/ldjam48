@@ -27,7 +27,7 @@ func _ready():
 
 	for i in range(10):
 		add_character(0, 0)
-
+	
 	for object in roomManager.room_container.get_children():
 		if object.get_id() == "o:room_entrance":
 			var n = float(characters.size())
@@ -51,14 +51,18 @@ func add_character(x : int, y : int):
 	characters.append(character)
 
 func _process(_delta):
-	var target = Vector2.ZERO
-	var max_dis = 0
-	for character in characters:
-		target += character.get_position()
-		for other in characters:
-			max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
-	target /= characters.size()
-	camera.target = target
+	if god.selected_characters.size() > 0:
+		var target = Vector2.ZERO
+		var max_dis = 0
+		for character in god.selected_characters:
+			target += character.get_position()
+			for other in characters:
+				max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
+		target /= god.selected_characters.size()
+		camera.target = target
+	elif characters.size() > 0:
+		var character = God.get_closest(characters, camera.get_position())
+		camera.target = character.get_position()
 	#var scale = sqrt(clamp(max_dis, 150, min(roomManager.get_width(), roomManager.get_height()))) / 50
 	#camera.zoom = Vector2(scale, scale)
 	
