@@ -11,7 +11,7 @@ var pos = Vector2(0, 0)
 var target = Vector2(0, 0)
 
 func _ready():
-	zoom = Vector2(0.25, 0.25)
+	zoom = Vector2(1, 1)
 
 func _process(delta):
 #	if Input.is_action_pressed("ui_left"):

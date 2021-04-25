@@ -126,37 +126,73 @@ func walls():
 
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
-	
+	var result = []
 	var w = _width
 	var h = _height
+	var x0 = -w/2
+	var y0 = -h/2
+	var side = randi() % 4
+	for i in range(2):
+		var rx = 1 + randi() % (w - 2)
+		var ry = 1 + randi() % (h - 2)
+		var sx = x0 + [w - 1, rx, 0, rx][side]
+		var sy = y0 + [ry, 0, ry, h - 1][side]
+		var x1 = sx + [-1, 0, 1, 0][side]
+		var y1 = sy + [0, 1, 0, -1][side]
+		place_tile(sx, sy, [TILE.sand, TILE.water][i])
+		place_real(x1, y1, get_object(["o:room_entrance", "o:room_entrance"][i]))
+		side = (side + 2) % 4
+		result.append(Vector2(x1, y1))
+	return result
 	
-	var bottom = randi() % 2
-	var right = randi() % 2
+func two_snakes(start: Vector2, end: Vector2):
+	var w = _width
+	var h = _height
+	var x0 = -w/2
+	var y0 = -h/2
+	for x in range(x0, x0 + w):
+		for y in range(y0, y0 + h):
+			place_tile(x, y, TILE.jungle)
+			
+	var snake_0_positions = []
+	var snake_1_positions = []
+	var snake_0 = start
+	var snake_1 = end
+	var snake_0_dir = start.direction_to(end)
+	var snake_1_dir = end.direction_to(start)
 	
-	var x = randi() % w + (right) * (w - 1)
-	var y = randi() % h + (bottom) * (h - 1)
+	while true:
+		var snake_0_int = Vector2(int(snake_0.x), int(snake_0.y))
+		var snake_1_int = Vector2(int(snake_1.x), int(snake_1.y))
+		snake_0_positions.append(snake_0_int)
+		snake_1_positions.append(snake_1_int)
+		
+		if snake_0_int in snake_1_positions \
+		or snake_1_int in snake_0_positions:
+			break
+		
+		snake_0_dir = snake_0_dir.rotated(fmod(randf(), PI/8) - PI/16)
+		snake_1_dir = snake_1_dir.rotated(fmod(randf(), PI/8) - PI/16)
+		
+		snake_0 = Vector2(clamp((snake_0.x + snake_0_dir.x), x0, x0 + w), clamp((snake_0.y + snake_0_dir.y), y0, y0 + h))
+		snake_1 = Vector2(clamp((snake_1.x + snake_1_dir.x), x0, x0 + w), clamp((snake_1.y + snake_1_dir.y), y0, y0 + h))
+		
+	var tiles = snake_0_positions + snake_1_positions
 	
-	place_tile(x, y, TILE.water)
+	for tile in tiles:
+		var s = 4 + randi() % 6
+		for x in range(tile.x - s/2, tile.x + s/2):
+			for y in range(tile.y - s/2, tile.y + s/2):
+				place_tile(x, y, TILE.grass)
 	
-	place_real(x + 2 - 4 * right, y + 2 - 4 * bottom, get_object("o:room_entrance"))
+	place_tile(start.x, start.y, TILE.sand)
+	place_tile(end.x, end.y, TILE.water)
 	
-	place_real(w/2+1, h/2+1, get_object("o:room_exit"))
-	
-#	var r = randi() % 4
-#	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
-#	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_entrance"))
-#	control_block_positions.remove(r)
-#	tile_positions.remove(r)
-#	r = randi() % 3
-#	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
-#	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_exit"))
-#	control_block_positions.remove(r)
-#	tile_positions.remove(r)
-
 func foraging_room():
 	walls()
+	var start_end = proc_room_controls()
+	two_snakes(start_end[0], start_end[1])
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
-	proc_room_controls()
 
 func bland_room():
 	walls()
