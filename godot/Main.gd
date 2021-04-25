@@ -30,7 +30,7 @@ func _ready():
 	roomManager.set_tileset(load("res://world/tileset.tres"))
 	var _room
 	for i in range(32):
-		_room = Room.new(randi() % 32 + 32, randi() % 46 + 32, i)
+		_room = Room.new(16, 16)#randi() % 32 + 32, randi() % 46 + 32, i)
 		var r = randi() % 3
 		if r == 0:
 			_room.monster_room()
@@ -71,10 +71,13 @@ func _process(_delta):
 	var mouse_position = (get_viewport().get_mouse_position() - get_viewport().size/2) * camera.zoom
 	
 	target += mouse_position / get_viewport().size.normalized() * 0.2
-	var view_size = get_viewport().size * camera.zoom
-	var tx = clamp(target.x, - roomManager.get_width() / 2 + view_size.x / 2 - 16, + roomManager.get_width() / 2 - view_size.x / 2 + 16)
-	var ty = clamp(target.y, - roomManager.get_height() / 2 + view_size.y / 2 - 16, + roomManager.get_height() / 2 - view_size.y / 2 + 16)
-	camera.target = Vector2(tx, ty)
+	
+	if (roomManager.get_width() > get_viewport().size.x and roomManager.get_height() > get_viewport().size.y):
+		var view_size = get_viewport().size * camera.zoom
+		var tx = clamp(target.x, - roomManager.get_width() / 2 + view_size.x / 2 - 16, + roomManager.get_width() / 2 - view_size.x / 2 + 16)
+		var ty = clamp(target.y, - roomManager.get_height() / 2 + view_size.y / 2 - 16, + roomManager.get_height() / 2 - view_size.y / 2 + 16)
+		target = Vector2(tx, ty)
+	camera.target = target
 	#var scale = sqrt(clamp(max_dis, 150, min(roomManager.get_width(), roomManager.get_height()))) / 50
 	#camera.zoom = Vector2(scale, scale)
 	

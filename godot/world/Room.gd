@@ -110,38 +110,34 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
-	#place_real(x0 + 12, y0 + 8, get_object("o:tree"))
-	#place_real(x0 + 14, y0 + 8, get_object("o:tree"))
-
-
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
 	
-	var tile_positions : Array = [
-		Vector2(0, -_height/2), 
-		Vector2(0, _height/2-1), 
-		Vector2(-_width/2, 0), 
-		Vector2(_width/2-1, 0)
-		]
+	var w = _width
+	var h = _height
 	
-	var control_block_positions = [
-		Vector2(0, -_height/2+2), 
-		Vector2(0, _height/2-3), 
-		Vector2(-_width/2+2, 0), 
-		Vector2(_width/2-3, 0)
-	]
+	var bottom = randi() % 2
+	var right = randi() % 2
 	
-	var r = randi() % 4
-	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
-	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_entrance"))
-	control_block_positions.remove(r)
-	tile_positions.remove(r)
-	r = randi() % 3
-	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
-	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_exit"))
-	control_block_positions.remove(r)
-	tile_positions.remove(r)
+	var x = randi() % w + (right) * (w - 1)
+	var y = randi() % h + (bottom) * (h - 1)
+	
+	place_tile(x, y, TILE.water)
+	
+	place_real(x + 2 - 4 * right, y + 2 - 4 * bottom, get_object("o:room_entrance"))
+	
+	place_real(w/2+1, h/2+1, get_object("o:room_exit"))
+	
+#	var r = randi() % 4
+#	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
+#	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_entrance"))
+#	control_block_positions.remove(r)
+#	tile_positions.remove(r)
+#	r = randi() % 3
+#	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
+#	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_exit"))
+#	control_block_positions.remove(r)
+#	tile_positions.remove(r)
 
 func foraging_room():
 	walls()
@@ -155,7 +151,6 @@ func bland_room():
 	
 func monster_room():
 	bland_room()
-	print("monstuour")
 
 func populate_room(collection : Array, chance : float):
 	for i in range(-_width/2, _width/2):
