@@ -48,7 +48,7 @@ func _ready():
 	collision_mask = (1 << 0) + (1 << 2)
 
 func _physics_process(delta):
-	move_and_slide(velocity)
+	velocity = move_and_slide(velocity)
 	timer += delta
 	if timer > 10:
 		queue_free()
