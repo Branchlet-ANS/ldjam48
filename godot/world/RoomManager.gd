@@ -15,7 +15,6 @@ func _ready():
 	tile_map = TileMap.new()
 	add_child(tile_map)
 	tile_map.set_cell_size(Vector2(TILE_SIZE, TILE_SIZE))
-	tile_map.set_position(Vector2(-0.5, -0.5))
 	room_container = YSort.new()
 	add_child(room_container)
 
