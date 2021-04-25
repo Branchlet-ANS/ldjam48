@@ -19,6 +19,7 @@ func _ready():
 	player_step = AudioStreamPlayer2D.new()
 	add_child(player_step)
 	player_step.set_stream(sfx_step)
+	sfx_step.set_stereo(true)
 	
 	step_dist *= rand_range(0.8, 1.2)
 

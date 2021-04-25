@@ -34,9 +34,11 @@ func _ready():
 	player_dead = AudioStreamPlayer2D.new()
 	add_child(player_dead)
 	player_dead.set_stream(sfx_dead)
+	sfx_dead.set_stereo(true)
 	player_hurt = AudioStreamPlayer2D.new()
 	add_child(player_hurt)
 	player_hurt.set_stream(sfx_hurt)
+	sfx_hurt.set_stereo(true)
 	
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
