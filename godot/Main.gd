@@ -3,6 +3,7 @@ extends Node
 class_name Main
 
 export var scene_character : Resource
+export var scene_projectile : Resource
 export var scene_interactable : Resource
 
 onready var god : God = $God
@@ -12,18 +13,8 @@ var characters : Array = []
 var interactables: Array = []
 
 func _ready():
-	
-	add_character(100, 100)
-	add_character(-100, -100)
-	add_character(100, 100)
-	add_character(-100, -100)
-	add_character(100, 100)
-	add_character(-100, -100)
-	add_character(100, 100)
-	add_character(-100, -100)
-	add_character(100, 100)
-	add_character(-100, -100)
-	add_character(100, 100)
+	for i in range(10):
+		add_character(i*100, i*100)
 	
 #	var interactable = scene_interactable.instance()
 #	add_child(interactable)
@@ -40,6 +31,7 @@ func _ready():
 	
 func add_character(x : int, y : int):
 	var character = scene_character.instance()
+	character.scene_projectile = scene_projectile
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
 	add_child(character)

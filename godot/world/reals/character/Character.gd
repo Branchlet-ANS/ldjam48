@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name Character
 
 export var scene_item : Resource
+export var scene_projectile : Resource
 onready var collision_shape = $"CollisionShape2D"
 
 enum STATE {
@@ -20,7 +21,7 @@ var jobs : Array = []
 var job_timer : int = 0
 
 func _init():
-	 inventory = Inventory.new()
+	inventory = Inventory.new()
 
 func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
@@ -70,6 +71,13 @@ func perform_job():
 		get_jobs()[0].queue_free()
 		get_jobs().pop_front()
 	update()
+
+func strike(pos):
+	var projectile = scene_projectile.instance()
+	get_parent().add_child(projectile)
+	projectile.position = position
+	projectile.velocity = projectile.speed * Vector2(pos - position).normalized()
+	projectile.late_ready()
 	
 func get_target():
 	return _target

@@ -40,6 +40,10 @@ func _unhandled_input(event):
 				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
 				(float(i) / float(floor(sqrt(n))) -
 				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+		elif(event.get_button_index() == 3):
+			for character in selected_characters:
+				character.strike(camera.mouse_world_position())
+				
 
 func interact(interactable):
 	for character in selected_characters:
