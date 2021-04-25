@@ -3,11 +3,15 @@ extends Node
 class_name Main
 
 onready var god : God = $God
-onready var roomManager : RoomManager = $RoomManager
+var roomManager : RoomManager
 
 var characters : Array = []
 
 func _ready():
+	roomManager = RoomManager.new()
+	add_child(roomManager)
+	roomManager.set_tileset(load("res://world/tileset.tres"))
+	
 	var _r = Room.new(32, 18)
 	_r.basic_room()
 	roomManager.add(_r)
@@ -34,6 +38,6 @@ func _ready():
 	
 func add_character(x : int, y : int):
 	var character = Character.new("character")
+	roomManager.room_container.add_child(character)
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
-	roomManager.room_container.add_child(character)
