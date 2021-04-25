@@ -64,6 +64,10 @@ func _on_Area2D_body_entered(body):
 func add_job(interactable):
 	get_jobs().append(interactable)
 
+func enter_contact(monster):
+	contact_target = monster
+	set_state(STATE.contact)
+
 func get_state():
 	if _state == STATE.job and get_jobs().size() == 0:
 		set_state(STATE.idle)
@@ -75,7 +79,7 @@ func set_state(state):
 		_target = transform.origin
 	elif state == STATE.job:
 		job_timer = 100
-		
+
 func set_target(target):
 	_target = target
 	set_state(STATE.target)

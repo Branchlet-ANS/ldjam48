@@ -32,14 +32,19 @@ func _unhandled_input(event):
 					if (interactable.get_position() - mouse_pos).length() < 16:
 						interact(interactable)
 						return
-			var n = selected_characters.size()
-			for i in range(n):
-				# Plasserer valgte karakterers i et kvadrat rundt musepekeren
-				selected_characters[i].set_target(mouse_pos +
-				(fmod(i, float(floor(sqrt(n)))) -
-				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-				(float(i) / float(floor(sqrt(n))) -
-				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+			if event.is_pressed():
+				for monster in get_parent().roomManager.get_monsters():
+					if (monster.get_position() - mouse_pos).length() < 16:
+						contact(monster)
+						return
+				var n = selected_characters.size()
+				for i in range(n):
+					# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+					selected_characters[i].set_target(mouse_pos +
+					(fmod(i, float(floor(sqrt(n)))) -
+					fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+					(float(i) / float(floor(sqrt(n))) -
+					float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 		elif(event.get_button_index() == 3):
 			for character in selected_characters:
 				character.strike(mouse_pos)
@@ -47,6 +52,10 @@ func _unhandled_input(event):
 func interact(interactable):
 	for character in selected_characters:
 		character.add_job(interactable)
+		
+func contact(monster):
+	for character in selected_characters:
+		character.enter_contact(monster)
 
 func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
