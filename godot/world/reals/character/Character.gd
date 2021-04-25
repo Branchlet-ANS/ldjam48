@@ -109,7 +109,6 @@ func attack_cycle(delta):
 	if !is_instance_valid(attack_target):
 		set_state(STATE.idle)
 	attack_timer -= delta
-	print(attack_timer)
 	if attack_timer <= 0:
 		strike(attack_target.position)
 		attack_timer = 100
@@ -117,8 +116,6 @@ func attack_cycle(delta):
 func strike(pos):
 	var _projectile = Projectile.new("", "", "Bullet", get_parent(),
 		Vector2(pos - position).normalized(), position)
-	print("SHOOT!")
-	
 
 func get_target():
 	return _target
