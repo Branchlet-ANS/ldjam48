@@ -21,7 +21,7 @@ func _ready():
 	var n_spike = int(float(n)*2)
 	var angle_campfire = rand_range(0, PI)
 	var angle_dif_spikes = 0.4
-	
+
 	for i in range(n_campfire):
 		var campfire = Sprite.new()
 		add_child(campfire)
@@ -49,10 +49,8 @@ func _ready():
 			elif(floor(float(i)/float(n_spike) * float(n_campfire)) == n_campfire-1):
 				if(abs(fmod(angle, 2*PI) - fmod(angle_campfire, 2*PI) - PI) < angle_dif_spikes):
 					spike.queue_free()
-					continue			
+					continue
 			elif(abs(fmod(angle, PI) - fmod(angle_campfire, PI)) < angle_dif_spikes):
 				spike.queue_free()
 				continue
 		spike.position = my_campfire_pos + float(DISTANCE_SPIKE) * (1 + rand_range(-RAND_SPIKE, RAND_SPIKE))* Vector2(sin(angle), cos(angle))
-		
-

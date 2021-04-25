@@ -40,3 +40,16 @@ func add_character(x : int, y : int):
 	roomManager.room_container.add_child(character)
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
+
+func _process(_delta):
+	var target = Vector2.ZERO
+	var max_dis = 0
+	for character in characters:
+		target += character.get_position()
+		for other in characters:
+			max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
+	target /= characters.size()
+	camera.target = target
+	var scale = sqrt(max_dis) / 50
+	camera.zoom = Vector2(scale, scale)
+	
