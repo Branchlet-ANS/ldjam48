@@ -52,7 +52,7 @@ func fire(direction, position):
 func _physics_process(delta):
 	if(!_fired):
 		return
-	velocity = move_and_slide(velocity)
+	_velocity = move_and_slide(_velocity)
 	_timer += delta
 	if _timer > 10:
 		queue_free()
