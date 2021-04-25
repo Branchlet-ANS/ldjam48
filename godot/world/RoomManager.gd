@@ -27,19 +27,31 @@ func select(index):
 	rebuild()
 	
 func next():
-	print("next")
+	assert(_index < _rooms.size()-1)
 	_index += 1
 	rebuild()
 	
 func previous():
-	print("previous")
+	
+	assert(_index > 0)
 	_index -= 1
+	print(_index)
+	print(_rooms[_index])
 	rebuild()
 
 func rebuild():
 	for child in room_container.get_children():
-		# free all jobs, then move room
-		pass
+		if child is Entity:
+			child.set_job(null)
+			if !(child is Character):
+				child.queue_free()
+		else:
+			room_container.remove_child(child)
+			child.queue_free()
+	for child in room_container.get_children():
+		print(child._name)
+	
+	tile_map.clear()
 	var room = _rooms[_index]
 	var reals = room.get_reals()
 	var tiles = room.get_tiles()
@@ -53,6 +65,13 @@ func rebuild():
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
+		
+	for object in room_container.get_children():
+		if object.get_id() == "o:room_entrance":
+			for character in get_parent().characters:
+				character.set_position(object.get_position())
+			get_parent().grid_entities(get_parent().characters, object.get_position(), 15)
+			break
 
 func instance_object(info):
 	var object = info["object"]

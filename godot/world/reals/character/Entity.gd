@@ -93,6 +93,9 @@ func set_target(target):
 	set_state(STATE.target)
 
 func perform_job():
+	if job == null:
+		set_state(STATE.idle)
+		return
 	job_timer -= 1
 	if job_timer == 0:
 		job.interact(self)

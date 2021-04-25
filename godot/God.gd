@@ -32,14 +32,16 @@ func _unhandled_input(event):
 						interact(closest_interactable)
 						return
 					var n = selected_characters.size()
-					for i in range(n):
-						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
-						selected_characters[i].set_job(null)
-						selected_characters[i].set_target(mouse_pos +
-						(fmod(i, float(floor(sqrt(n)))) -
-						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-						(float(i) / float(floor(sqrt(n))) -
-						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+					
+					get_parent().grid_entities(selected_characters, mouse_pos, character_space)
+#					for i in range(n):
+#						# Plasserer valgte karakterers i et kvadrat rundt musepekeren
+#						selected_characters[i].set_job(null)
+#						selected_characters[i].set_target(mouse_pos +
+#						(fmod(i, float(floor(sqrt(n)))) -
+#						fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+#						(float(i) / float(floor(sqrt(n))) -
+#						float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
 				else:
 					var new_selection = []
 					for character in get_parent().characters:
@@ -109,7 +111,7 @@ func _draw():
 		var pos = character.transform.origin
 		var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
 		draw_colored_polygon(points, Color.lightgreen)
-	if clickable != null:
+	if is_instance_valid(clickable):
 		var pos = clickable.transform.origin
 		var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
