@@ -30,7 +30,7 @@ func _ready():
 	var _shape = RectangleShape2D.new()
 	_shape.set_extents(Vector2(12, 12))
 	_collision_shape.set_shape(_shape)
-	interact_area.add_child(collision_shape)
+	interact_area.add_child(_collision_shape)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	add_child(interact_area)
 

@@ -6,7 +6,7 @@ export var scene_character : Resource
 export var scene_projectile : Resource
 export var scene_interactable : Resource
 
-onready var god : God = $God
+onready var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
