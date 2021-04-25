@@ -54,5 +54,5 @@ func _physics_process(delta):
 	if velocity_prev != _velocity:
 		_velocity = Vector2.ZERO
 	_timer += delta
-	if _timer > 10:
+	if _timer > 3:
 		queue_free()
