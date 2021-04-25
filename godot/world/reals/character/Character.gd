@@ -137,5 +137,4 @@ func add_health(amount):
 		_health = 100.0
 
 	if _health <= 0:
-		# delete fella
-		pass
+		queue_free()
