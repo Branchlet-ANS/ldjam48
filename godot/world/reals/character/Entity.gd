@@ -16,6 +16,7 @@ var speed : float = 100
 var job : Real = null
 var job_timer : int = 0
 var interact_area : Area2D
+var melee_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
 var attack_moving : bool = false
@@ -144,7 +145,7 @@ func attack_cycle(delta):
 		attack_timer = 100
 
 func strike(at):
-	if(weapon.has_projectile):
+	if(weapon.has_projectile()):
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
@@ -152,6 +153,7 @@ func strike(at):
 		projectile.fire((at.position-position).normalized(), position)
 	else:
 		for entity in melee_in_range:
+			entity.add_health(-weapon.get_dmg())
 
 
 func get_target():

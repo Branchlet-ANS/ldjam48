@@ -40,7 +40,7 @@ func get_attack_timer() -> float:
 func get_desired_distance() -> float:
 	return _desired_distance
 
-func get_has_projectile() -> bool:
+func has_projectile() -> bool:
 	return _has_projectile
 
 func get_projectile() -> Projectile:
