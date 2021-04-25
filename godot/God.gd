@@ -98,7 +98,7 @@ func _draw():
 		else:
 			var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
 			draw_colored_polygon(points, Color.lightgreen)
-		if clickable != null:
-			var pos = clickable.transform.origin
-			var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
-			draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
+	if clickable != null:
+		var pos = clickable.transform.origin
+		var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
+		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))

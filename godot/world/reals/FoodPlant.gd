@@ -19,7 +19,7 @@ func get_food_value() -> int:
 	
 func interact(character):
 	if _fruits > 0:
+		character.add_health(_food_value)
 		_fruits -= 1
 	if _fruits == 0:
 		set_sprite("terrain/bush.png")
-	character.add_health(_food_value)

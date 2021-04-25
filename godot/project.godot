@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/character/Enemy.gd"
 }, {
-"base": "Item",
+"base": "Real",
 "class": "FoodPlant",
 "language": "GDScript",
 "path": "res://world/reals/FoodPlant.gd"
