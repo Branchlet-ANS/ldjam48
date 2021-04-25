@@ -68,8 +68,9 @@ func _process(_delta):
 func _physics_process(delta):
 	if get_state() == STATE.target:
 		velocity = transform.origin.direction_to(_target) * speed
+		var velocity_prev = velocity
 		velocity = move_and_slide(velocity)
-		if transform.origin.distance_to(_target) < speed * 8 * delta:
+		if transform.origin.distance_to(_target) < speed * delta * (1 if velocity == velocity_prev else 8):
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
@@ -131,7 +132,6 @@ func get_target():
 
 func add_health(amount):
 	if (_health + amount) <= 100.0:
-		print(_health + amount)
 		_health += amount
 	else:
 		_health = 100.0
