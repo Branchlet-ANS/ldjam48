@@ -141,11 +141,13 @@ func attack_cycle(delta):
 		set_state(STATE.idle)
 	attack_timer -= delta
 	if attack_timer <= 0:
-		strike(attack_target.position)
+		strike(attack_target)
 		attack_timer = 100
 
 func strike(at):
-	if(weapon.has_projectile()):
+	print(weapon._desired_distance)
+	if(weapon.get_has_projectile()):
+		print("test")
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)

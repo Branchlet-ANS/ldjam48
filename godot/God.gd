@@ -76,9 +76,6 @@ func _unhandled_input(event):
 						player_selected1.play()
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
-		elif(event.get_button_index() == 3):
-			for character in selected_characters:
-				character.strike(mouse_pos)
 	elif event is InputEventMouseMotion:
 		var all = get_parent().roomManager.get_monsters() + get_parent().roomManager.get_interactables()
 		var closest = get_closest(all, mouse_pos)

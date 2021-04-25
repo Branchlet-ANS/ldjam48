@@ -83,7 +83,7 @@ var objects_json =  [
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
-	register_food_plant("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
@@ -125,6 +125,7 @@ func walls():
 				place_tile(x, y, TILE.grass)
 
 	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
+	place_real(x0 + 16, y0 + 16, get_object("o:bow"))
 	#place_real(x0 + 12, y0 + 8, get_object("o:tree"))
 	#place_real(x0 + 14, y0 + 8, get_object("o:tree"))
 

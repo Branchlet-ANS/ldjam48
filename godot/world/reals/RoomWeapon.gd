@@ -22,13 +22,16 @@ func get_weapon_name() -> String:
 	return _weapon_name
 	
 func interact(character):
-	print(character.weapon.name)
+	print("HELLO")
+	print(character.weapon.get_weapon_name())
 	if character.weapon != character.weapon_list["Fists"]:
 		player_food.play()
-		#Legg gamle våpnet på bakken
+		var weapon_old = character.weapon
 		character.weapon = character.weapon_list[_weapon_name]
-		#Slett våpenet
+		set_weapon_name(weapon_old)
+		set_sprite("items/" + get_weapon_name())
 	else:
 		character.weapon = character.weapon_list[_weapon_name]
-		#Slett våpenet
-	print(character.weapon.name)
+		get_parent().remove_child(self)
+		queue_free()
+	print(character.weapon.get_weapon_name())

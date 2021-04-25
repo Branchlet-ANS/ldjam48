@@ -11,10 +11,11 @@ var step_dist : float = 10
 var enemy_script = load("res://world/reals/character/Enemy.gd")
 
 func _init(id : String, name: String = "").(id, name):
-	weapon = weapon_list["Fists"]
 	pass
 
 func _ready():
+	weapon = weapon_list["Fists"]
+	
 	set_sprite("characters/character.png")
 
 	player_step = AudioStreamPlayer2D.new()
