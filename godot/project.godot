@@ -9,20 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
+"base": "KinematicReal",
 "class": "Character",
 "language": "GDScript",
-"path": "res://Character.gd"
+"path": "res://world/reals/character/Character.gd"
 }, {
 "base": "Node",
 "class": "Chunk",
 "language": "GDScript",
-"path": "res://Chunk.gd"
+"path": "res://chunks (deprecated)/Chunk.gd"
 }, {
 "base": "Item",
 "class": "Food",
 "language": "GDScript",
-"path": "res://Food.gd"
+"path": "res://world/reals/Food.gd"
 }, {
 "base": "Node2D",
 "class": "God",
@@ -32,17 +32,47 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Inventory",
 "language": "GDScript",
-"path": "res://Inventory.gd"
+"path": "res://world/reals/character/Inventory.gd"
 }, {
-"base": "Reference",
+"base": "StaticReal",
 "class": "Item",
 "language": "GDScript",
-"path": "res://Item.gd"
+"path": "res://world/reals/Item.gd"
+}, {
+"base": "StaticReal",
+"class": "KinematicReal",
+"language": "GDScript",
+"path": "res://world/reals/KinematicReal.gd"
 }, {
 "base": "Node",
 "class": "Main",
 "language": "GDScript",
 "path": "res://Main.gd"
+}, {
+"base": "Camera2D",
+"class": "MainCamera",
+"language": "GDScript",
+"path": "res://MainCamera.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Real",
+"language": "GDScript",
+"path": "res://world/reals/Real.gd"
+}, {
+"base": "Node2D",
+"class": "Room",
+"language": "GDScript",
+"path": "res://world/Room.gd"
+}, {
+"base": "Node2D",
+"class": "RoomManager",
+"language": "GDScript",
+"path": "res://world/RoomManager.gd"
+}, {
+"base": "Real",
+"class": "StaticReal",
+"language": "GDScript",
+"path": "res://world/reals/StaticReal.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
@@ -51,7 +81,13 @@ _global_script_class_icons={
 "God": "",
 "Inventory": "",
 "Item": "",
-"Main": ""
+"KinematicReal": "",
+"Main": "",
+"MainCamera": "",
+"Real": "",
+"Room": "",
+"RoomManager": "",
+"StaticReal": ""
 }
 
 [application]

@@ -2,38 +2,45 @@ extends Node
 
 class_name Main
 
-onready var scene_gatherable = preload("res://Gatherable.tscn")
-onready var scene_character = preload("res://Character.tscn")
-onready var scene_interactable = preload("res://InteractableTest.tscn")
+export var scene_character : Resource
+export var scene_projectile : Resource
+export var scene_interactable : Resource
 
-onready var god : God = $God
-
+onready var god : God
+var roomManager : RoomManager
+var camera : MainCamera
 
 var characters : Array = []
-var interactables: Array = []
 
 func _ready():
-#	var item = scene_gatherable.instance()
-#	item.transform.origin = Vector2(100, 100)
-#	add_child(item)
-	add_character(100, 100)
-	add_character(-100, -100)
-	var interactable = scene_interactable.instance()
-	add_child(interactable)
-	interactables.append(interactable)
+	camera = MainCamera.new()
+	add_child(camera)
+	camera.current = true
+	roomManager = RoomManager.new()
+	add_child(roomManager)
+	roomManager.set_tileset(load("res://world/tileset.tres"))
 
-func add_character(x : int, y : int) -> Character:
-	var character = scene_character.instance()
+	var _r = Room.new(32, 18)
+	_r.basic_room()
+	roomManager.add(_r)
+	roomManager.select(0)
+
+	for i in range(10):
+		add_character(i*100, i*100)
+
+	for object in roomManager.room_container.get_children():
+		if object.get_id() == "o:room_entrance":
+			for i in range(len(characters)):
+				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
+			break
+	
+	god = God.new()
+	add_child(god)
+
+
+func add_character(x : int, y : int):
+	var character = Character.new("character")
+	roomManager.room_container.add_child(character)
+	character.scene_projectile = scene_projectile
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
-	add_child(character)
-	return character
-
-func get_interactables():
-	var i = 0
-	while i < interactables.size():
-		if (!is_instance_valid(interactables[i])):
-			interactables.erase(interactables[i])
-			i -= 1
-		i += 1
-	return interactables

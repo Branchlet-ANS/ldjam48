@@ -13,19 +13,16 @@ func add(item) -> void:
 				return
 	items.append(item)
 	
-func remove(id : String, count : int) -> Item:
-	var name
+func remove(id : String, count : int):
 	for item in items:
 		if item.get_id() == id:
-			name = item.get_name()
 			var remove = min(count, item.get_count())
 			item.remove(remove)
 			count -= remove
 			if count == 0:
 				break
 	assert(count == 0)
-	return Item.new(id, name, count)
-
+	
 func _to_string() -> String:
 	var string : String = "{Inventory["
 	for item in items:

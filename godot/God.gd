@@ -2,14 +2,14 @@ extends Node2D
 
 class_name God
 
-onready var camera = $"../Camera2D"
-
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
+var character_space = 15
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
+		var camera = get_parent().camera
 		if(event.get_button_index() == 2):
 			if(event.is_pressed()):
 				select_pos_start = camera.mouse_world_position()
@@ -27,23 +27,30 @@ func _unhandled_input(event):
 								Rect2(character.position, character.collision_shape.shape.get_extents()))):
 						selected_characters.append(character)
 		elif(event.get_button_index() == 1):
-			for interactable in get_parent().get_interactables():
-				if (interactable.transform.origin - camera.mouse_world_position()).length() < 16:
-					interact(interactable)
-					return
+			var n = selected_characters.size()
+			for i in range(n):
+				var wpos = camera.mouse_world_position() # Plasserer valgte karakterers i et kvadrat rundt musepekeren
+				selected_characters[i].set_target(camera.mouse_world_position() +
+				(fmod(i, float(floor(sqrt(n)))) -
+				fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+				(float(i) / float(floor(sqrt(n))) -
+				float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+		elif(event.get_button_index() == 3):
 			for character in selected_characters:
-				character.set_target(camera.mouse_world_position())
+				character.strike(camera.mouse_world_position())
+
 
 func interact(interactable):
 	for character in selected_characters:
 		character.add_job(interactable)
 
-func _process(delta):
+func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
 
 
 func _draw():
+	var camera = get_parent().camera
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
 		var pos1 = select_pos_start
 		var pos2 = camera.mouse_world_position()
