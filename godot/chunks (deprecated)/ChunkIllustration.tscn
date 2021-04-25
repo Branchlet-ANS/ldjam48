@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/terrain/tiles/programmer_grass.png" type="Texture" id=1]
 [ext_resource path="res://assets/terrain/programmer_tree.png" type="Texture" id=2]
-[ext_resource path="res://chunks/ChunkIllustration.gd" type="Script" id=3]
+[ext_resource path="res://chunks (deprecated)/ChunkIllustration.gd" type="Script" id=3]
 
 [sub_resource type="TileSet" id=1]
 0/name = "programmer_grass.png 0"

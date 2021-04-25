@@ -29,7 +29,7 @@ func build():
 	var tiles = room.get_tiles()
 	for key in reals:
 		var real = reals[key]
-		var instance = instance_real(real["object"])
+		var instance = instance_real(real["object"], real["id"])
 		add_child(instance)
 		instance.set_position(key * TILE_SIZE)
 		instance.set_sprite(real["sprite"])
@@ -37,11 +37,13 @@ func build():
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
 		
-func instance_real(object):
+func instance_real(object, id):
 	if object == Real:
 		return Real.new()
 	if object == StaticReal:
 		return StaticReal.new()
+	if object == Item:
+		return Item.new(id, "Name")
 	
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)

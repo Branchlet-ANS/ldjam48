@@ -1,3 +1,4 @@
+extends StaticReal
 
 class_name Item 
 

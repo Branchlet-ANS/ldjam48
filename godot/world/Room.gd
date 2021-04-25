@@ -43,6 +43,7 @@ var objects_json =  {
 	"o:room_entrance": register_real("o:room_entrance", "programmer_bed.png", 0, Real),
 	"o:room_exit": register_real("o:room_exit", "programmer_campfire.png", 0, Real),
 	"o:tree": register_real("o:tree", "programmer_spike.png", 0, StaticReal),
+	"o:berry": register_real("o:berry", "items/wangu.png", 0, Item),
 }
 
 func basic_room(): # temp
@@ -59,5 +60,6 @@ func basic_room(): # temp
 	place_real(x0 + 2, y0 + 2, objects_json["o:room_entrance"])
 	place_real(x0 + w - 3, y0 + h - 3, objects_json["o:room_exit"])
 	place_real(x0 + 7, y0 + 7, objects_json["o:tree"])
+	place_real(x0 + 8, y0 + 8, objects_json["o:berry"])
 
 

@@ -2,7 +2,6 @@ extends Node
 
 class_name Main
 
-export var scene_gatherable : Resource
 export var scene_character : Resource
 export var scene_interactable : Resource
 

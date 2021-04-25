@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://God.gd" type="Script" id=1]
 [ext_resource path="res://world/RoomManager.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://world/tileset.tres" type="TileSet" id=4]
 [ext_resource path="res://Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://world/reals/StaticReal.gd" type="Script" id=6]
-[ext_resource path="res://world/reals/gatherable/Gatherable.tscn" type="PackedScene" id=8]
 [ext_resource path="res://world/reals/character/Character.tscn" type="PackedScene" id=9]
 [ext_resource path="res://world/reals/character/InteractableTest.tscn" type="PackedScene" id=10]
 
@@ -41,7 +40,6 @@ _bundled = {
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
-scene_gatherable = ExtResource( 8 )
 scene_character = ExtResource( 9 )
 scene_interactable = ExtResource( 10 )
 

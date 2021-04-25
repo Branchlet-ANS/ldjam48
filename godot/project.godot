@@ -17,12 +17,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Chunk",
 "language": "GDScript",
-"path": "res://chunks/Chunk.gd"
+"path": "res://chunks (deprecated)/Chunk.gd"
 }, {
 "base": "Item",
 "class": "Food",
 "language": "GDScript",
-"path": "res://world/reals/gatherable/Food.gd"
+"path": "res://world/reals/Food.gd"
 }, {
 "base": "Node2D",
 "class": "God",
@@ -34,10 +34,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/character/Inventory.gd"
 }, {
-"base": "Reference",
+"base": "StaticReal",
 "class": "Item",
 "language": "GDScript",
-"path": "res://world/reals/gatherable/Item.gd"
+"path": "res://world/reals/Item.gd"
 }, {
 "base": "Node",
 "class": "Main",

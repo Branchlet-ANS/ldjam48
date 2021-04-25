@@ -13,4 +13,3 @@ func _ready():
 	
 func set_sprite(path : String):
 	sprite.texture = load("res://assets/" + path)
-	print("Sprite set!")
