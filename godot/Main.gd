@@ -28,11 +28,17 @@ func _ready():
 	roomManager = RoomManager.new()
 	add_child(roomManager)
 	roomManager.set_tileset(load("res://world/tileset.tres"))
-	var _r
-	for i in range(10):
-		_r = Room.new(randi() % 32 + 16, randi() % 46 + 16)
-		_r.basic_room()
-		roomManager.add(_r)
+	var _room
+	for i in range(32):
+		_room = Room.new(randi() % 32 + 16, randi() % 46 + 16, i)
+		var r = randi() % 3
+		if r == 0:
+			_room.monster_room()
+		elif r == 1:
+			_room.foraging_room()
+		else:
+			_room.bland_room()	
+		roomManager.add(_room)
 	roomManager.select(0)
 
 	for i in range(10):

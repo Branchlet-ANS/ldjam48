@@ -64,14 +64,14 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
-	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
-	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.4, 1),
-	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.3, 2),
-	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.3, 3),
-	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.3, -20),
+	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.8, 1),
+	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
+	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
+	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
-	register_real("o:rock", "Rock", "items/rock.png", 1, false, Real, "decoration"),
+	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
+	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
 	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
 ]
 
@@ -141,23 +141,19 @@ func proc_room_controls():
 	control_block_positions.remove(r)
 	tile_positions.remove(r)
 
-func basic_room(): # temp
-	_corruption = 5
-	foraging_room()
-
 func foraging_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.03)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
 	proc_room_controls()
 	
 func bland_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.02)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.06)
 	proc_room_controls()
 	
 func monster_room():
-	#generate forage
-	pass
+	bland_room()
+	print("monstuour")
 
 func populate_room(collection : Array, chance : float):
 	for i in range(-_width/2, _width/2):
