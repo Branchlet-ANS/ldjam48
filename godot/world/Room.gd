@@ -88,7 +88,7 @@ var objects_json =  [
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 1, 64, 8)
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10, 64, 8)
 ]
 
 func get_objects_by(attribute, term):
@@ -160,12 +160,12 @@ func proc_room_controls():
 
 func foraging_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage")), 0.04)
 	proc_room_controls()
 
 func bland_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.06)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") ), 0.06)
 	proc_room_controls()
 
 func monster_room():

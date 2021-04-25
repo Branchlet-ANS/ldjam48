@@ -75,7 +75,7 @@ func _ready():
 func _process(_delta):
 	if get_state() == STATE.idle:
 		if is_instance_valid(attack_target):
-			set_state(STATE.attack)
+			attack_target = null
 		if is_instance_valid(job):
 			set_target(job.transform.origin)
 	if get_state() == STATE.job:
@@ -150,7 +150,8 @@ func attack_cycle(delta):
 		attack_timer = 100
 
 func strike(at):
-	print(weapon._desired_distance)
+	if !is_instance_valid(at):
+		return
 	if(weapon.get_has_projectile()):
 		print("test")
 		var p = weapon.get_projectile()
@@ -180,4 +181,4 @@ func _on_Area2D_body_entered(body):
 		if body is Projectile:
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
-				body.call_deferred("free")
+				body.queue_free()

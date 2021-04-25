@@ -46,6 +46,6 @@ func _process(delta):
 func add_health(var amount):
 	.add_health(amount)
 	if _health <= 0:
-		get_parent().remove_child(self)
+		#get_parent().remove_child(self)
 		queue_free()
 	
