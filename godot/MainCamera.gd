@@ -14,7 +14,6 @@ func _ready():
 	zoom = Vector2(0.25, 0.25)
 
 func _process(delta):
-	offset = pos
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -CAMERA_SPEED*delta
 	if Input.is_action_pressed("ui_right"):
@@ -29,6 +28,10 @@ func _process(delta):
 	if velocity.length() == CAMERA_SPEED:
 		velocity *= sqrt(1/2*pow(CAMERA_SPEED, 2))
 	pos += velocity
+	pos += (target - pos) * 0.02
+	
+	
+	offset = pos
 
 func mouse_world_position():
 	return get_viewport().get_mouse_position()*zoom +offset - get_viewport().size/2*zoom
