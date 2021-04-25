@@ -67,8 +67,10 @@ func _process(_delta):
 	elif characters.size() > 0:
 		var character = God.get_closest(characters, camera.get_position())
 		target = character.get_position()
-	target += camera.mouse_world_position() / get_viewport().size.normalized() * 0.2
-	target /= 1.2
+		
+	var mouse_position = (get_viewport().get_mouse_position() - get_viewport().size/2) * camera.zoom
+	
+	target += mouse_position / get_viewport().size.normalized() * 0.2
 	var view_size = get_viewport().size * camera.zoom
 	var tx = clamp(target.x, - roomManager.get_width() / 2 + view_size.x / 2 - 16, + roomManager.get_width() / 2 - view_size.x / 2 + 16)
 	var ty = clamp(target.y, - roomManager.get_height() / 2 + view_size.y / 2 - 16, + roomManager.get_height() / 2 - view_size.y / 2 + 16)
