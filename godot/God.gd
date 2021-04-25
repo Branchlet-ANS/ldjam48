@@ -48,6 +48,8 @@ func _unhandled_input(event):
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
 							selected_characters.append(character)
+		if(event.get_button_index() == 2):
+			selected_characters.clear()
 		elif(event.get_button_index() == 3):
 			for character in selected_characters:
 				character.strike(mouse_pos)
