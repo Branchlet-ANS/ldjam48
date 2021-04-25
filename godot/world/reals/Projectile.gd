@@ -6,6 +6,7 @@ var velocity = Vector2(0, 0)
 var speed = 200
 var rotating : bool = true
 var damage = 10
+var timer = 0
 
 func _init(id : String, name: String = "", type : String = "", parent = null,
 		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
@@ -48,3 +49,6 @@ func _ready():
 
 func _physics_process(delta):
 	move_and_slide(velocity)
+	timer += delta
+	if timer > 10:
+		queue_free()
