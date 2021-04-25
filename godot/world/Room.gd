@@ -57,7 +57,7 @@ func register_real(id, _name, sprite, corruption, interactable, object, subtype=
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "programmer_bed.png", 0, true, Real),
 	register_real("o:room_exit", "Room Exit", "programmer_campfire.png", 0, true, Real),
-	register_real("o:tree", "Tree", "programmer_spike.png", 0, false, StaticReal),
+	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal),
 	register_real("o:wangu_berry", "Wangu", "items/wangu.png", 0, false, Item, "berry"),
 	register_real("o:blue_banana", "Blue Banana", "items/blue_banana.png", 0, false, Item, "berry", 0.7),
 	register_real("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0, false, Item, "berry", 0.6),
@@ -100,6 +100,9 @@ func walls():
 	place_real(x0 + 2, y0 + 2, get_object("o:room_entrance"))
 	place_real(x0 + w - 3, y0 + h - 3, get_object("o:room_exit"))
 	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
+	place_real(x0 + 12, y0 + 8, get_object("o:tree"))
+	place_real(x0 + 14, y0 + 8, get_object("o:tree"))
+
 
 func basic_room(): # temp
 	walls()
