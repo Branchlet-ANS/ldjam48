@@ -15,12 +15,7 @@ func _ready():
 	_r.basic_room()
 	roomManager.add(_r)
 	roomManager.select(0)
-	for object in roomManager.room_container.get_children():
-		if object.get_id() == "o:room_entrance":
-			for i in range(len(characters)):
-				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
-			break
-			
+	
 	add_character(100, 100)
 	add_character(-100, -100)
 	add_character(100, 100)
@@ -33,6 +28,12 @@ func _ready():
 	add_character(-100, -100)
 	add_character(100, 100)
 	
+	for object in roomManager.room_container.get_children():
+		if object.get_id() == "o:room_entrance":
+			for i in range(len(characters)):
+				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
+			break
+			
 	
 func add_character(x : int, y : int):
 	var character = scene_character.instance()
