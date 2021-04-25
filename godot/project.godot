@@ -9,12 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Entity",
+"base": "KinematicReal",
 "class": "Character",
 "language": "GDScript",
 "path": "res://world/reals/character/Character.gd"
 }, {
-"base": "Entity",
+"base": "KinematicReal",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://world/reals/character/Enemy.gd"

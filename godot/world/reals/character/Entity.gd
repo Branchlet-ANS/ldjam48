@@ -18,6 +18,7 @@ var job_timer : int = 0
 var interact_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
+var attack_moving : bool = false
 var weapon : Weapon = null
 var _health : float = 100.0
 
@@ -57,6 +58,16 @@ func _physics_process(delta):
 				set_state(STATE.job)
 			else:
 				set_state(STATE.idle)
+	if get_state() == STATE.attack:
+		var margin = 10
+		if(attack_moving):
+			margin = 5
+		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+			attack_moving = true
+			velocity = transform.origin.direction_to(attack_target.position - (transform.origin.direction_to(attack_target.position) * weapon.get_desired_distance())) * speed
+			velocity = move_and_slide(velocity)
+			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
+				attack_moving = false
 
 func set_job(interactable):
 	job = interactable
