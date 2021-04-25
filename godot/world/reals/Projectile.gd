@@ -5,19 +5,32 @@ class_name Projectile
 var velocity = Vector2(0, 0)
 var speed = 200
 var rotating : bool = true
+var damage = 10
 
-func _init(id : String, name: String = "", parent = null,
-		rotating : bool = false, speed : float = 200,
-		direction : Vector2 = Vector2.ZERO,
-		position : Vector2 = Vector2.ZERO).(id, name):
-	print(parent)
+func _init(id : String, name: String = "", type : String = "", parent = null,
+		direction : Vector2 = Vector2.ZERO, position : Vector2 = Vector2.ZERO).(id, name):
 	parent.add_child(self)
 	
+	speed = 0
+	rotating = false
+	var inaccuracy = 0
+	if(type == "Arrow"):
+		speed = 200
+		rotating = true
+		damage = 7
+		inaccuracy = 0.01
+		set_sprite("weapons/projectiles/arrow.png")
+	elif(type == "Bullet"):
+		speed = 400
+		rotating = false
+		damage = 10
+		inaccuracy = 0.05
+		set_sprite("weapons/projectiles/bullet.png")
+	
 	self.rotating = rotating
+	direction *= 1 + rand_range(-inaccuracy, inaccuracy)
 	self.velocity = direction * speed
 	self.position = position
-	
-	print(position)
 	
 	if(rotating):
 		rotation = (atan(velocity.y/velocity.x) + PI/2)
@@ -26,7 +39,6 @@ func _init(id : String, name: String = "", parent = null,
 			rotation = (atan(velocity.y/velocity.x) + PI/2 - PI)
 
 func _ready():
-	set_sprite("weapons/projectiles/arrow.png")
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
 	_shape.set_extents(Vector2(1.6, 1.6))
