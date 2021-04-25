@@ -171,8 +171,8 @@ func two_snakes(start: Vector2, end: Vector2):
 	var h = _height
 	var x0 = -w/2
 	var y0 = -h/2
-	for x in range(x0, x0 + w):
-		for y in range(y0, y0 + h):
+	for x in range(x0-8, x0 + w+8): # PADDING
+		for y in range(y0-8, y0 + h+8):
 			place_tile(x, y, TILE.jungle)
 			
 	var snake_0_positions = []
@@ -192,7 +192,7 @@ func two_snakes(start: Vector2, end: Vector2):
 		or snake_1_int in snake_0_positions:
 			break
 		
-		snake_0_dir = snake_0_dir.rotated(fmod(randf(), PI/8) - PI/16)
+		snake_0_dir = snake_0_dir.rotated(fmod(randf(), PI/8) - PI/16) # SWIRLYNESS
 		snake_1_dir = snake_1_dir.rotated(fmod(randf(), PI/8) - PI/16)
 		
 		snake_0 = Vector2(clamp((snake_0.x + snake_0_dir.x), x0, x0 + w), clamp((snake_0.y + snake_0_dir.y), y0, y0 + h))
@@ -201,14 +201,19 @@ func two_snakes(start: Vector2, end: Vector2):
 	var tiles = snake_0_positions + snake_1_positions
 	
 	for tile in tiles:
-		var s = 4 + randi() % 6
-		for x in range(tile.x - s/2, tile.x + s/2):
-			for y in range(tile.y - s/2, tile.y + s/2):
-				place_tile(x, y, TILE.grass)
+		var s = 2 + randi() % 4 # SNAKE WIDTH
+		set_tile_rect(tile.x, tile.y, s, TILE.grass)
 	
+	set_tile_rect(start.x, start.y, 8, TILE.grass) # SPAWN WIDTH
 	place_tile(start.x, start.y, TILE.sand)
+	set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
 	place_tile(end.x, end.y, TILE.water)
-	
+
+func set_tile_rect(x, y, size, tile):
+	for x0 in range(x - size/2, x + size/2):
+		for y0 in range(y - size/2, y + size/2):
+			place_tile(x0, y0, tile)
+
 func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
