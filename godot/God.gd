@@ -2,8 +2,6 @@ extends Node2D
 
 class_name God
 
-onready var camera = $"../Camera2D"
-
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
@@ -11,6 +9,7 @@ var character_space = 15
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
+		var camera = get_parent().camera
 		if(event.get_button_index() == 2):
 			if(event.is_pressed()):
 				select_pos_start = camera.mouse_world_position()
@@ -48,7 +47,7 @@ func interact(interactable):
 func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
-
+	var camera = get_parent().camera
 	if Input.is_action_pressed("ui_left"):
 		camera.spd_x = -camera.CAMERA_SPEED
 	if Input.is_action_pressed("ui_right"):
@@ -60,6 +59,7 @@ func _process(_delta):
 
 
 func _draw():
+	var camera = get_parent().camera
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
 		var pos1 = select_pos_start
 		var pos2 = camera.mouse_world_position()

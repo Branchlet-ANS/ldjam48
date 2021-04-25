@@ -1,5 +1,6 @@
 extends Camera2D
 
+class_name MainCamera
 
 const DEACCELERATION = 1
 const STOP_THRESHOLD = 0.5

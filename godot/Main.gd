@@ -8,10 +8,16 @@ export var scene_interactable : Resource
 
 onready var god : God = $God
 var roomManager : RoomManager
+var camera : MainCamera
 
 var characters : Array = []
 
 func _ready():
+	god = God.new()
+	add_child(god)
+	camera = MainCamera.new()
+	add_child(camera)
+	camera.current = true
 	roomManager = RoomManager.new()
 	add_child(roomManager)
 	roomManager.set_tileset(load("res://world/tileset.tres"))

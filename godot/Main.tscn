@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://God.gd" type="Script" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 [ext_resource path="res://Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://world/reals/StaticReal.gd" type="Script" id=6]
