@@ -50,6 +50,6 @@ func _process(_delta):
 			max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
 	target /= characters.size()
 	camera.target = target
-	var scale = sqrt(clamp(max_dis, 150, min(roomManager.get_width(), roomManager.get_height()))) / 50
-	camera.zoom = Vector2(scale, scale)
+	#var scale = sqrt(clamp(max_dis, 150, min(roomManager.get_width(), roomManager.get_height()))) / 50
+	#camera.zoom = Vector2(scale, scale)
 	
