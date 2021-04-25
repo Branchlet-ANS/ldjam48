@@ -26,6 +26,7 @@ func _init(id : String, name: String, dmg : float = 10,
 	_attack_timer = attack_timer
 	_desired_distance = desired_distance
 	_weapon_name = weapon_name
+	_has_projectile = has_projectile
 	if(has_projectile):
 		_projectile = Projectile.new("", "", projectile_speed, projectile_rotating,
 				dmg, projectile_inaccuracy, projectile_sprite_name, false,
@@ -37,10 +38,13 @@ func get_dmg() -> float:
 func get_attack_timer() -> float:
 	return _attack_timer
 
+func get_weapon_name() -> String:
+	return _weapon_name
+
 func get_desired_distance() -> float:
 	return _desired_distance
 
-func has_projectile() -> bool:
+func get_has_projectile() -> bool:
 	return _has_projectile
 
 func get_projectile() -> Projectile:

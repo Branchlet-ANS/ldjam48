@@ -45,12 +45,8 @@ func _init(id : String, name: String = "").(id, name):
 func _ready():
 	player_dead = AudioStreamPlayer2D.new()
 	add_child(player_dead)
-	player_dead.set_stream(sfx_dead)
-	sfx_dead.set_stereo(true)
 	player_hurt = AudioStreamPlayer2D.new()
 	add_child(player_hurt)
-	player_hurt.set_stream(sfx_hurt)
-	sfx_hurt.set_stereo(true)
 
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
@@ -75,7 +71,7 @@ func _ready():
 func _process(_delta):
 	if get_state() == STATE.idle:
 		if is_instance_valid(attack_target):
-			set_state(STATE.attack)
+			attack_target = null
 		if is_instance_valid(job):
 			set_target(job.transform.origin)
 	if get_state() == STATE.job:
@@ -94,6 +90,10 @@ func _physics_process(delta):
 			else:
 				set_state(STATE.idle)
 	if get_state() == STATE.attack:
+		if !(is_instance_valid(attack_target)):
+			attack_target = null
+			set_state(STATE.idle)
+			return
 		var margin = 10
 		if(attack_moving):
 			margin = 5
@@ -128,7 +128,7 @@ func set_target(target):
 	set_state(STATE.target)
 
 func perform_job():
-	if job == null:
+	if job == null or !is_instance_valid(job):
 		set_state(STATE.idle)
 		return
 	job_timer -= 1
@@ -142,11 +142,14 @@ func attack_cycle(delta):
 		set_state(STATE.idle)
 	attack_timer -= delta
 	if attack_timer <= 0:
-		strike(attack_target.position)
+		strike(attack_target)
 		attack_timer = 100
 
 func strike(at):
-	if(weapon.has_projectile()):
+	if !is_instance_valid(at):
+		return
+	if(weapon.get_has_projectile()):
+		print("test")
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
@@ -167,6 +170,9 @@ func add_health(amount):
 		_health = 100.0
 	if(amount < 0):
 		player_hurt.play()
+		print(sfx_hurt)
+	if(_health <= 0):
+		player_dead.play()
 
 
 func _on_Area2D_body_entered(body):
@@ -174,4 +180,4 @@ func _on_Area2D_body_entered(body):
 		if body is Projectile:
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
-				body.call_deferred("free")
+				body.queue_free()

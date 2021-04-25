@@ -11,10 +11,11 @@ var step_dist : float = 10
 var enemy_script = load("res://world/reals/character/Enemy.gd")
 
 func _init(id : String, name: String = "").(id, name):
-	weapon = weapon_list["Fists"]
 	pass
 
 func _ready():
+	weapon = weapon_list["Fists"]
+	
 	set_sprite("characters/character.png")
 
 	player_step = AudioStreamPlayer2D.new()
@@ -23,6 +24,11 @@ func _ready():
 	sfx_step.set_stereo(true)
 
 	step_dist *= rand_range(0.8, 1.2)
+	
+	player_hurt.set_stream(sfx_hurt)
+	sfx_hurt.set_stereo(true)
+	player_dead.set_stream(sfx_dead)
+	sfx_dead.set_stereo(true)
 
 func _process(_delta):
 	if((position - step_pos).length() > 10):

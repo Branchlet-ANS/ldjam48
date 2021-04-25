@@ -24,6 +24,13 @@ func _ready():
 	sense_area.add_child(_collision_shape)
 	sense_area.connect("body_entered", self, "_on_sense_area_body_entered")
 	add_child(sense_area)
+	
+	sfx_hurt = load("res://Assets/SFX/monke" + str(randi()%3+1)+ ".wav")
+	player_hurt.set_stream(sfx_hurt)
+	sfx_hurt.set_stereo(true)
+	sfx_dead = load("res://Assets/SFX/monke4.wav")
+	player_dead.set_stream(sfx_dead)
+	sfx_dead.set_stereo(true)
 
 func _on_sense_area_body_entered(body):
 	if body is Character:
@@ -45,7 +52,12 @@ func _process(delta):
 
 func add_health(var amount):
 	.add_health(amount)
+	if(amount < 0):
+		sfx_hurt = load("res://Assets/SFX/monke" + str(randi()%3+1)+ ".wav")
+		print(sfx_hurt)
+		player_hurt.set_stream(sfx_hurt)
+		sfx_hurt.set_stereo(true)
 	if _health <= 0:
-		get_parent().remove_child(self)
+		#get_parent().remove_child(self)
 		queue_free()
 	

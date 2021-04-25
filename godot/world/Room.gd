@@ -83,10 +83,20 @@ var objects_json =  [
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
-	register_food_plant("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:gun", "Gun", "items/gun.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:sword", "Sword", "items/sword.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:pike", "Pike", "items/pike.png", 7, "weapon", 0.6, 2),
+	register_weapon("o:halberd", "Halberd", "items/halberd.png", 7, "weapon", 0.6, 2),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton1", "Skeleton1", "terrain/dead party/skeleton_man.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton2", "Skeleton2", "terrain/dead party/skeleton_man2.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton3", "Skeleton3", "terrain/dead party/skeleton_man3.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
+	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
 	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10, 64, 8)
 ]
@@ -123,6 +133,17 @@ func walls():
 				place_tile(x, y, TILE.jungle)
 			else:
 				place_tile(x, y, TILE.grass)
+
+	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
+	place_real(x0 + 16, y0 + 16, get_object("o:bow"))
+	place_real(x0 + 17, y0 + 16, get_object("o:crossbow"))
+	place_real(x0 + 18, y0 + 16, get_object("o:gun"))
+	place_real(x0 + 16, y0 + 17, get_object("o:pike"))
+	place_real(x0 + 17, y0 + 17, get_object("o:halberd"))
+	place_real(x0 + 18, y0 + 17, get_object("o:sword"))
+	#place_real(x0 + 12, y0 + 8, get_object("o:tree"))
+	#place_real(x0 + 14, y0 + 8, get_object("o:tree"))
+
 
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
@@ -196,7 +217,7 @@ func foraging_room():
 
 func bland_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.06)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") ), 0.06)
 	proc_room_controls()
 
 func monster_room():
