@@ -57,7 +57,7 @@ func _physics_process(delta):
 		_velocity = Vector2.ZERO
 	_timer += delta
 	if _timer > 3:
-		queue_free()
+		call_deferred("queue_free")
 		
 func get_damage():
 	return _dmg

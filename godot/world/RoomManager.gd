@@ -78,8 +78,10 @@ func instance_object(info):
 		return Item.new(info["id"], info["name"])
 	if object == FoodPlant:
 		return FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
+	if object == RoomWeapon:
+		return RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:
-		return Enemy.new(info["id"])
+		return Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"])
 	if object == RoomPortal:
 		if info["id"] == "o:room_entrance":
 			return RoomPortal.new(info["id"], info["name"], -1)

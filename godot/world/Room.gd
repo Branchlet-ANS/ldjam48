@@ -60,9 +60,22 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	dict["chance"] = chance
 	dict["value"] = value
 	return dict
-	
-func register_enemy(id, _name, sprite, corruption, health, sense_radius, attack_radius):
-	pass
+
+func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=0):
+	var dict = register_real(id, _name, sprite, corruption, true, RoomWeapon)
+	dict["subtype"] = subtype
+	dict["chance"] = chance
+	dict["value"] = value
+	return dict
+
+func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius):
+	var dict = register_real(id, _name, sprite, corruption, false, Enemy)
+	dict["resistance"] = resistance
+	dict["sense_radius"] = sense_radius
+	dict["attack_radius"] = attack_radius
+	return dict
+
+
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
@@ -70,11 +83,12 @@ var objects_json =  [
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
+	register_food_plant("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
-	register_real("o:monkey", "Monkey", "animals/monkey.png", 3, true, Enemy),
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10, 64, 8)
 ]
 
 func get_objects_by(attribute, term):
@@ -143,12 +157,12 @@ func foraging_room():
 	walls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
 	proc_room_controls()
-	
+
 func bland_room():
 	walls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.06)
 	proc_room_controls()
-	
+
 func monster_room():
 	bland_room()
 
