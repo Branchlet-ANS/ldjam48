@@ -5,6 +5,7 @@ class_name Real
 var _id : String
 var _name : String
 var sprite : Sprite
+var interactable : bool = false
 
 func _init(id : String, name: String = ""):
 	_id = id

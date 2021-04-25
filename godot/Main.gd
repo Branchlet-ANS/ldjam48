@@ -3,7 +3,6 @@ extends Node
 class_name Main
 
 export var scene_character : Resource
-export var scene_interactable : Resource
 
 onready var god : God = $God
 onready var roomManager : RoomManager = $RoomManager
@@ -12,9 +11,9 @@ var characters : Array = []
 var interactables: Array = []
 
 func _ready():
-	var room = Room.new(16, 16)
-	room.basic_room()
-	roomManager.add(room)
+	var _r = Room.new(32, 18)
+	_r.basic_room()
+	roomManager.add(_r)
 	roomManager.select(0)
 	for object in roomManager.room_container.get_children():
 		if object.get_id() == "o:room_entrance":
