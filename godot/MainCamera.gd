@@ -14,21 +14,21 @@ func _ready():
 	zoom = Vector2(0.25, 0.25)
 
 func _process(delta):
-	if Input.is_action_pressed("ui_left"):
-		velocity.x = -CAMERA_SPEED*delta
-	if Input.is_action_pressed("ui_right"):
-		velocity.x = CAMERA_SPEED*delta
-	if Input.is_action_pressed("ui_up"):
-		velocity.y = -CAMERA_SPEED*delta
-	if Input.is_action_pressed("ui_down"):
-		velocity.y = CAMERA_SPEED*delta
-	velocity *= DEACCELERATION
-	if (velocity.length() < STOP_THRESHOLD):
-		velocity = Vector2.ZERO
-	if velocity.length() == CAMERA_SPEED:
-		velocity *= sqrt(1/2*pow(CAMERA_SPEED, 2))
-	pos += velocity
-	pos += (target - pos) * 0.02
+#	if Input.is_action_pressed("ui_left"):
+#		velocity.x = -CAMERA_SPEED*delta
+#	if Input.is_action_pressed("ui_right"):
+#		velocity.x = CAMERA_SPEED*delta
+#	if Input.is_action_pressed("ui_up"):
+#		velocity.y = -CAMERA_SPEED*delta
+#	if Input.is_action_pressed("ui_down"):
+#		velocity.y = CAMERA_SPEED*delta
+#	velocity *= DEACCELERATION
+#	if (velocity.length() < STOP_THRESHOLD):
+#		velocity = Vector2.ZERO
+#	if velocity.length() == CAMERA_SPEED:
+#		velocity *= sqrt(1/2*pow(CAMERA_SPEED, 2))
+#	pos += velocity
+	pos += (target - pos) * 0.05
 	
 	
 	offset = pos

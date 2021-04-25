@@ -20,7 +20,7 @@ func _ready():
 	add_child(player_step)
 	player_step.set_stream(sfx_step)
 	sfx_step.set_stereo(true)
-	
+
 	step_dist *= rand_range(0.8, 1.2)
 
 func _process(_delta):
@@ -33,11 +33,20 @@ func _on_Area2D_body_entered(body):
 	if body is Item:
 		inventory.add(body)
 		body.get_parent().remove_child(body)
-
 func _on_melee_Area2D_body_entered(body):
 	if body is Entity: #hvordan ikke få characters?
 		melee_in_range.append(body)
-		
+
 func _on_melee_Area2D_body_exited(body):
 	if body is Entity and body in melee_in_range: #hvordan ikke få characters?
 		melee_in_range.erase(body)
+		
+func add_health(var amount):
+	.add_health(amount)
+	if _health <= 0:
+		player_dead.play()
+		get_parent().get_parent().get_parent().characters.erase(self)
+		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
+			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
+		get_parent().remove_child(self)
+		call_deferred("free")

@@ -15,7 +15,6 @@ func _ready():
 	tile_map = TileMap.new()
 	add_child(tile_map)
 	tile_map.set_cell_size(Vector2(TILE_SIZE, TILE_SIZE))
-	tile_map.set_position(Vector2(-0.5, -0.5))
 	room_container = YSort.new()
 	add_child(room_container)
 
@@ -35,8 +34,6 @@ func previous():
 	
 	assert(_index > 0)
 	_index -= 1
-	print(_index)
-	print(_rooms[_index])
 	rebuild()
 
 func rebuild():
@@ -48,8 +45,6 @@ func rebuild():
 		else:
 			room_container.remove_child(child)
 			child.queue_free()
-	for child in room_container.get_children():
-		print(child._name)
 	
 	tile_map.clear()
 	var room = _rooms[_index]

@@ -68,6 +68,9 @@ func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=
 	dict["value"] = value
 	return dict
 
+func register_enemy(id, _name, sprite, corruption, health, sense_radius, attack_radius):
+	pass
+
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
@@ -123,21 +126,21 @@ func walls():
 
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
-	
+
 	var tile_positions : Array = [
-		Vector2(0, -_height/2), 
-		Vector2(0, _height/2-1), 
-		Vector2(-_width/2, 0), 
+		Vector2(0, -_height/2),
+		Vector2(0, _height/2-1),
+		Vector2(-_width/2, 0),
 		Vector2(_width/2-1, 0)
 		]
-	
+
 	var control_block_positions = [
-		Vector2(0, -_height/2+2), 
-		Vector2(0, _height/2-3), 
-		Vector2(-_width/2+2, 0), 
+		Vector2(0, -_height/2+2),
+		Vector2(0, _height/2-3),
+		Vector2(-_width/2+2, 0),
 		Vector2(_width/2-3, 0)
 	]
-	
+
 	var r = randi() % 4
 	place_tile(tile_positions[r].x, tile_positions[r].y, -1)
 	place_real(control_block_positions[r].x, control_block_positions[r].y, get_object("o:room_entrance"))
@@ -153,12 +156,12 @@ func foraging_room():
 	walls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
 	proc_room_controls()
-	
+
 func bland_room():
 	walls()
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.06)
 	proc_room_controls()
-	
+
 func monster_room():
 	bland_room()
 	print("monstuour")

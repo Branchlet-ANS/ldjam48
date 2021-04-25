@@ -23,6 +23,7 @@ var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
 var melee_in_range : Array = []
+var _power = 2
 
 var player_dead : AudioStreamPlayer2D
 var sfx_dead = preload("res://Assets/SFX/dead.wav")
@@ -48,7 +49,7 @@ func _ready():
 	add_child(player_hurt)
 	player_hurt.set_stream(sfx_hurt)
 	sfx_hurt.set_stereo(true)
-	
+
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
@@ -151,7 +152,7 @@ func strike(at):
 		projectile.fire((at.position-position).normalized(), position)
 	else:
 		for entity in melee_in_range:
-			
+
 
 func get_target():
 	return _target
@@ -163,7 +164,10 @@ func add_health(amount):
 		_health = 100.0
 	if(amount < 0):
 		player_hurt.play()
-	if _health <= 0:
-		player_dead.play()
-		# delete fella
-		pass
+
+
+func _on_Area2D_body_entered(body):
+	if body is Projectile:
+		if (!body.get_owner() == self):
+			add_health(-body.get_damage())
+			body.call_deferred("free")
