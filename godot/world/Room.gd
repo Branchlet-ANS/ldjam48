@@ -15,7 +15,8 @@ func _init(width, height, corruption=0):
 	_corruption = corruption
 
 func place_real(i : int, j : int, object):
-	reals[Vector2(i, j)] = object
+	if !reals.has(Vector2(i, j)):
+		reals[Vector2(i, j)] = object
 
 func place_tile(i : int, j : int, tile):
 	tiles[Vector2(i, j)] = tile
@@ -76,7 +77,8 @@ func get_object(id):
 		if object["id"] == id:
 			return object
 
-func basic_room(): # temp
+
+func walls():
 	var x0 = -_width/2
 	var y0 = -_height/2
 	var w = _width
@@ -87,12 +89,13 @@ func basic_room(): # temp
 				place_tile(x, y, TILE.jungle)
 			else:
 				place_tile(x, y, TILE.grass)
-	_corruption = 5
-	foraging_room()
 	place_real(x0 + 2, y0 + 2, get_object("o:room_entrance"))
 	place_real(x0 + w - 3, y0 + h - 3, get_object("o:room_exit"))
-	#place_real(x0 + 7, y0 + 7, get_object("o:tree"))
-	#place_real(x0 + 8, y0 + 8, get_object("o:berry"))
+
+func basic_room(): # temp
+	walls()
+	_corruption = 5
+	foraging_room()
 
 func foraging_room():
 	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry")), 0.03)
