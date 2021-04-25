@@ -3,7 +3,8 @@ extends Node
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
-const CHUNK_SIZE = 8
+const CHUNK_WIDTH = 64
+const CHUNK_HEIGHT = 32
 
 enum ItemTypes {
 	FOLIAGE = 0,
@@ -27,7 +28,7 @@ var food_register = [
 		"name": "Penis Berry",
 		"id": "penis_berry",
 		"value": -3,
-		"corruption": 3
+		"corruption": 7
 	}
 	
 ]
@@ -90,8 +91,8 @@ func get_by_corruption(corruption, dict: Array):
 	return items
 		
 func add_items(collection : Array, chance : float): 
-	for i in range(-CHUNK_SIZE/2+1, CHUNK_SIZE/2-1):
-		for j in range(-CHUNK_SIZE/2+1, CHUNK_SIZE/2-1):
+	for i in range(-CHUNK_WIDTH/2+1, CHUNK_WIDTH/2-1):
+		for j in range(-CHUNK_HEIGHT/2+1, CHUNK_HEIGHT/2-1):
 			randomize()
 			if rand_range(0, 1) < chance: 
 				content[Vector2(i, j)] = collection[randi() % collection.size()]

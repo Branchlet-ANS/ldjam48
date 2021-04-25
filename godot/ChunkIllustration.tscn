@@ -94,3 +94,39 @@ collision_layer = 4
 position = Vector2( -0.445465, 0 )
 scale = Vector2( 7, 7 )
 shape = SubResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 64.0
+margin_top = -65.0
+margin_right = 65.0
+margin_bottom = 65.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = -65.7083
+margin_top = -65.2102
+margin_right = -64.7083
+margin_bottom = 64.7898
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = -66.0
+margin_top = 64.0511
+margin_right = 65.0
+margin_bottom = 65.0511
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+margin_left = -65.7898
+margin_top = -65.4469
+margin_right = 65.2102
+margin_bottom = -64.4469
+__meta__ = {
+"_edit_use_anchors_": false
+}

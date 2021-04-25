@@ -42,15 +42,6 @@ func _process(delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
 
-	if Input.is_action_pressed("ui_left"):
-		camera.spd_x = -camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_right"):
-		camera.spd_x = camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_up"):
-		camera.spd_y = -camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_down"):
-		camera.spd_y = camera.CAMERA_SPEED
-
 
 func _draw():
 	if(select_pressed): # Tegn boks fra der musen ble trykt til der musen er nå
