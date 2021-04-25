@@ -36,9 +36,6 @@ func _ready():
 			else:
 				tiles.overgrow()		
 			
-			
-			
-
 func make_paths():
 	var directions = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 	var direction
