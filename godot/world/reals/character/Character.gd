@@ -2,9 +2,6 @@ extends KinematicReal
 
 class_name Character
 
-export var scene_item : Resource
-export var scene_projectile : Resource
-
 enum STATE {
 	idle,
 	target,
@@ -33,6 +30,8 @@ func _ready():
 	interact_area.add_child(_collision_shape)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	add_child(interact_area)
+	collision_layer = 1 << 1
+	collision_mask = (1 << 0) + (1 << 2)
 
 func _process(_delta):
 	if get_state() == STATE.idle and get_jobs().size() > 0:
@@ -83,11 +82,9 @@ func perform_job():
 		set_state(STATE.idle)
 	
 func strike(pos):
-	var projectile = scene_projectile.instance()
-	get_parent().add_child(projectile)
-	projectile.position = position
-	projectile.velocity = projectile.speed * Vector2(pos - position).normalized()
-	projectile.late_ready()
+	var projectile = Projectile.new("", "", get_parent(), true, 200,
+		Vector2(pos - position).normalized(), position)
+	pass
 
 func get_target():
 	return _target
