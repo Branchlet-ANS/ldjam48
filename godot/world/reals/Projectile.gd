@@ -24,11 +24,8 @@ func _init(id : String, name: String = "", speed : float = 200,
 	_sprite_name = sprite_name
 	if(_fired):
 		fire(direction, position)
-	print("init")
 
 func _ready():
-	print("ready")
-	print(_sprite_name)
 	set_sprite("weapons/projectiles/" + _sprite_name + ".png")
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
@@ -44,10 +41,10 @@ func fire(direction, position):
 	self.position = position
 
 	if(_rotating):
-		rotation = (atan(_velocity.y/_velocity.x) + PI/2)
+		rotation = (atan2(_velocity.y,_velocity.x) + PI/2)
 		if(_velocity.x < 0):
 			scale = Vector2(-scale.x, scale.y)
-			rotation = (atan(_velocity.y/_velocity.x) + PI/2 - PI)
+			rotation = (atan2(_velocity.y,_velocity.x) + PI/2 - PI)
 
 func _physics_process(delta):
 	if(!_fired):
