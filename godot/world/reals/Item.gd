@@ -2,21 +2,11 @@ extends StaticReal
 
 class_name Item 
 
-var _id : String
-var _name : String
 var _count : int = 1
 var _count_max : int = 8
 
-func _init(id : String, name: String, count = 1):
-	_id = id
-	_name = name
+func _init(id : String, name: String, count = 1).(id, name):
 	_count = count
-
-func get_id() -> String:
-	return _id
-
-func get_name() -> String:
-	return _name
 
 func get_count() -> int:
 	return _count

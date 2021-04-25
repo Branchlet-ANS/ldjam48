@@ -7,6 +7,7 @@ export var scene_static_real : Resource
 export var tileset : TileSet
 
 onready var tile_map : TileMap = $"TileMap"
+onready var room_container : Node2D = $"RoomContainer"
 
 const TILE_SIZE = 16
 var _rooms : Array = []
@@ -21,27 +22,29 @@ func add(room : Room):
 
 func select(index):
 	_index = index
-	build()
+	rebuild()
 	
-func build():
+func rebuild():
+	for child in room_container.get_children():
+		child.queue_free()
 	var room = _rooms[_index]
 	var reals = room.get_reals()
 	var tiles = room.get_tiles()
 	for key in reals:
 		var real = reals[key]
-		var instance = instance_real(real["object"], real["id"])
-		add_child(instance)
+		var instance = instance_object(real["object"], real["id"])
+		room_container.add_child(instance)
 		instance.set_position(key * TILE_SIZE)
 		instance.set_sprite(real["sprite"])
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
 		
-func instance_real(object, id):
+func instance_object(object, id):
 	if object == Real:
-		return Real.new()
+		return Real.new(id)
 	if object == StaticReal:
-		return StaticReal.new()
+		return StaticReal.new(id)
 	if object == Item:
 		return Item.new(id, "Name")
 	

@@ -4,6 +4,9 @@ class_name StaticReal
 
 var collision_shape : CollisionShape2D
 
+func _init(id : String, name: String = "").(id, name):
+	pass
+	
 func _ready():
 	collision_shape = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
