@@ -7,7 +7,7 @@ export var scene_static_real : Resource
 export var tileset : TileSet
 
 onready var tile_map : TileMap = $"TileMap"
-onready var room_container : Node2D = $"RoomContainer"
+onready var room_container : YSort = $"RoomContainer"
 
 const TILE_SIZE = 16
 var _rooms : Array = []

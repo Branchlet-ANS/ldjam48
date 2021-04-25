@@ -11,4 +11,4 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 
-[node name="RoomContainer" type="Node2D" parent="."]
+[node name="RoomContainer" type="YSort" parent="."]
