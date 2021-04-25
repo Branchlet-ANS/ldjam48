@@ -24,11 +24,11 @@ func _init(id : String, name: String = "", type : String = "", parent = null,
 		speed = 400
 		rotating = false
 		damage = 10
-		inaccuracy = 0.05
+		inaccuracy = 0.5
 		set_sprite("weapons/projectiles/bullet.png")
 	
 	self.rotating = rotating
-	direction *= 1 + rand_range(-inaccuracy, inaccuracy)
+	direction = (direction * Vector2(1 + rand_range(-inaccuracy, inaccuracy), 1+ rand_range(-inaccuracy, inaccuracy))).normalized()
 	self.velocity = direction * speed
 	self.position = position
 	

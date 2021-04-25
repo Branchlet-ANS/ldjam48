@@ -5,7 +5,8 @@ class_name Character
 enum STATE {
 	idle,
 	target,
-	job
+	job,
+	contact
 }
 
 var inventory : Inventory = Inventory.new()
@@ -16,6 +17,8 @@ var speed : float = 100
 var jobs : Array = []
 var job_timer : int = 0
 var interact_area : Area2D
+var contact_timer : int = 0
+var weapon : int = 0
 
 func _init(id : String, name: String = "").(id, name):
 	pass
@@ -39,6 +42,8 @@ func _process(_delta):
 			set_target(get_jobs()[0].transform.origin)
 	if get_state() == STATE.job:
 		perform_job()
+	if get_state() == STATE.contact:
+		contact_cycle()
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
@@ -75,6 +80,13 @@ func set_target(target):
 	set_state(STATE.target)
 
 func perform_job():
+	job_timer -= 1
+	if job_timer == 0:
+		get_jobs()[0].interact(self)
+		get_jobs().pop_front()
+		set_state(STATE.idle)
+
+func contact_cycle():
 	job_timer -= 1
 	if job_timer == 0:
 		get_jobs()[0].interact(self)
