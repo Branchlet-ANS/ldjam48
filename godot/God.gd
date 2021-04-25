@@ -16,9 +16,11 @@ func _ready():
 	player_selected1 = AudioStreamPlayer2D.new()
 	add_child(player_selected1)
 	player_selected1.set_stream(sfx_selected1)
+	sfx_selected1.set_stereo(true)
 	player_selected2 = AudioStreamPlayer2D.new()
 	add_child(player_selected2)
 	player_selected2.set_stream(sfx_selected2)
+	sfx_selected2.set_stereo(true)
 
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()

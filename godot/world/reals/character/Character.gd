@@ -10,7 +10,7 @@ var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 
 func _init(id : String, name: String = "").(id, name):
-	weapon = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.7)
+	weapon = weapon_list["Gun"]
 	pass
 
 func _ready():
@@ -19,6 +19,7 @@ func _ready():
 	player_step = AudioStreamPlayer2D.new()
 	add_child(player_step)
 	player_step.set_stream(sfx_step)
+	sfx_step.set_stereo(true)
 	
 	step_dist *= rand_range(0.8, 1.2)
 

@@ -19,6 +19,7 @@ var interact_area : Area2D
 var attack_timer : int = 0
 var attack_target : KinematicReal
 var attack_moving : bool = false
+var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
 
@@ -28,15 +29,23 @@ var player_hurt : AudioStreamPlayer2D
 var sfx_hurt = preload("res://Assets/SFX/hurt.wav")
 
 func _init(id : String, name: String = "").(id, name):
+	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 100)
+	weapon_list["Crossbow"] = Weapon.new("", "", 20, 150, true, 300, "arrow", true, 0.05, 100)
+	weapon_list["Gun"] = Weapon.new("", "", 30, 200, true, 400, "bullet", false, 0.7, 100)
+	weapon_list["Sword"] = Weapon.new("", "", 5, 25, false, 0, "", false, 0, 10)
+	weapon_list["Pike"] = Weapon.new("", "", 10, 50, false, 0, "", false, 0, 25)
+	weapon_list["Halberd"] = Weapon.new("", "", 13, 40, false, 0, "", false, 0, 20)
 	pass
 
 func _ready():
 	player_dead = AudioStreamPlayer2D.new()
 	add_child(player_dead)
 	player_dead.set_stream(sfx_dead)
+	sfx_dead.set_stereo(true)
 	player_hurt = AudioStreamPlayer2D.new()
 	add_child(player_hurt)
 	player_hurt.set_stream(sfx_hurt)
+	sfx_hurt.set_stereo(true)
 	
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
