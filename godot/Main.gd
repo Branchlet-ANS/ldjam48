@@ -2,13 +2,10 @@ extends Node
 
 class_name Main
 
-export var scene_character : Resource
-
 onready var god : God = $God
 onready var roomManager : RoomManager = $RoomManager
 
 var characters : Array = []
-var interactables: Array = []
 
 func _ready():
 	var _r = Room.new(32, 18)
@@ -36,16 +33,7 @@ func _ready():
 			
 	
 func add_character(x : int, y : int):
-	var character = scene_character.instance()
+	var character = Character.new("character")
 	character.transform.origin = Vector2(x, y)
 	characters.append(character)
 	roomManager.room_container.add_child(character)
-
-func get_interactables():
-	var i = 0
-	while i < interactables.size():
-		if (!is_instance_valid(interactables[i])):
-			interactables.erase(interactables[i])
-			i -= 1
-		i += 1
-	return interactables
