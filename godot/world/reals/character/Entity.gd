@@ -22,6 +22,7 @@ var attack_moving : bool = false
 var weapon_list : Dictionary = {}
 var weapon : Weapon = null
 var _health : float = 100.0
+var melee_in_range : Array = []
 
 var player_dead : AudioStreamPlayer2D
 var sfx_dead = preload("res://Assets/SFX/dead.wav")
@@ -29,12 +30,13 @@ var player_hurt : AudioStreamPlayer2D
 var sfx_hurt = preload("res://Assets/SFX/hurt.wav")
 
 func _init(id : String, name: String = "").(id, name):
-	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 100)
-	weapon_list["Crossbow"] = Weapon.new("", "", 20, 150, true, 300, "arrow", true, 0.05, 100)
-	weapon_list["Gun"] = Weapon.new("", "", 30, 200, true, 400, "bullet", false, 0.7, 100)
-	weapon_list["Sword"] = Weapon.new("", "", 5, 25, false, 0, "", false, 0, 10)
-	weapon_list["Pike"] = Weapon.new("", "", 10, 50, false, 0, "", false, 0, 25)
-	weapon_list["Halberd"] = Weapon.new("", "", 13, 40, false, 0, "", false, 0, 20)
+	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 100, "Bow")
+	weapon_list["Crossbow"] = Weapon.new("", "", 20, 150, true, 300, "arrow", true, 0.05, 100, "Crossbow")
+	weapon_list["Gun"] = Weapon.new("", "", 30, 200, true, 400, "bullet", false, 0.7, 100, "Gun")
+	weapon_list["Sword"] = Weapon.new("", "", 5, 25, false, 0, "", false, 0, 10, "Sword")
+	weapon_list["Pike"] = Weapon.new("", "", 10, 50, false, 0, "", false, 0, 25, "Pike")
+	weapon_list["Halberd"] = Weapon.new("", "", 13, 40, false, 0, "", false, 0, 20, "Halberd")
+	weapon_list["Fists"] = Weapon.new("", "", 2, 25, false, 0, "", false, 0, 10, "Fists")
 	pass
 
 func _ready():
@@ -47,15 +49,24 @@ func _ready():
 	player_hurt.set_stream(sfx_hurt)
 	sfx_hurt.set_stereo(true)
 	
+	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = RectangleShape2D.new()
 	_shape.set_extents(Vector2(12, 12))
 	_collision_shape.set_shape(_shape)
+	var _collision_shape_melee = CollisionShape2D.new()
+	var _shape_melee = RectangleShape2D.new()
+	_shape_melee.set_extents(Vector2(12, 12))
+	_collision_shape_melee.set_shape(_shape)
 	collision_layer = 1 << 1
 	collision_mask = (1 << 0) + (1 << 2)
 	interact_area.add_child(_collision_shape)
+	melee_area.add_child(_collision_shape_melee)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
+	melee_area.connect("body_entered", self, "_on_melee_Area2D_body_entered")
+	melee_area.connect("body_exited", self, "_on_melee_Area2D_body_exited")
+	add_child(melee_area)
 	add_child(interact_area)
 
 func _process(_delta):
@@ -131,12 +142,16 @@ func attack_cycle(delta):
 		strike(attack_target.position)
 		attack_timer = 100
 
-func strike(pos):
-	var p = weapon.get_projectile()
-	var projectile = Projectile.new("", "", p._speed, p._rotating,
-			p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
-	get_parent().add_child(projectile)
-	projectile.fire((pos-position).normalized(), position)
+func strike(at):
+	if(weapon.has_projectile):
+		var p = weapon.get_projectile()
+		var projectile = Projectile.new("", "", p._speed, p._rotating,
+				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
+		get_parent().add_child(projectile)
+		projectile.fire((at.position-position).normalized(), position)
+	else:
+		for entity in melee_in_range:
+			
 
 func get_target():
 	return _target

@@ -33,3 +33,11 @@ func _on_Area2D_body_entered(body):
 	if body is Item:
 		inventory.add(body)
 		body.get_parent().remove_child(body)
+
+func _on_melee_Area2D_body_entered(body):
+	if body is Entity: #hvordan ikke få characters?
+		melee_in_range.append(body)
+		
+func _on_melee_Area2D_body_exited(body):
+	if body is Entity and body in melee_in_range: #hvordan ikke få characters?
+		melee_in_range.erase(body)

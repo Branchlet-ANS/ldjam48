@@ -61,6 +61,13 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	dict["value"] = value
 	return dict
 
+func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=0):
+	var dict = register_real(id, _name, sprite, corruption, true, RoomWeapon)
+	dict["subtype"] = subtype
+	dict["chance"] = chance
+	dict["value"] = value
+	return dict
+
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
 	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
@@ -68,6 +75,7 @@ var objects_json =  [
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
+	register_food_plant("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
