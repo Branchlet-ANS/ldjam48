@@ -9,8 +9,6 @@ var camera : MainCamera
 var characters : Array = []
 
 func _ready():
-	god = God.new()
-	add_child(god)
 	camera = MainCamera.new()
 	add_child(camera)
 	camera.current = true
@@ -31,6 +29,9 @@ func _ready():
 			for i in range(len(characters)):
 				characters[i].set_position(object.get_position() + Vector2(16, 8) * i)
 			break
+
+	god = God.new()
+	add_child(god)
 
 
 func add_character(x : int, y : int):

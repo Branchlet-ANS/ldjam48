@@ -3,7 +3,8 @@ extends Node
 
 class_name Chunk
 enum Type {BUSH, PATH, OPEN}
-const CHUNK_SIZE = 8
+const CHUNK_WIDTH = 64
+const CHUNK_HEIGHT = 32
 
 enum ItemTypes {
 	FOLIAGE = 0,
@@ -27,9 +28,9 @@ var food_register = [
 		"name": "Penis Berry",
 		"id": "penis_berry",
 		"value": -3,
-		"corruption": 3
+		"corruption": 7
 	}
-	
+
 ]
 
 var foliage_register = [
@@ -70,29 +71,29 @@ func _init(coordinates: Vector2, traversable: bool, corruption: float):
 func monster_chunk():
 	# Check corruption and add monsters to content array
 	pass
-	
+
 func foraging_chunk():
 	var available_food: Array = get_by_corruption(_corruption, food_register)
 	var available_foliage: Array = get_by_corruption(_corruption, foliage_register)
 	add_items(available_food, 0.02)
 	add_items(available_foliage, 0.05)
-				
+
 func bland_chunk():
 	var available_foliage: Array = get_by_corruption(_corruption, foliage_register)
 	add_items(available_foliage, 0.05);
-	
+
 func get_content() -> Dictionary:
 	return content
-	
+
 func get_by_corruption(corruption, dict: Array):
 	var items = []
 	for item in dict:
 		if item["corruption"] <= corruption:
 			items.append(item)
 	return items
-		
-func add_items(collection : Array, chance : float): 
+
+func add_items(collection : Array, chance : float):
 	for i in range(-CHUNK_SIZE/2+1, CHUNK_SIZE/2-1):
 		for j in range(-CHUNK_SIZE/2+1, CHUNK_SIZE/2-1):
-			if rand_range(0, 1) < chance: 
+			if rand_range(0, 1) < chance:
 				content[Vector2(i, j)] = collection[randi() % collection.size()]

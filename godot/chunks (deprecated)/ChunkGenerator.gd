@@ -1,12 +1,14 @@
 extends Node2D
 
+
 export var scene_chunk_illustration : Resource
 export var scene_gatherable : Resource
 
 const MAP_WIDTH = 84
 const MAX_BRANCHES = 1
-const CHUNK_SIZE = 8
 const TILE_SIZE = 16
+const CHUNK_WIDTH = 64
+const CHUNK_HEIGHT = 32
 
 var map = {}
 
@@ -21,21 +23,21 @@ func _ready():
 		for j in range(-MAP_WIDTH/2, MAP_WIDTH/2):
 			var pos = Vector2(i, j)
 			var traversable = map[pos]._traversable
-			
+
 			var tiles = scene_chunk_illustration.instance()
 			add_child(tiles)
-			tiles.position = map[pos]._coordinates * CHUNK_SIZE * TILE_SIZE
-			
+			tiles.position = map[pos]._coordinates * Vector2(CHUNK_WIDTH, CHUNK_HEIGHT) * TILE_SIZE
+
 			if traversable:
 				var items = map[pos].content
 				for posi in items:
 					var gatherable = scene_gatherable.instance()
 					gatherable.init(Food.new(items[posi]["id"], items[posi]["name"], items[posi]["value"]))
-					gatherable.set_position(pos*CHUNK_SIZE*TILE_SIZE + posi*TILE_SIZE+Vector2(8, 8))
+					gatherable.set_position(pos*Vector2(CHUNK_WIDTH, CHUNK_HEIGHT)*TILE_SIZE + posi*TILE_SIZE+Vector2(8, 8))
 					add_child(gatherable)
 			else:
-				tiles.overgrow()		
-			
+				tiles.overgrow()
+
 func make_paths():
 	var directions = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 	var direction

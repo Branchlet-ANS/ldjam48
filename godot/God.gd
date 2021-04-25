@@ -38,7 +38,7 @@ func _unhandled_input(event):
 		elif(event.get_button_index() == 3):
 			for character in selected_characters:
 				character.strike(camera.mouse_world_position())
-				
+
 
 func interact(interactable):
 	for character in selected_characters:
@@ -47,15 +47,6 @@ func interact(interactable):
 func _process(_delta):
 	if select_pressed or selected_characters.size() > 0:
 		update()
-	var camera = get_parent().camera
-	if Input.is_action_pressed("ui_left"):
-		camera.spd_x = -camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_right"):
-		camera.spd_x = camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_up"):
-		camera.spd_y = -camera.CAMERA_SPEED
-	if Input.is_action_pressed("ui_down"):
-		camera.spd_y = camera.CAMERA_SPEED
 
 
 func _draw():
