@@ -64,6 +64,7 @@ func _ready():
 	melee_area.add_child(_collision_shape_melee)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	melee_area.connect("body_entered", self, "_on_melee_Area2D_body_entered")
+	melee_area.connect("body_exited", self, "_on_melee_Area2D_body_exited")
 	add_child(melee_area)
 	add_child(interact_area)
 
@@ -180,3 +181,9 @@ func _on_Area2D_body_entered(body):
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
 				body.queue_free()
+
+func _on_melee_Area2D_body_entered(body):
+	pass
+
+func _on_melee_Area2D_body_exited(body):
+	pass

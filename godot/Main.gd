@@ -30,7 +30,7 @@ func _ready():
 	roomManager.set_tileset(load("res://world/tileset.tres"))
 	var _room
 	for i in range(1):
-		_room = Room.new(48, 32)#randi() % 32 + 32, randi() % 46 + 32, i)
+		_room = Room.new(48, 32, 10)#randi() % 32 + 32, randi() % 46 + 32, i)
 		_room.foraging_room()
 #		var r = randi() % 3
 #		if r == 0:

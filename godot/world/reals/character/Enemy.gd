@@ -5,10 +5,11 @@ var _sense_radius
 var _attack_radius
 
 
-func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8).(id, name):
+func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8, power=2).(id, name):
 	_resistance = resistance
 	_sense_radius = sense_radius
 	_attack_radius = attack_radius
+	_power = power
 
 var sense_area : Area2D
 var target_object : Character = null

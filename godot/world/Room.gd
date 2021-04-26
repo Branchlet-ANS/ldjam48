@@ -68,11 +68,13 @@ func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=
 	dict["value"] = value
 	return dict
 
-func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius):
+func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power):
 	var dict = register_real(id, _name, sprite, corruption, false, Enemy)
 	dict["resistance"] = resistance
 	dict["sense_radius"] = sense_radius
 	dict["attack_radius"] = attack_radius
+	dict["power"] = power
+	dict["chance"] = 0.25
 	return dict
 
 
@@ -98,7 +100,8 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10, 64, 8)
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
+	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png", 3, 1, 128, 32, 25)
 ]
 
 func get_objects_by(attribute, term):
@@ -134,7 +137,6 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-	place_real(x0 + 8, y0 + 8, get_object("o:monkey"))
 	place_real(x0 + 16, y0 + 16, get_object("o:bow"))
 	place_real(x0 + 17, y0 + 16, get_object("o:crossbow"))
 	place_real(x0 + 18, y0 + 16, get_object("o:gun"))
@@ -201,7 +203,7 @@ func two_snakes(start: Vector2, end: Vector2):
 	var tiles = snake_0_positions + snake_1_positions
 	
 	for tile in tiles:
-		var s = 2 + randi() % 4 # SNAKE WIDTH
+		var s = 4 + randi() % 4 # SNAKE WIDTH
 		set_tile_rect(tile.x, tile.y, s, TILE.grass)
 	
 	set_tile_rect(start.x, start.y, 8, TILE.grass) # SPAWN WIDTH
@@ -218,7 +220,7 @@ func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
 	two_snakes(start_end[0], start_end[1])
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration")), 0.04)
+	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration") + get_objects_by("id", "o:monkey") + get_objects_by("id", "o:skeleton_horse")), 0.07)
 
 func bland_room():
 	walls()
