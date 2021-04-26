@@ -12,7 +12,7 @@ enum STATE {
 var _state : int
 var velocity : Vector2 = Vector2.ZERO
 var _target : Vector2 = Vector2.ZERO
-var speed_max : float = 80
+var speed_max : float = 70
 var acceleration : float = 20
 var damp = 0.8
 var job : Real = null
@@ -40,7 +40,6 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	speed_max = 50
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
@@ -76,7 +75,15 @@ func _physics_process(delta):
 	if get_state() == STATE.target:
 		var velocity_prev = velocity
 		move_towards(_target)
-		if transform.origin.distance_to(_target) < speed_max * delta:
+		
+		var target_width = 0
+		if is_instance_valid(job):
+			if job is StaticReal:
+				print(job._name)
+				target_width = 2*(job.collision_shape.shape.extents.length() + \
+				self.collision_shape.shape.extents.length())
+				
+		if transform.origin.distance_to(_target) <= velocity.length() * delta + target_width:
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
