@@ -66,7 +66,7 @@ func _unhandled_input(event):
 					elif(new_selection.size() >= 1):
 						EffectsManager.play_sound("selected1", self, position)
 	elif event is InputEventMouseMotion:
-		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables()
+		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables() + get_parent().roomManager.get_characters()
 		var closest = get_closest(all, mouse_pos)
 		if (closest.get_position() - mouse_pos).length() < 16:
 			clickable = closest
@@ -135,12 +135,23 @@ func _draw():
 		if !is_instance_valid(character):
 			selected_characters.erase(character)
 		var pos = character.transform.origin
-		var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
+		var points = PoolVector2Array([pos + Vector2(-5, -25), pos + Vector2(0, -20), pos + Vector2(5, -25)])
 		draw_colored_polygon(points, Color.lightgreen)
+		
 	if is_instance_valid(clickable):
 		var pos = clickable.transform.origin
-		var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
-		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
+		if clickable is Character:
+			var weapon_name = clickable.weapon.get_weapon_name().to_lower()
+			if weapon_name != "fists":
+				pos += Vector2.UP * 35
+				var texture : Texture = load("res://assets/items/" + weapon_name + ".png")
+				var points = PoolVector2Array([pos + Vector2(-10, -10), pos + Vector2(10, -10), pos + Vector2(10, 10), pos + Vector2(-10, 10)])
+				draw_colored_polygon(points, Color.lightgreen)
+				draw_texture(texture, pos + Vector2(-8, -8))
+		else:	
+			var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
+			draw_colored_polygon(points, Color.lightgreen)
+
 
 static func grid_entities(entities, around_position : Vector2, character_space):
 	var n = float(entities.size())
