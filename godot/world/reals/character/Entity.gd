@@ -12,14 +12,14 @@ enum STATE {
 var _state : int
 var velocity : Vector2 = Vector2.ZERO
 var _target : Vector2 = Vector2.ZERO
-var speed_max : float = 80
+var speed_max : float = 70
 var acceleration : float = 20
 var damp = 0.8
 var job : Real = null
-var job_timer : int = 0
+var job_timer : float = 0
 var interact_area : Area2D
 var melee_area : Area2D
-var attack_timer : int = 0
+var attack_timer : float = 0
 var attack_target : KinematicReal
 var attack_moving : bool = false
 var weapon_list : Dictionary = {}
@@ -28,6 +28,7 @@ var _health : float = 100.0
 var _resistance : float = 1.0
 var melee_in_range : Array = []
 var _power = 2
+var last_anim : String = ""
 
 func _init(id : String, name: String = "").(id, name):
 	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 100, "Bow")
@@ -40,7 +41,6 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	speed_max = 50
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
@@ -68,7 +68,7 @@ func _process(_delta):
 		if is_instance_valid(job):
 			set_target(job.transform.origin)
 	if get_state() == STATE.job:
-		perform_job()
+		perform_job(_delta)
 	if get_state() == STATE.attack:
 		attack_cycle(_delta)
 
@@ -76,24 +76,22 @@ func _physics_process(delta):
 	if get_state() == STATE.target:
 		var velocity_prev = velocity
 		move_towards(_target)
-		if transform.origin.distance_to(_target) < speed_max * delta:
+		
+		var target_width = 0
+		if is_instance_valid(job):
+			if job is StaticReal:
+				print(job._name)
+				target_width = 2*(job.collision_shape.shape.extents.length() + \
+				self.collision_shape.shape.extents.length())
+			else:
+				target_width = self.collision_shape.shape.extents.length()
+				
+		if transform.origin.distance_to(_target) <= velocity.length() * delta + target_width:
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
 				set_state(STATE.idle)
-	if get_state() == STATE.attack:
-		if !(is_instance_valid(attack_target)):
-			attack_target = null
-			set_state(STATE.idle)
-			return
-		var margin = 10
-		if(attack_moving):
-			margin = 5
-		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
-			attack_moving = true
-			move_towards(_target)
-			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
-				attack_moving = false
+	
 	velocity = move_and_slide(velocity)
 	velocity *= damp
 
@@ -120,20 +118,20 @@ func set_state(state):
 	if state == STATE.idle:
 		_target = transform.origin
 	elif state == STATE.job:
-		job_timer = 100
+		job_timer = 1
 	elif state == STATE.attack:
-		attack_timer = 100
+		attack_timer = 1
 
 func set_target(target):
 	_target = target
 	set_state(STATE.target)
 
-func perform_job():
+func perform_job(delta):
 	if job == null or !is_instance_valid(job):
 		set_state(STATE.idle)
 		return
-	job_timer -= 1
-	if job_timer == 0:
+	job_timer -= delta
+	if job_timer <= 0:
 		job.interact(self)
 		job = null
 		set_state(STATE.idle)
@@ -142,9 +140,10 @@ func attack_cycle(delta):
 	if !is_instance_valid(attack_target):
 		set_state(STATE.idle)
 	attack_timer -= delta
+	print(attack_timer)
 	if attack_timer <= 0:
 		strike(attack_target)
-		attack_timer = 100
+		attack_timer = 1
 
 func strike(at):
 	if !is_instance_valid(at):
@@ -159,7 +158,7 @@ func strike(at):
 		get_parent().add_child(projectile)
 		projectile.fire((at.position-position).normalized(), position)
 	else:
-		EffectsManager.play_video("slash", get_parent().get_parent(), position)
+		EffectsManager.play_video("slash", get_parent().get_parent(), at.position)
 		for entity in melee_in_range:
 			entity.add_health(-weapon.get_dmg())
 
@@ -172,10 +171,6 @@ func add_health(amount):
 		_health += amount * 1.0/_resistance
 	else:
 		_health = 100.0
-	if(_health <= 0):
-		EffectsManager.play_sound("dead", get_parent().get_parent(), position)
-	elif(amount < 0):
-		EffectsManager.play_sound("hurt", get_parent().get_parent(), position)
 
 
 func _on_Area2D_body_entered(body):

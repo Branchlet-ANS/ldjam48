@@ -36,7 +36,22 @@ func _process(_delta):
 		print(index)
 		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
-		
+
+func _physics_process(delta):
+	if get_state() == STATE.attack:
+		if !(is_instance_valid(attack_target)):
+			attack_target = null
+			set_state(STATE.idle)
+			return
+		var margin = 10
+		if(attack_moving):
+			margin = 5
+		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+			attack_moving = true
+			move_towards(_target)
+			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
+				attack_moving = false
+
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 
@@ -60,5 +75,7 @@ func add_health(var amount):
 		get_parent().get_parent().get_parent().get_characters().erase(self)
 		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
 			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
-		get_parent().remove_child(self)
+		#get_parent().remove_child(self)
 		call_deferred("queue_free")
+	elif(amount < 0):
+		EffectsManager.play_sound("hurt", get_parent().get_parent(), position)

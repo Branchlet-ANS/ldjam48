@@ -25,7 +25,7 @@ func _ready():
 		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
 		_room.foraging_room()
 		add(_room)
-	for i in range(4):
+	for i in range(16):
 		add_character()
 	select(0)
 
@@ -40,7 +40,7 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
-	print("next room..")
+	#print("next room..")
 	rebuild()
 	
 func rebuild():
@@ -62,7 +62,8 @@ func rebuild():
 		var instance = instance_object(real)
 		room_container.add_child(instance)
 		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
-		instance.set_sprite(real["sprite"])
+		if(real["sprite"] != ""):
+			instance.set_sprite(real["sprite"])
 		instance.interactable = real["interactable"]
 	for key in tiles:
 		var tile = tiles[key]
@@ -79,29 +80,32 @@ func rebuild():
 			break
 
 func instance_object(info):
+	var return_value
 	var object = info["object"]
 	if object == Real:
-		return Real.new(info["id"])
+		return_value = Real.new(info["id"], info["name"])
 	if object == StaticReal:
-		return StaticReal.new(info["id"])
+		return_value = StaticReal.new(info["id"], info["name"])
 	if object == Item:
-		return Item.new(info["id"], info["name"])
+		return_value = Item.new(info["id"], info["name"])
 	if object == FoodPlant:
-		return FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
+		return_value = FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
 	if object == RoomWeapon:
-		return RoomWeapon.new(info["id"], info["name"], info["name"])
+		return_value = RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:
-		return Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"])
+		return_value = Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"])
 	if object == RoomPortal:
 		if info["id"] == "o:room_entrance":
-			return RoomPortal.new(info["id"], info["name"], -1)
+			return_value = RoomPortal.new(info["id"], info["name"], -1)
 		else:
-			return RoomPortal.new(info["id"], info["name"], 1)
+			return_value = RoomPortal.new(info["id"], info["name"], 1)
 	if object == Character:
 		var character = Character.new(info["id"], info["name"])
 		character._health = randi() % (info["health_max"] - info["health_min"]) + info["health_min"]
 		character.weapon = character.weapon_list[info["weapons"][randi() % info["weapons"].size()]]
-		return character
+		return_value = character
+	return_value.sprite_offset = info["offset"]
+	return return_value
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)

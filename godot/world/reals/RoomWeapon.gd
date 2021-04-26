@@ -17,7 +17,7 @@ func get_weapon_name() -> String:
 	return _weapon_name
 	
 func interact(character):
-	print(character.weapon.get_weapon_name())
+	#(character.weapon.get_weapon_name())
 	if character.weapon != character.weapon_list["Fists"]:
 		EffectsManager.play_sound("food", get_parent().get_parent(), position)
 		var weapon_old = character.weapon

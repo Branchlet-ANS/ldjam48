@@ -33,17 +33,7 @@ margin_right = 800.0
 margin_bottom = 160.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "ACHIEVEMENT:
-
+text = "He
 "
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Timer" type="Timer" parent="GUI/Achievement"]
-wait_time = 5.0
-
-[connection signal="timeout" from="GUI/Achievement/Timer" to="GUI/Achievement" method="_on_Timer_timeout"]
