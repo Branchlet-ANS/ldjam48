@@ -87,7 +87,7 @@ func instance_object(info):
 	if object == Item:
 		return_value = Item.new(info["id"], info["name"])
 	if object == FoodPlant:
-		return_value = FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
+		return_value = FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.7, 1.3))
 	if object == RoomWeapon:
 		return_value = RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:

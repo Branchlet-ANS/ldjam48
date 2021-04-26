@@ -58,6 +58,14 @@ func _process(delta):
 			last_anim = "idle"
 			sprite.animation = "idle"
 
+func attack_cycle(delta):
+	if !is_instance_valid(attack_target):
+		set_state(STATE.idle)
+	attack_timer -= delta
+	if attack_timer <= 0:
+		strike(attack_target)
+		attack_timer = 1
+		
 func _physics_process(delta):
 	pass
 

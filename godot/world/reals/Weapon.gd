@@ -3,7 +3,7 @@ extends StaticReal
 class_name Weapon 
 
 var _dmg : float = 10
-var _attack_timer : float = 100
+var _attack_timer : float = 1
 var _has_projectile : bool = false
 var _projectile_speed : float = 200
 var _projectile_sprite_name : String = "bullet"
