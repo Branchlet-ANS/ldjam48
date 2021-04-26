@@ -23,17 +23,6 @@ func _ready():
 	sense_area.add_child(_collision_shape)
 	sense_area.connect("body_entered", self, "_on_sense_area_body_entered")
 	add_child(sense_area)
-	
-	sprite.frames = SpriteFrames.new()
-	_add_animation("walk",4)
-	_add_animation("attack",5)
-	_add_animation("idle",1)
-	sprite.animation = "idle"
-
-func _add_animation(a_name, length):
-	sprite.frames.add_animation(a_name)
-	for i in range(length):
-		sprite.frames.add_frame(a_name, load("res://assets/animals/monkey/monkey_" + a_name + str(i+1) + ".png"))
 
 func _on_sense_area_body_entered(body):
 	if body is Character:

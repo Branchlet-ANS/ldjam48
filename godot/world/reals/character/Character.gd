@@ -33,7 +33,6 @@ func _process(_delta):
 	if get_state() == STATE.target:
 		var angle = 2 * PI - get_position().angle_to_point(get_position() + velocity)
 		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
-		print(index)
 		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
 

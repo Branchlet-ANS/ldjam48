@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/character_down1.png-c614f4dc0f75f539f7eb29e5c09b2ef2.stex"
+path="res://.import/monkey_sheet.png-f7cc0d8f059a7925ccb1ed463403c9b9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/character_down1.png"
-dest_files=[ "res://.import/character_down1.png-c614f4dc0f75f539f7eb29e5c09b2ef2.stex" ]
+source_file="res://assets/animals/monkey/monkey_sheet.png"
+dest_files=[ "res://.import/monkey_sheet.png-f7cc0d8f059a7925ccb1ed463403c9b9.stex" ]
 
 [params]
 

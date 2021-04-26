@@ -29,7 +29,6 @@ func _ready():
 		add_character()
 	select(0)
 
-
 func add(room : Room):
 	_rooms.append(room)
 
@@ -40,7 +39,6 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
-	#print("next room..")
 	rebuild()
 	
 func rebuild():
