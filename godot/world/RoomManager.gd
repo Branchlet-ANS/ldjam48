@@ -76,9 +76,12 @@ func rebuild():
 		
 	for object in room_container.get_children():
 		if object.get_id() == "o:room_entrance":
+			var characters = []
 			for character in get_characters():
-				character.set_position(object.get_position())
-			God.grid_entities(get_characters(), object.get_position(), 15)
+				if character.tame:
+					characters.append(character)
+					character.set_position(object.get_position())
+			God.grid_entities(characters, object.get_position(), 15)
 			break
 
 func instance_object(info):
@@ -100,6 +103,11 @@ func instance_object(info):
 			return RoomPortal.new(info["id"], info["name"], -1)
 		else:
 			return RoomPortal.new(info["id"], info["name"], 1)
+	if object == Character:
+		var character = Character.new(info["id"], info["name"])
+		character._health = randi() % (info["health_max"] - info["health_min"]) + info["health_min"]
+		character.weapon =  character.weapon_list[info["weapons"][randi() % info["weapons"].size()]]
+		return character
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
@@ -136,4 +144,5 @@ func get_height():
 
 func add_character():
 	var character = Character.new("o:character")
+	character.tame = true
 	room_container.add_child(character)

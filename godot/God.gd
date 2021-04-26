@@ -38,9 +38,13 @@ func _unhandled_input(event):
 				var select_pos_end = mouse_pos
 				if (select_pos_end - select_pos_start).length() < 12:
 					var closest_character = get_closest(get_parent().get_characters(), mouse_pos)
-					if (closest_character.get_position() - mouse_pos).length() < 16:
-						selected_characters = [closest_character]
-						return
+					if closest_character != null:
+						if (closest_character.get_position() - mouse_pos).length() < 16:
+							selected_characters = [closest_character]
+							player_selected1.play()
+							return
+						else:
+							selected_characters.clear()
 				else:
 					var new_selection = []
 					for character in get_parent().get_characters():
@@ -50,8 +54,7 @@ func _unhandled_input(event):
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
 							new_selection.append(character)
-					if new_selection.size() > 0:
-						selected_characters = new_selection
+					selected_characters = new_selection
 					if(new_selection.size() >= 2):
 						EffectsManager.play_sound("selected2", self, position)
 					elif(new_selection.size() >= 1):
@@ -77,10 +80,11 @@ static func get_closest(objects, position):
 func set_selection_target():
 	var mouse_pos = get_parent().camera.mouse_world_position()
 	for character in selected_characters:
+		character.tame = true
 		character.set_job(null)
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
-	
+
 func interact(interactable):
 	for character in selected_characters:
 		character.set_job(interactable)

@@ -138,7 +138,7 @@ func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
 	two_snakes(start_end[0], start_end[1])
-	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") + register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") + register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse")), 0.07)
+	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") + register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") + register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse") + register.get_objects_by("id", "o:scruffy_character")), 0.07)
 
 func bland_room():
 	walls()

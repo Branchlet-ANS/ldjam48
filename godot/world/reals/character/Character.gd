@@ -7,6 +7,7 @@ var inventory : Inventory = Inventory.new()
 var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 var enemy_script = load("res://world/reals/character/Enemy.gd")
+var tame = false
 
 func _init(id : String, name: String = "").(id, name):
 	pass
