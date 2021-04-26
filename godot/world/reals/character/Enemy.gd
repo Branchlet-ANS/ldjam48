@@ -12,7 +12,7 @@ func _init(id : String, name: String = "", resistance=100, sense_radius=64, atta
 	_power = power
 
 var sense_area : Area2D
-var target_object : Character = null
+var sensed_characters : Array = []
 
 func _ready():
 	sense_area = Area2D.new()
@@ -23,24 +23,57 @@ func _ready():
 	sense_area.add_child(_collision_shape)
 	sense_area.connect("body_entered", self, "_on_sense_area_body_entered")
 	add_child(sense_area)
+	
+	sprite.frames = SpriteFrames.new()
+	_add_animation("walk",4)
+	_add_animation("attack",5)
+	_add_animation("idle",1)
+	sprite.animation = "idle"
+
+func _add_animation(a_name, length):
+	sprite.frames.add_animation(a_name)
+	for i in range(length):
+		sprite.frames.add_frame(a_name, load("res://assets/animals/monkey/monkey_" + a_name + str(i+1) + ".png"))
 
 func _on_sense_area_body_entered(body):
 	if body is Character:
-		if get_state() == STATE.idle:
-			target_object = body
+		sensed_characters.append(body)
 
 func _process(delta):
-	if is_instance_valid(target_object):
-		var distance = get_position().distance_to(target_object.get_position())
+	if is_instance_valid(attack_target):
+		var distance = get_position().distance_to(attack_target.get_position())
+		if(distance < _attack_radius and last_anim != "attack"):
+			sprite.animation = "attack"
+			last_anim = "attack"
+			sprite.play()
+		elif(distance >= _attack_radius and last_anim != "walk"):
+			sprite.animation = "walk"
+			last_anim = "walk"
+			sprite.play()
 		if distance > _sense_radius:
 			set_state(STATE.idle)
-		elif distance < _attack_radius:
-			target_object.add_health(-_power)
-			target_object.set_target((target_object.get_position() - get_position()).normalized()*5)
+		elif distance < _attack_radius and attack_timer < 0:
+			attack_cycle(delta)
+			
 		else:
-			set_target(target_object.get_position())
+			move_towards(attack_target.get_position())
 	else:
-		target_object = null
+		for character in sensed_characters:
+			if is_instance_valid(character):
+				set_state(STATE.attack)
+				attack_target = character
+				break
+		if(get_state() == STATE.idle and last_anim != "idle"):
+			last_anim = "idle"
+			sprite.animation = "idle"
+			
+func _physics_process(delta):
+	pass
+
+func strike(at):
+	if !is_instance_valid(at):
+		return
+	at.add_health(-_power)
 
 func add_health(var amount):
 	.add_health(amount)

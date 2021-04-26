@@ -26,12 +26,13 @@ func _ready():
 	sprite.set_position(Vector2(0, -8))
 	
 	step_dist *= rand_range(0.8, 1.2)
-	
+
+
 func _add_animation(animation):
 	sprite.frames.add_animation(animation)
 	for i in range(4):
 		sprite.frames.add_frame(animation, load("res://assets/characters/character_" + animation + str(i+1) + ".png"))
-
+	
 func _process(_delta):
 	if (position - step_pos).length() > 10:
 		step_pos = position
@@ -49,7 +50,22 @@ func _process(_delta):
 		var index = int(angle / (PI / 2.0) + PI / 4.0) % 4
 		sprite.animation = ["right", "up", "left", "down"][index]
 		sprite.play()
-		
+
+func _physics_process(delta):
+	if get_state() == STATE.attack:
+		if !(is_instance_valid(attack_target)):
+			attack_target = null
+			set_state(STATE.idle)
+			return
+		var margin = 10
+		if(attack_moving):
+			margin = 5
+		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+			attack_moving = true
+			move_towards(_target)
+			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
+				attack_moving = false
+
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 
@@ -73,5 +89,7 @@ func add_health(var amount):
 		get_parent().get_parent().get_parent().get_characters().erase(self)
 		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
 			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
-		get_parent().remove_child(self)
+		#get_parent().remove_child(self)
 		call_deferred("queue_free")
+	elif(amount < 0):
+		EffectsManager.play_sound("hurt", get_parent().get_parent(), position)

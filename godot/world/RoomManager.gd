@@ -25,7 +25,7 @@ func _ready():
 		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
 		_room.foraging_room()
 		add(_room)
-	for i in range(4):
+	for i in range(16):
 		add_character()
 	select(0)
 
@@ -62,7 +62,8 @@ func rebuild():
 		var instance = instance_object(real)
 		room_container.add_child(instance)
 		instance.set_position(key * TILE_SIZE + TILE_SIZE/2*Vector2(1,1))
-		instance.set_sprite(real["sprite"])
+		if(real["sprite"] != ""):
+			instance.set_sprite(real["sprite"])
 		instance.interactable = real["interactable"]
 	for key in tiles:
 		var tile = tiles[key]

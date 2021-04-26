@@ -131,8 +131,6 @@ func _draw():
 static func grid_entities(entities, around_position : Vector2, character_space):
 	var n = float(entities.size())
 	for i in range(n):
-		print((fmod(i, float(floor(sqrt(n)))) -
-		fmod(n, float(floor(sqrt(n))))/1.0 ))
 		entities[i].set_target(around_position #- Vector2(character_space*sqrt(n)/2, character_space*sqrt(n)/2) +
 		+
 		(fmod(i, sqrt(n)) - clamp(((n - floor(i / sqrt(n))*sqrt(n))), 0, sqrt(n))/2 ) * character_space * Vector2.LEFT +
