@@ -1,7 +1,7 @@
 extends Node2D
 
 class_name God
-
+var Achievement = load("res://Achievement.gd")
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
@@ -87,6 +87,7 @@ func set_selection_target():
 
 func interact(interactable):
 	if selected_characters.size() > 0:
+		Achievement.achievement("Woo")
 		selected_characters[0].set_job(interactable)
 
 func contact(monster):

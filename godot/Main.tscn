@@ -1,17 +1,41 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/VFX/slash.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Achievement.gd" type="Script" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Achievement" type="PanelContainer" parent="GUI"]
 visible = false
-position = Vector2( -4.51376, 178.417 )
-scale = Vector2( 100, 100 )
-z_index = 100
-frames = ExtResource( 1 )
-animation = "anim"
-frame = 1
-playing = true
+margin_left = 400.0
+margin_top = 10.0
+margin_right = 1200.0
+margin_bottom = 170.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Achievement"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 793.0
+margin_bottom = 153.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "ACHIEVEMENT:
+
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="GUI/Achievement"]
+wait_time = 3.0
+
+[connection signal="timeout" from="GUI/Achievement/Timer" to="GUI/Achievement" method="_on_Timer_timeout"]
