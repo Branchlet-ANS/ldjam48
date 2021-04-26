@@ -190,7 +190,7 @@ func foraging_room():
 		), 0.07
 	)
 	prettify_tiles()
-	tiles_set_corruption(clamp(_corruption, 0, 3))
+	tiles_set_corruption(  floor(_corruption/4)   )
 
 func bland_room():
 	walls()

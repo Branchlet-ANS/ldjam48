@@ -6,6 +6,7 @@ var _id : String
 var _name : String
 var sprite : AnimatedSprite
 var interactable : bool = false
+var sprite_offset = Vector2.ZERO
 
 func _init(id : String, name: String = ""):
 	_id = id
@@ -20,6 +21,10 @@ func set_sprite(path : String):
 	sprite.frames.add_animation("idle")
 	sprite.frames.add_frame("idle", load("res://assets/" + path))
 	sprite.animation = "idle"
+	print(_name + ": " + str(sprite_offset))
+	sprite.set_position(sprite.get_position() + sprite_offset)
+func get_sprite():
+	return sprite
 	
 func get_id() -> String:
 	return _id

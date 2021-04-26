@@ -40,7 +40,7 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
-	print("next room..")
+	#print("next room..")
 	rebuild()
 	
 func rebuild():
@@ -80,29 +80,32 @@ func rebuild():
 			break
 
 func instance_object(info):
+	var return_value
 	var object = info["object"]
 	if object == Real:
-		return Real.new(info["id"])
+		return_value = Real.new(info["id"], info["name"])
 	if object == StaticReal:
-		return StaticReal.new(info["id"])
+		return_value = StaticReal.new(info["id"], info["name"])
 	if object == Item:
-		return Item.new(info["id"], info["name"])
+		return_value = Item.new(info["id"], info["name"])
 	if object == FoodPlant:
-		return FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
+		return_value = FoodPlant.new(info["id"], info["name"], info["value"] * rand_range(0.8, 1.2))
 	if object == RoomWeapon:
-		return RoomWeapon.new(info["id"], info["name"], info["name"])
+		return_value = RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:
-		return Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"])
+		return_value = Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"])
 	if object == RoomPortal:
 		if info["id"] == "o:room_entrance":
-			return RoomPortal.new(info["id"], info["name"], -1)
+			return_value = RoomPortal.new(info["id"], info["name"], -1)
 		else:
-			return RoomPortal.new(info["id"], info["name"], 1)
+			return_value = RoomPortal.new(info["id"], info["name"], 1)
 	if object == Character:
 		var character = Character.new(info["id"], info["name"])
 		character._health = randi() % (info["health_max"] - info["health_min"]) + info["health_min"]
 		character.weapon = character.weapon_list[info["weapons"][randi() % info["weapons"].size()]]
-		return character
+		return_value = character
+	return_value.sprite_offset = info["offset"]
+	return return_value
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)

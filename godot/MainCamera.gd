@@ -43,7 +43,4 @@ func _process(delta):
 
 	pos += (target - pos) * 0.05
 	offset = pos
-
-func mouse_world_position():
-	return get_viewport().get_mouse_position()*zoom +offset - get_viewport().size/2*zoom
 	

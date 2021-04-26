@@ -1,7 +1,6 @@
 extends Node2D
 
 class_name God
-var Achievement = load("res://Achievement.gd")
 var selected_characters : Array = []
 var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
@@ -13,7 +12,7 @@ func _ready():
 	pass
 
 func _unhandled_input(event):
-	var mouse_pos = get_parent().camera.mouse_world_position()
+	var mouse_pos = get_global_mouse_position()
 	if event is InputEventMouseButton:
 		if event.get_button_index() == 1:
 			if !event.is_pressed():
@@ -24,7 +23,11 @@ func _unhandled_input(event):
 					return
 				var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
 				if (closest_interactable.get_position() - mouse_pos).length() < 16:
-					interact(closest_interactable)
+					var closest_fella = get_closest(get_parent().roomManager.get_characters(), mouse_pos)
+					for fella in get_parent().roomManager.get_characters():
+						if !(fella == closest_fella):
+							fella.set_state(fella.STATE.idle)
+					interact(closest_fella, closest_interactable)
 					return
 			else:
 				left_down = true
@@ -80,16 +83,15 @@ static func get_closest(objects, position):
 	return closest
 
 func set_selection_target():
-	var mouse_pos = get_parent().camera.mouse_world_position()
+	var mouse_pos = get_global_mouse_position()
 	for character in selected_characters:
 		character.set_job(null)
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
 
-func interact(interactable):
-	if selected_characters.size() > 0:
-		Achievement.achievement("Woo")
-		selected_characters[0].set_job(interactable)
+func interact(character, interactable):
+	if is_instance_valid(character):
+		character.set_job(interactable)
 
 func contact(monster):
 	for character in selected_characters:
@@ -104,7 +106,7 @@ func _draw():
 	var camera = get_parent().camera
 	if select_pressed: # Tegn boks fra der musen ble trykt til der musen er nå
 		var pos1 = select_pos_start
-		var pos2 = camera.mouse_world_position()
+		var pos2 = get_global_mouse_position()
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
