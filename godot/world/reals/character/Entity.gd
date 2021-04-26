@@ -95,7 +95,7 @@ func _physics_process(delta):
 	velocity *= damp
 
 func set_sprite(spriteframes):
-	sprite.frames = load(spriteframes)
+	sprite.frames = load("res://assets/" + spriteframes)
 	
 func move_towards(pos):
 	if velocity.length() < speed_max:

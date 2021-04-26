@@ -5,11 +5,13 @@ class_name Enemy
 var _sense_radius
 var _attack_radius
 
-func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8, power=2).(id, name):
+
+func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8, power=2, speed=80).(id, name):
 	_resistance = resistance
 	_sense_radius = sense_radius
 	_attack_radius = attack_radius
 	_power = power
+	speed_max = speed
 
 var sense_area : Area2D
 var sensed_characters : Array = []
@@ -23,17 +25,6 @@ func _ready():
 	sense_area.add_child(_collision_shape)
 	sense_area.connect("body_entered", self, "_on_sense_area_body_entered")
 	add_child(sense_area)
-	
-	sprite.frames = SpriteFrames.new()
-	_add_animation("walk",4)
-	_add_animation("attack",5)
-	_add_animation("idle",1)
-	sprite.animation = "idle"
-
-func _add_animation(a_name, length):
-	sprite.frames.add_animation(a_name)
-	for i in range(length):
-		sprite.frames.add_frame(a_name, load("res://assets/animals/monkey/monkey_" + a_name + str(i+1) + ".png"))
 
 func _on_sense_area_body_entered(body):
 	if body is Character:
@@ -54,7 +45,7 @@ func _process(delta):
 			set_state(STATE.idle)
 		elif distance < _attack_radius and attack_timer < 0:
 			attack_cycle(delta)
-			
+
 		else:
 			move_towards(attack_target.get_position())
 	else:
@@ -66,7 +57,7 @@ func _process(delta):
 		if(get_state() == STATE.idle and last_anim != "idle"):
 			last_anim = "idle"
 			sprite.animation = "idle"
-			
+
 func _physics_process(delta):
 	pass
 
@@ -83,4 +74,3 @@ func add_health(var amount):
 	if _health <= 0:
 		#get_parent().remove_child(self)
 		queue_free()
-	

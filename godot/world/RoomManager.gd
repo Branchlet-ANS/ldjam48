@@ -29,7 +29,6 @@ func _ready():
 		add_character()
 	select(0)
 
-
 func add(room : Room):
 	_rooms.append(room)
 
@@ -40,7 +39,6 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
-	#print("next room..")
 	rebuild()
 	
 func rebuild():
@@ -93,7 +91,7 @@ func instance_object(info):
 	if object == RoomWeapon:
 		return_value = RoomWeapon.new(info["id"], info["name"], info["name"])
 	if object == Enemy:
-		return_value = Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"])
+		return_value = Enemy.new(info["id"], info["name"], info["resistance"], info["sense_radius"], info["attack_radius"], info["power"], info["speed"])
 	if object == RoomPortal:
 		if info["id"] == "o:room_entrance":
 			return_value = RoomPortal.new(info["id"], info["name"], -1)

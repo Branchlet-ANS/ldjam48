@@ -23,8 +23,8 @@ func _unhandled_input(event):
 					return
 				var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
 				if (closest_interactable.get_position() - mouse_pos).length() < 16:
-					var closest_fella = get_closest(get_parent().roomManager.get_characters(), mouse_pos)
-					for fella in get_parent().roomManager.get_characters():
+					var closest_fella = get_closest(selected_characters, mouse_pos)
+					for fella in selected_characters:
 						if !(fella == closest_fella):
 							fella.set_state(fella.STATE.idle)
 					interact(closest_fella, closest_interactable)
