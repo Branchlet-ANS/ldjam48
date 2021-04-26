@@ -43,7 +43,7 @@ func _process(delta):
 			sprite.play()
 		if distance > _sense_radius:
 			set_state(STATE.idle)
-		elif distance < _attack_radius and attack_timer < 0:
+		elif distance < _attack_radius:
 			attack_cycle(delta)
 
 		else:
