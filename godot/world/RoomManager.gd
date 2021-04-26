@@ -21,7 +21,7 @@ func _ready():
 	add_child(room_container)
 	
 	var _room
-	for i in range(8):
+	for i in range(15):
 		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
 		_room.foraging_room()
 		add(_room)
