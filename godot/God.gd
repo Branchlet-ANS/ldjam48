@@ -25,7 +25,22 @@ func _ready():
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()
 	if event is InputEventMouseButton:
-		if(event.get_button_index() == 1):
+		if event.get_button_index() == 1:
+			if !event.is_pressed():
+				var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
+				if closest_monster != null and (closest_monster.get_position() - mouse_pos).length() < 16:
+					contact(closest_monster)
+					return
+				var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
+				if (closest_interactable.get_position() - mouse_pos).length() < 16:
+					interact(closest_interactable)
+					return
+				for character in selected_characters:
+					character.set_job(null)
+					character.set_state(character.STATE.idle)
+				grid_entities(selected_characters, mouse_pos, character_space)
+				player_selected1.play()			
+		elif event.get_button_index() == 2:
 			if(event.is_pressed()):
 				select_pos_start = mouse_pos
 				select_pressed = true
@@ -38,21 +53,6 @@ func _unhandled_input(event):
 						selected_characters = [closest_character]
 						player_selected1.play()
 						return
-					var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
-					if closest_monster != null:
-						if (closest_monster.get_position() - mouse_pos).length() < 16:
-							contact(closest_monster)
-							return
-					var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
-					if (closest_interactable.get_position() - mouse_pos).length() < 16:
-						interact(closest_interactable)
-						return
-					
-					for character in selected_characters:
-						character.set_job(null)
-						character.set_state(character.STATE.idle)
-					grid_entities(selected_characters, mouse_pos, character_space)
-					player_selected1.play()
 				else:
 					var new_selection = []
 					for character in get_parent().get_characters():
@@ -68,8 +68,6 @@ func _unhandled_input(event):
 						player_selected2.play()
 					elif(new_selection.size() >= 1):
 						player_selected1.play()
-		if(event.get_button_index() == 2):
-			selected_characters.clear()
 	elif event is InputEventMouseMotion:
 		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables()
 		var closest = get_closest(all, mouse_pos)
