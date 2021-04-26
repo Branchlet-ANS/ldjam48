@@ -39,6 +39,15 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	dict["power"] = power
 	dict["chance"] = 0.25
 	return dict
+	
+func register_character(id, _name, sprite, corruption, health_min, health_max, weapons, chance):
+	var dict = register_real(id, _name, sprite, corruption, false, Character)
+	dict["health_min"] = health_min
+	dict["health_max"] = health_max
+	dict["weapons"] = weapons
+	dict["chance"] = chance
+	return dict
+	
 
 
 var objects_json =  [
@@ -64,7 +73,8 @@ var objects_json =  [
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
 	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
-	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png", 3, 1, 128, 32, 25)
+	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png", 3, 1, 128, 32, 25),
+	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", 2, 7, 23, ["Fists", "Sword"], 0.12)
 ]
 
 func get_objects_by(attribute, term):

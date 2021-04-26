@@ -89,6 +89,7 @@ static func get_closest(objects, position):
 func set_selection_target():
 	var mouse_pos = get_parent().camera.mouse_world_position()
 	for character in selected_characters:
+		character.tame = true
 		character.set_job(null)
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
