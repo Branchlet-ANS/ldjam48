@@ -109,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/StaticReal.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "VideoTimer",
+"language": "GDScript",
+"path": "res://world/VideoTimer.gd"
+}, {
 "base": "StaticReal",
 "class": "Weapon",
 "language": "GDScript",
@@ -135,6 +140,7 @@ _global_script_class_icons={
 "RoomPortal": "",
 "RoomWeapon": "",
 "StaticReal": "",
+"VideoTimer": "",
 "Weapon": ""
 }
 

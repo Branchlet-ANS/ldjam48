@@ -41,7 +41,6 @@ func _unhandled_input(event):
 					if closest_character != null:
 						if (closest_character.get_position() - mouse_pos).length() < 16:
 							selected_characters = [closest_character]
-							player_selected1.play()
 							return
 						else:
 							selected_characters.clear()
