@@ -45,7 +45,6 @@ func _process(delta):
 			set_state(STATE.idle)
 		elif distance < _attack_radius:
 			attack_cycle(delta)
-
 		else:
 			move_towards(attack_target.get_position())
 	else:
