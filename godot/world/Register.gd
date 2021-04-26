@@ -56,18 +56,36 @@ func register_character(id, _name, sprite, corruption, health_min, health_max, w
 
 
 var objects_json =  [
-	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
-	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
-	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.8, 1),
-	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
-	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
-	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
-	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.12),
-	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.07),
-	register_weapon("o:gun", "Gun", "items/gun.png", 0, 1),
-	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.12),
+	register_real("o:room_entrance", "Room Entrance", "entrance.png", 0, true, RoomPortal),
+	register_real("o:room_exit", "Room Exit", "exit.png", 0, true, RoomPortal),
+
+	register_food_plant("o:wangu_berry", "Wangu", "bushes/wangu.png", 0, "berry", 0.8, 5),
+	register_food_plant("o:cherry_berry", "Cherry Berry", "bushes/cherry_berry.png", 0,"berry", 0.6, -5),
+	register_food_plant("o:blue_banana", "Blue Banana", "bushes/blue_banana.png", 1, "berry", 0.6, 7),
+	register_food_plant("o:penis_berry", "Penis Berry", "bushes/penis_berry.png", 2, "berry", 0.6, -25),
+	register_food_plant("o:bee_berry", "Bee Berry", "bushes/bee_berry.png", 3, "berry", 0.4, 10),
+	register_food_plant("o:zip_berry", "Zip Berry", "bushes/zip_berry.png", 3, "berry", 0.5, -100),
+
+	register_food_plant("o:blue_wangu", "Blue Wangu", "bushes/blue_wangu.png", 4, "berry", 0.8, -100),
+	register_food_plant("o:red_banana", "Red Banana", "bushes/red_banana.png", 5, "berry", 0.8, 15),
+
+	register_food_plant("o:wasp_berry", "Wasp Berry", "bushes/wasp_berry.png", 6, "berry", 0.5, -100),
+	register_food_plant("o:bat_berry", "Bat Berry", "bushes/wasp_berry.png", 7, "berry", 0.3, 25),
+
+	register_food_plant("o:purple_wangu", "Purple Wangu", "bushes/purple_wangu.png", 9, "berry", 0.8, 35),
+	register_food_plant("o:prickled_wangu", "Prickled Wangu", "bushes/prickled_wangu.png", 10, "berry", 0.8, -100),
+	register_food_plant("o:purple_cherry", "Purple Cherry", "bushes/purple_cherry.png", 9, "berry", 0.45, 30),
+
+	register_food_plant("o:thorn_berry", "Thorn Berry", "bushes/thorn_berry.png", 10, "berry", 0.02, 200),
+
+
+	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.13),
+	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.1),
+	register_weapon("o:gun", "Gun", "items/gun.png", 0, 0.03),
+	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.13),
 	register_weapon("o:pike", "Pike", "items/pike.png", 3, 0.07),
-	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.03),
+	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.06),
+
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, true, StaticReal, "decoration"),
@@ -77,10 +95,27 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration", Vector2.UP*8),
+
 	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
 	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
-	register_character("o:scruffy_character", "Scruffy Character", "characters/char_basic_anim.tres", \
-	0, 7, 23, ["Bow"], 0.1)
+
+	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
+	0, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.17),
+
+	register_character("o:gentleman", "Gentleman", "characters/char_shirt_anim.tres", \
+	0, 30, 40, ["Fists"], 0.14),
+
+	register_character("o:gentleman_gun", "Gentleman with gun", "characters/char_shirt_anim.tres", \
+	5, 1, 5, ["Gun"], 0.05),
+
+	register_character("o:armored", "Armored Fella", "characters/char_armor_anim.tres", \
+	5, 20, 60, ["Crossbow", "Sword", "Fists", "Fists"], 0.09),
+
+	register_character("o:armored_halberd", "Armored Fella with halberd", "characters/char_armor_anim.tres", \
+	7, 60, 80, ["Halberd"], 0.06),
+
+	register_character("o:armored_gun", "Armored Fella with gun", "characters/char_armor_anim.tres", \
+	8, 100, 100, ["Gun"], 0.01)
 ]
 
 func get_objects_by(attribute, terms):

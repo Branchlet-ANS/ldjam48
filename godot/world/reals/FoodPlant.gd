@@ -22,7 +22,7 @@ func get_food_value() -> int:
 func interact(character):
 	if _fruits > 0:
 		EffectsManager.play_sound("food", get_parent().get_parent(), position)
-		
+		get_parent().get_parent().get_parent().get_node("GUI/Achievement").berry(_name)
 		if _food_value < 0:
 			achievement("Bad move", "You ate poisonous fruit")
 		else:

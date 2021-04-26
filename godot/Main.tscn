@@ -45,5 +45,6 @@ __meta__ = {
 
 [node name="Timer" type="Timer" parent="GUI/Achievement"]
 wait_time = 5.0
+one_shot = true
 
 [connection signal="timeout" from="GUI/Achievement/Timer" to="GUI/Achievement" method="_on_Timer_timeout"]
