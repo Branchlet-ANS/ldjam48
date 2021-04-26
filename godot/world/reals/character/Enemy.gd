@@ -56,6 +56,7 @@ func _process(delta):
 		if(get_state() == STATE.idle and last_anim != "idle"):
 			last_anim = "idle"
 			sprite.animation = "idle"
+	sprite.set_scale(Vector2(sign(velocity.x), 1))
 
 func attack_cycle(delta):
 	if !is_instance_valid(attack_target):
