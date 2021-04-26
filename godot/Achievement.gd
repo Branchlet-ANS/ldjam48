@@ -16,6 +16,7 @@ func _ready():
 	
 	add_child(timer) #to process
 	timer.set_wait_time(ACHIEVEMENT_DISPLAY_TIME)
+	achievement("You wake up deep in the jungle", "all you can think of is that you need to find a way out")
 
 func achievement(header : String, achievement_text : String):
 	if achievements.has(header):
