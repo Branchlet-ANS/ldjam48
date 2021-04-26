@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/monkey_mini_attack2.png-329b64fbd4b281fdc28499d6006ff479.stex"
+path="res://.import/monkey_mini_sheet.png-0098d68d3351101a5b558a05e54d6eb6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/monkey_mini/monkey_mini_attack2.png"
-dest_files=[ "res://.import/monkey_mini_attack2.png-329b64fbd4b281fdc28499d6006ff479.stex" ]
+source_file="res://assets/animals/monkey_mini/monkey_mini_sheet.png"
+dest_files=[ "res://.import/monkey_mini_sheet.png-0098d68d3351101a5b558a05e54d6eb6.stex" ]
 
 [params]
 

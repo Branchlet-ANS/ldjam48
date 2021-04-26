@@ -35,6 +35,8 @@ func _process(_delta):
 		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
 		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
+	if get_state() == STATE.attack:
+		attack_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.attack:

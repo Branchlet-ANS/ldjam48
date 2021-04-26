@@ -69,8 +69,6 @@ func _process(_delta):
 			set_target(job.transform.origin)
 	if get_state() == STATE.job:
 		perform_job(_delta)
-	if get_state() == STATE.attack:
-		attack_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
@@ -176,8 +174,8 @@ func _on_Area2D_body_entered(body):
 		if body is Projectile:
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
-				body.queue_free()
 				EffectsManager.play_video("splash", get_parent().get_parent(), position)
+				body.queue_free()
 
 func _on_melee_Area2D_body_entered(body):
 	pass
