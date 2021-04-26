@@ -21,7 +21,6 @@ func set_sprite(path : String):
 	sprite.frames.add_animation("idle")
 	sprite.frames.add_frame("idle", load("res://assets/" + path))
 	sprite.animation = "idle"
-	print(_name + ": " + str(sprite_offset))
 	sprite.set_position(sprite.get_position() + sprite_offset)
 	
 func get_sprite():
@@ -35,4 +34,7 @@ func get_name() -> String:
 
 func interact(character):
 	print(character.get_id() + " has completed an interaction with " + _id)
+	
+func achievement(header, text):
+	get_parent().get_parent().get_parent().get_node("GUI/Achievement").achievement(header, text)
 

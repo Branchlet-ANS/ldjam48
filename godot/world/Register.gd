@@ -33,7 +33,7 @@ func register_weapon(id, _name, sprite, corruption, chance=1, value=0, offset:Ve
 	dict["offset"] = offset
 	return dict
 
-func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, chance=1, offset:Vector2=Vector2.ZERO):
+func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, speed, chance=1, offset:Vector2=Vector2.ZERO):
 	var dict = register_real(id, _name, sprite, corruption, false, Enemy, "enemy")
 	dict["resistance"] = resistance
 	dict["sense_radius"] = sense_radius
@@ -41,6 +41,7 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	dict["power"] = power
 	dict["chance"] = chance
 	dict["offset"] = offset
+	dict["speed"] = speed
 	return dict
 
 ## hello
@@ -63,7 +64,7 @@ var objects_json =  [
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
 	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.12),
 	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.07),
-	register_weapon("o:gun", "Gun", "items/gun.png", 7, 0.02),
+	register_weapon("o:gun", "Gun", "items/gun.png", 0, 1),
 	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.12),
 	register_weapon("o:pike", "Pike", "items/pike.png", 3, 0.07),
 	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.03),
@@ -76,7 +77,7 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, true, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration", Vector2.UP*8),
-	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 0.4),
+	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
 	 3, 1, 128, 32, 25, 0.1),
 	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
