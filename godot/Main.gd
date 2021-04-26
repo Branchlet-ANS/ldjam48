@@ -6,6 +6,7 @@ var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
+
 func _ready():
 	randomize() # butterfly effect
 	
@@ -23,3 +24,4 @@ func _ready():
 
 func get_characters():
 	return roomManager.get_characters()
+	
