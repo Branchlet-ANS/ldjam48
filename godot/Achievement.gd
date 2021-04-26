@@ -11,6 +11,9 @@ func achievement(achievement_text : String):
 	achievements.append(achievement_text)
 	$Label.text = "Achievement!\n" + achievement_text
 	visible = true
+	print("HELLO")
+	
+	$Timer.start()
 	
 func _on_Timer_timeout():
 	visible = false

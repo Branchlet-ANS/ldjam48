@@ -41,7 +41,7 @@ func _process(_delta):
 		sprite.frame = 3
 		sprite.stop()
 	if get_state() == STATE.idle and is_selected():
-		var mouse_pos = get_parent().get_parent().get_parent().camera.mouse_world_position()
+		var mouse_pos = get_global_mouse_position()
 		var angle = 2 * PI - get_position().angle_to_point(mouse_pos)
 		sprite.frame = int(angle / (PI / 2.0) - PI / 2.0) % 4
 	if get_state() == STATE.target:
