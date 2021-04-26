@@ -16,26 +16,40 @@ func _ready():
 	weapon = weapon_list["Fists"]
 	
 	sprite.frames = SpriteFrames.new()
-	sprite.frames.add_animation("idle")
-	for i in range(4):
-		sprite.frames.add_frame("idle", load("res://assets/characters/character_idle_" + str(i) + ".png"))
+	_add_animation("idle")
+	_add_animation("right")
+	_add_animation("up")
+	_add_animation("left")
+	_add_animation("down")
 	sprite.animation = "idle"
 	
 	sprite.set_position(Vector2(0, -8))
 	
 	step_dist *= rand_range(0.8, 1.2)
 	
+func _add_animation(animation):
+	sprite.frames.add_animation(animation)
+	for i in range(4):
+		sprite.frames.add_frame(animation, load("res://assets/characters/character_" + animation + str(i+1) + ".png"))
 
 func _process(_delta):
 	if (position - step_pos).length() > 10:
 		step_pos = position
 		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
-		EffectsManager.play_video("slash", get_parent().get_parent(), position)
+	if get_state() == STATE.idle:
+		sprite.animation = "idle"
+		sprite.frame = 3
+		sprite.stop()
 	if get_state() == STATE.idle and is_selected():
 		var mouse_pos = get_parent().get_parent().get_parent().camera.mouse_world_position()
 		var angle = 2 * PI - get_position().angle_to_point(mouse_pos)
 		sprite.frame = int(angle / (PI / 2.0) - PI / 2.0) % 4
-
+	if get_state() == STATE.target:
+		var angle = 2 * PI - velocity.angle()
+		var index = int(angle / (PI / 2.0) + PI / 4.0) % 4
+		sprite.animation = ["right", "up", "left", "down"][index]
+		sprite.play()
+		
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 

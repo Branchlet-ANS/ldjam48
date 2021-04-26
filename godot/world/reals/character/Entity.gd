@@ -147,12 +147,16 @@ func strike(at):
 	if !is_instance_valid(at):
 		return
 	if(weapon.get_has_projectile()):
+		# skytelyd
+		if(weapon.get_weapon_name() == "Gun"):
+			EffectsManager.play_video("flash", get_parent().get_parent(), position)
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
 		get_parent().add_child(projectile)
 		projectile.fire((at.position-position).normalized(), position)
 	else:
+		EffectsManager.play_video("slash", get_parent().get_parent(), position)
 		for entity in melee_in_range:
 			entity.add_health(-weapon.get_dmg())
 
@@ -177,6 +181,7 @@ func _on_Area2D_body_entered(body):
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
 				body.queue_free()
+				EffectsManager.play_video("splash", get_parent().get_parent(), position)
 
 func _on_melee_Area2D_body_entered(body):
 	pass

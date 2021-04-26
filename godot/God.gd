@@ -42,6 +42,7 @@ func _unhandled_input(event):
 						if (closest_character.get_position() - mouse_pos).length() < 16:
 							selected_characters = [closest_character]
 							closest_character.tame = true
+							EffectsManager.play_sound("selected2", self, position)
 							return
 						else:
 							selected_characters.clear()
@@ -130,8 +131,9 @@ func _draw():
 static func grid_entities(entities, around_position : Vector2, character_space):
 	var n = float(entities.size())
 	for i in range(n):
-		entities[i].set_target(around_position - Vector2(character_space*sqrt(n)/2, character_space*sqrt(n)/2) +
-		(fmod(i, float(floor(sqrt(n)))) -
-		fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
-		(float(i) / float(floor(sqrt(n))) -
-		float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)
+		print((fmod(i, float(floor(sqrt(n)))) -
+		fmod(n, float(floor(sqrt(n))))/1.0 ))
+		entities[i].set_target(around_position #- Vector2(character_space*sqrt(n)/2, character_space*sqrt(n)/2) +
+		+
+		(fmod(i, sqrt(n)) - clamp(((n - floor(i / sqrt(n))*sqrt(n))), 0, sqrt(n))/2 ) * character_space * Vector2.LEFT +
+		(floor(i / sqrt(n)) - sqrt(n)/2) * character_space * Vector2.UP)
