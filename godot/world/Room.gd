@@ -37,6 +37,7 @@ func get_tiles():
 
 enum TILE {
 	jungle,
+	jungle_dark,
 	jungle_lt,
 	jungle_rt,
 	jungle_lb,
@@ -139,15 +140,17 @@ func set_tile_rect(sx, sy, size, tile):
 	for x in range(sx - size/2, sx + size/2):
 		for y in range(sy - size/2, sy + size/2):
 			place_tile(x, y, tile)
-
+	
 func prettify_tiles():
-	var jungles = [TILE.jungle, TILE.jungle_rt, TILE.jungle_lt, TILE.jungle_lb, TILE.jungle_rb]
+	var jungles = [TILE.jungle, TILE.jungle_dark, TILE.jungle_rt, TILE.jungle_lt, TILE.jungle_lb, TILE.jungle_rb]
 	var jungle_bottoms = [TILE.jungle_lb, TILE.jungle_rb]
-	var grasses = [TILE.grass, TILE.grass, TILE.grass, TILE.grass1, TILE.grass2]
+	var jungle_leaves = [TILE.jungle, TILE.jungle_dark]
+	var grasses = [TILE.grass, TILE.grass1, TILE.grass2]
 	var w = _width
 	var h = _height
 	var x0 = -w/2
 	var y0 = -h/2
+	
 	for i in range(2):
 		for x in range(x0-8, x0 + w+8): # PADDING
 			for y in range(y0-8, y0 + h+8):
@@ -167,8 +170,10 @@ func prettify_tiles():
 			var top = tiles[Vector2(x, y-1)] if tiles.has(Vector2(x, y-1)) else -1
 			var left = tiles[Vector2(x-1, y)] if tiles.has(Vector2(x-1, y)) else -1
 			var bottom = tiles[Vector2(x, y+1)] if tiles.has(Vector2(x, y+1)) else -1
-			if tile == TILE.grass:
-				place_tile(x, y, grasses[randi() % 5])
+			if tile == TILE.grass and (randi() % 10 < 1 or (jungles.has(right) or jungles.has(top) or jungles.has(left) or jungles.has(bottom))):
+				place_tile(x, y, grasses[randi() % 3])
+			if tile == TILE.jungle and (jungle_leaves.has(right) and jungle_leaves.has(top) and jungle_leaves.has(left) and jungle_leaves.has(bottom)):
+				place_tile(x, y, TILE.jungle_dark)
 				
 func foraging_room():
 	walls()
