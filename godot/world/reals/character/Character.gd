@@ -54,6 +54,14 @@ func _physics_process(delta):
 			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
 				attack_moving = false
 
+func attack_cycle(delta):
+	if !is_instance_valid(attack_target):
+		set_state(STATE.idle)
+	attack_timer -= delta
+	if attack_timer <= 0:
+		strike(attack_target)
+		attack_timer = weapon.get_attack_timer()
+		
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 
