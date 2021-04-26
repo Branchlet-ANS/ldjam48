@@ -21,6 +21,12 @@ func _ready():
 	
 	god = God.new()
 	add_child(god)
+	
+	for child in roomManager.room_container.get_children():
+		if child is Character and child.tame:
+			god.selected_characters.append(child)
+	
+	
 
 func get_characters():
 	return roomManager.get_characters()
