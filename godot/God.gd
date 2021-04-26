@@ -41,6 +41,7 @@ func _unhandled_input(event):
 					if closest_character != null:
 						if (closest_character.get_position() - mouse_pos).length() < 16:
 							selected_characters = [closest_character]
+							closest_character.tame = true
 							return
 						else:
 							selected_characters.clear()
@@ -53,6 +54,7 @@ func _unhandled_input(event):
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
 							new_selection.append(character)
+							character.tame = true
 					selected_characters = new_selection
 					if(new_selection.size() >= 2):
 						EffectsManager.play_sound("selected2", self, position)
@@ -79,13 +81,13 @@ static func get_closest(objects, position):
 func set_selection_target():
 	var mouse_pos = get_parent().camera.mouse_world_position()
 	for character in selected_characters:
-		character.tame = true
 		character.set_job(null)
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
 
 func interact(interactable):
-	selected_characters[0].set_job(interactable)
+	if selected_characters.size() > 0:
+		selected_characters[0].set_job(interactable)
 
 func contact(monster):
 	for character in selected_characters:

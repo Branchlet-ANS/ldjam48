@@ -25,13 +25,13 @@ func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, va
 	return dict
 
 func register_weapon(id, _name, sprite, corruption, chance=1, value=0):
-	var dict = register_real(id, _name, sprite, corruption, true, RoomWeapon, "Weapon")
+	var dict = register_real(id, _name, sprite, corruption, true, RoomWeapon, "weapon")
 	dict["chance"] = chance
 	dict["value"] = value
 	return dict
 
 func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, chance=1):
-	var dict = register_real(id, _name, sprite, corruption, false, Enemy, "Enemy")
+	var dict = register_real(id, _name, sprite, corruption, false, Enemy, "enemy")
 	dict["resistance"] = resistance
 	dict["sense_radius"] = sense_radius
 	dict["attack_radius"] = attack_radius
@@ -40,8 +40,8 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	return dict
 
 ## hello
-func register_character(id, _name, sprite, corruption, health_min, health_max, weapons, chance=1):
-	var dict = register_real(id, _name, sprite, corruption, false, Character, "Character")
+func register_character(id, _name, sprite, corruption, health_min, health_max, weapons : Array, chance=1):
+	var dict = register_real(id, _name, sprite, corruption, false, Character, "character")
 	dict["health_min"] = health_min
 	dict["health_max"] = health_max
 	dict["weapons"] = weapons
@@ -75,7 +75,7 @@ var objects_json =  [
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
 	 3, 1, 128, 32, 25),
 	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
-	2, 7, 23, ["Fists", "Sword", "Bow"], 1)
+	0, 7, 23, ["Bow"], 1)
 ]
 
 func get_objects_by(attribute, terms):

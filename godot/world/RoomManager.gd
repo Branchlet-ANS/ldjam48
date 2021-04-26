@@ -47,7 +47,7 @@ func rebuild():
 	for child in room_container.get_children():
 		if child is Entity:
 			child.set_job(null)
-			if !(child is Character):
+			if !(child is Character) or !child.tame:
 				child.queue_free()
 		else:
 			room_container.remove_child(child)

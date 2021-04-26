@@ -71,9 +71,30 @@ func _process(_delta):
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
-		velocity = transform.origin.direction_to(_target) * speed
 		var velocity_prev = velocity
+		velocity = transform.origin.direction_to(_target) * speed
 		velocity = move_and_slide(velocity)
+#		if (is_instance_valid(collision)):
+#			collider = collision.get_collider()
+#			var dir_collision
+#			var dir_target =  transform.origin.direction_to(_target).normalized()
+#			if collider is TileMap:
+#				var coll_pos  = transform.origin + velocity
+#				var tile_pos = Vector2(int(coll_pos.x) /16, int(coll_pos.y) /16) * 16
+#				var tile_center = tile_pos + Vector2(16, 16)/2
+#				dir_collision = transform.origin.direction_to(tile_center).normalized()
+#				print(dir_collision)
+#			else:
+#				dir_collision = transform.origin.direction_to(collider.transform.origin).normalized()
+#			var length = abs(dir_target.dot(dir_collision))
+#
+#			velocity = (dir_target - dir_collision*length).normalized()*speed
+#		else:
+#			velocity = transform.origin.direction_to(_target) * speed
+		
+		
+		
+		
 		if transform.origin.distance_to(_target) < speed * delta * (1 if velocity == velocity_prev else 8):
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
@@ -139,7 +160,6 @@ func strike(at):
 	if !is_instance_valid(at):
 		return
 	if(weapon.get_has_projectile()):
-		print("test")
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
