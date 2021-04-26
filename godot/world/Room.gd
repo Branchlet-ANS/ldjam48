@@ -170,7 +170,7 @@ func prettify_tiles():
 			if tile == TILE.jungle and (jungle_leaves.has(right) and jungle_leaves.has(top) and jungle_leaves.has(left) and jungle_leaves.has(bottom)):
 				place_tile(x, y, TILE.jungle_dark)
 
-func tiles_set_curruption(corruption):
+func tiles_set_corruption(corruption):
 	for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
 		for y in range(y0-PADDING, y0 + h+PADDING):
 			var tile = tiles[Vector2(x, y)] % 11
@@ -186,7 +186,7 @@ func foraging_room():
 		), 0.07
 	)
 	prettify_tiles()
-	tiles_set_corruption(  floor(_corruption/4)   )
+	tiles_set_corruption(floor(_corruption/4))
 
 func bland_room():
 	walls()
