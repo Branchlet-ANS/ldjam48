@@ -48,7 +48,6 @@ func _physics_process(delta):
 		if(attack_moving):
 			margin = 5
 		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
-			print("ai")
 			attack_moving = true
 			var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
 			move_towards(wanted_pos)
