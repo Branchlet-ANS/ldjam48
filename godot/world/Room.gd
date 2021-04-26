@@ -24,7 +24,8 @@ func _init(width, height, corruption=0):
 	h = _height
 	x0 = -w/2
 	y0 = -h/2
-	
+
+
 func place_real(i : int, j : int, info):
 	if info["object"] == RoomPortal:
 		reals[Vector2(i, j)] = info
@@ -192,7 +193,7 @@ func foraging_room():
 		), 0.07
 	)
 	prettify_tiles()
-	tiles_set_corruption(floor(_corruption/3))
+	tiles_set_corruption(min(floor(_corruption/3), 3))
 #
 #func bland_room():
 #	walls()

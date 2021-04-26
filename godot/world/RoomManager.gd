@@ -48,6 +48,7 @@ func next():
 		rebuild()
 	
 func rebuild():
+	get_parent().get_node("Music").play_music(_rooms[_index]._corruption)
 	for child in room_container.get_children():
 		if child is Entity:
 			child.set_job(null)
