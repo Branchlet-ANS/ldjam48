@@ -45,8 +45,8 @@ func _process(_delta):
 		var angle = 2 * PI - get_position().angle_to_point(mouse_pos)
 		sprite.frame = int(angle / (PI / 2.0) - PI / 2.0) % 4
 	if get_state() == STATE.target:
-		var angle = 2 * PI - velocity.angle()
-		var index = int(angle / (PI / 2.0) + PI / 4.0) % 4
+		var angle = 2 * PI - get_position().angle_to_point(get_position() + velocity)
+		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
 		sprite.animation = ["right", "up", "left", "down"][index]
 		sprite.play()
 		
