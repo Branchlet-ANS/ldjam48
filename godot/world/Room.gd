@@ -174,7 +174,17 @@ func prettify_tiles():
 				place_tile(x, y, grasses[randi() % 3])
 			if tile == TILE.jungle and (jungle_leaves.has(right) and jungle_leaves.has(top) and jungle_leaves.has(left) and jungle_leaves.has(bottom)):
 				place_tile(x, y, TILE.jungle_dark)
-				
+
+func tiles_set_curruption(corruption):
+	var w = _width
+	var h = _height
+	var x0 = -w/2
+	var y0 = -h/2
+	for x in range(x0-8, x0 + w+8): # PADDING
+			for y in range(y0-8, y0 + h+8):
+				var tile = tiles[Vector2(x, y)] % 11
+				place_tile(x, y, tile + 11 * corruption)
+	
 func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
@@ -184,6 +194,7 @@ func foraging_room():
 	+ register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse") \
 	+ register.get_objects_by("id", "o:scruffy_character")), 0.07)
 	prettify_tiles()
+	tiles_set_curruption(randi() % 4)
 
 func bland_room():
 	walls()
