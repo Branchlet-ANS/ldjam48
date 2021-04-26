@@ -35,9 +35,9 @@ func _init(id : String, name: String = "").(id, name):
 	weapon_list["Crossbow"] = Weapon.new("", "", 20, 1.5, true, 300, "arrow", true, 0.05, 50, "Crossbow")
 	weapon_list["Gun"] = Weapon.new("", "", 30, 2, true, 400, "bullet", false, 0.7, 50, "Gun")
 	weapon_list["Sword"] = Weapon.new("", "", 5, 0.25, false, 0, "", false, 0, 10, "Sword")
-	weapon_list["Pike"] = Weapon.new("", "", 10, 0.2, false, 0, "", false, 0, 25, "Pike")
-	weapon_list["Halberd"] = Weapon.new("", "", 13, 0.4, false, 0, "", false, 0, 20, "Halberd")
-	weapon_list["Fists"] = Weapon.new("", "", 2, 0.25, false, 0, "", false, 0, 10, "Fists")
+	weapon_list["Pike"] = Weapon.new("", "", 10, 0.7, false, 0, "", false, 0, 25, "Pike")
+	weapon_list["Halberd"] = Weapon.new("", "", 13, 1, false, 0, "", false, 0, 20, "Halberd")
+	weapon_list["Fists"] = Weapon.new("", "", 2, 0.6, false, 0, "", false, 0, 10, "Fists")
 	pass
 
 func _ready():
