@@ -32,7 +32,9 @@ func _unhandled_input(event):
 					return
 			else:
 				left_down = true
-				set_selection_target()
+				var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
+				if closest_monster == null or (closest_monster.get_position() - mouse_pos).length() >= 16:
+					set_selection_target()
 		elif event.get_button_index() == 2:
 			if(event.is_pressed()):
 				select_pos_start = mouse_pos
