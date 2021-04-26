@@ -25,7 +25,7 @@ func _ready():
 		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
 		_room.foraging_room()
 		add(_room)
-	for i in range(1):
+	for i in range(4):
 		add_character()
 	select(0)
 
