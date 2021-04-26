@@ -19,12 +19,12 @@ func achievement(header : String, achievement_text : String):
 	achievements.append(header)
 	display_queue.append([header, achievement_text])
 	next_text()
-		
+
 
 func berry(bry):
 	if !berries_eaten.has(bry):
 		berries_eaten.append(bry)
-		
+
 	if berries_eaten.size() == 2:
 		achievement("Two berries eaten", "You are on your way to becoming a berry master")
 	elif berries_eaten.size() == 3:
@@ -35,8 +35,8 @@ func berry(bry):
 		achievement("Berry master (7 berries)", "You are being contacted by organizations who want you to\nbe in their ad campaigns")
 	elif berries_eaten.size() == 10:
 		achievement("Berry lord (10 berries)", "You are regarded as the most influental berry eater in \nthe world. Congratulations.")
-	
-	
+
+
 func next_text():
 	if display_queue.size() > 0 and $Timer.get_time_left() == 0:
 		print(display_queue[0])

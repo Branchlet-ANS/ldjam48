@@ -7,6 +7,7 @@ var select_pressed = false
 var character_space = 15
 var clickable = null
 var left_down = false
+var dead = false
 
 func _ready():
 	pass
@@ -98,6 +99,17 @@ func contact(monster):
 		character.attack(monster)
 
 func _process(_delta):
+	var character_size = 0
+	for character in get_parent().get_characters():
+		if(is_instance_valid(character) and character.tame):
+			character_size+=1
+	if(character_size<= 0):
+		if(!dead):
+			get_parent().get_node("GUI/Achievement").achievement("You died", "You'll forever be a part of the jungle")
+			dead = true
+			yield(get_tree().create_timer(3.0), "timeout")
+			get_tree().reload_current_scene()
+			
 	if left_down:
 		set_selection_target()
 	update()

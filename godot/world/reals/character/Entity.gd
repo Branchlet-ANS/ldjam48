@@ -31,13 +31,13 @@ var _power = 2
 var last_anim : String = ""
 
 func _init(id : String, name: String = "").(id, name):
-	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 50, "Bow")
-	weapon_list["Crossbow"] = Weapon.new("", "", 20, 150, true, 300, "arrow", true, 0.05, 50, "Crossbow")
-	weapon_list["Gun"] = Weapon.new("", "", 30, 200, true, 400, "bullet", false, 0.7, 50, "Gun")
-	weapon_list["Sword"] = Weapon.new("", "", 5, 25, false, 0, "", false, 0, 10, "Sword")
-	weapon_list["Pike"] = Weapon.new("", "", 10, 50, false, 0, "", false, 0, 25, "Pike")
-	weapon_list["Halberd"] = Weapon.new("", "", 13, 40, false, 0, "", false, 0, 20, "Halberd")
-	weapon_list["Fists"] = Weapon.new("", "", 2, 25, false, 0, "", false, 0, 10, "Fists")
+	weapon_list["Bow"] = Weapon.new("", "", 10, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
+	weapon_list["Crossbow"] = Weapon.new("", "", 20, 1.5, true, 300, "arrow", true, 0.05, 50, "Crossbow")
+	weapon_list["Gun"] = Weapon.new("", "", 30, 2, true, 400, "bullet", false, 0.7, 50, "Gun")
+	weapon_list["Sword"] = Weapon.new("", "", 5, 0.25, false, 0, "", false, 0, 10, "Sword")
+	weapon_list["Pike"] = Weapon.new("", "", 10, 0.2, false, 0, "", false, 0, 25, "Pike")
+	weapon_list["Halberd"] = Weapon.new("", "", 13, 0.4, false, 0, "", false, 0, 20, "Halberd")
+	weapon_list["Fists"] = Weapon.new("", "", 2, 0.25, false, 0, "", false, 0, 10, "Fists")
 	pass
 
 func _ready():
@@ -69,8 +69,6 @@ func _process(_delta):
 			set_target(job.transform.origin)
 	if get_state() == STATE.job:
 		perform_job(_delta)
-	if get_state() == STATE.attack:
-		attack_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.target:
@@ -135,14 +133,6 @@ func perform_job(delta):
 		job = null
 		set_state(STATE.idle)
 
-func attack_cycle(delta):
-	if !is_instance_valid(attack_target):
-		set_state(STATE.idle)
-	attack_timer -= delta
-	if attack_timer <= 0:
-		strike(attack_target)
-		attack_timer = 1
-
 func strike(at):
 	if !is_instance_valid(at):
 		return
@@ -176,8 +166,8 @@ func _on_Area2D_body_entered(body):
 		if body is Projectile:
 			if (!body.get_owner() == self):
 				add_health(-body.get_damage())
-				body.queue_free()
 				EffectsManager.play_video("splash", get_parent().get_parent(), position)
+				body.queue_free()
 
 func _on_melee_Area2D_body_entered(body):
 	pass

@@ -14,7 +14,7 @@ func _init(id : String, name: String = "").(id, name):
 
 func _ready():
 	weapon = weapon_list["Gun"]
-	sprite.frames = load("res://assets/characters/player_anim.tres")
+	sprite.frames = load("res://assets/characters/char_player_anim.tres")
 	sprite.set_position(Vector2(0, -8))
 	step_dist *= rand_range(0.8, 1.2)
 
@@ -35,6 +35,8 @@ func _process(_delta):
 		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
 		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
+	if get_state() == STATE.attack:
+		attack_cycle(_delta)
 
 func _physics_process(delta):
 	if get_state() == STATE.attack:
@@ -46,13 +48,20 @@ func _physics_process(delta):
 		if(attack_moving):
 			margin = 5
 		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
-			print("ai")
 			attack_moving = true
 			var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
 			move_towards(wanted_pos)
 			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
 				attack_moving = false
 
+func attack_cycle(delta):
+	if !is_instance_valid(attack_target):
+		set_state(STATE.idle)
+	attack_timer -= delta
+	if attack_timer <= 0:
+		strike(attack_target)
+		attack_timer = weapon.get_attack_timer()
+		
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 
