@@ -21,18 +21,11 @@ func _ready():
 	add_child(room_container)
 	
 	var _room
-	for i in range(1):
-		_room = Room.new(48, 32, 10)#randi() % 32 + 32, randi() % 46 + 32, i)
+	for i in range(8):
+		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
 		_room.foraging_room()
-#		var r = randi() % 3
-#		if r == 0:
-#			_room.monster_room()
-#		elif r == 1:
-#			_room.foraging_room()
-#		else:
-#			_room.bland_room()	
 		add(_room)
-	for i in range(9):
+	for i in range(1):
 		add_character()
 	select(0)
 
@@ -47,6 +40,7 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
+	print("next room..")
 	rebuild()
 	
 func rebuild():
@@ -106,12 +100,12 @@ func instance_object(info):
 	if object == Character:
 		var character = Character.new(info["id"], info["name"])
 		character._health = randi() % (info["health_max"] - info["health_min"]) + info["health_min"]
-		character.weapon =  character.weapon_list[info["weapons"][randi() % info["weapons"].size()]]
+		character.weapon = character.weapon_list[info["weapons"][randi() % info["weapons"].size()]]
 		return character
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
-
+	
 func get_interactables():
 	var interactables = []
 	for object in room_container.get_children():

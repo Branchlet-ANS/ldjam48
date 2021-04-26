@@ -26,8 +26,10 @@ func _process(delta):
 				max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
 		target /= god.selected_characters.size()
 	elif characters.size() > 0:
-		var character = God.get_closest(characters, get_position())
-		target = character.get_position()
+		for character in characters:
+			if character.tame:
+				target = character.get_position()
+				break
 		
 	var mouse_position = (get_viewport().get_mouse_position() - get_viewport().size/2) * zoom
 	
