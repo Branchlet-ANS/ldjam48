@@ -34,4 +34,7 @@ func get_name() -> String:
 
 func interact(character):
 	print(character.get_id() + " has completed an interaction with " + _id)
+	
+func achievement(header, text):
+	get_parent().get_parent().get_parent().get_node("GUI/Achievement").achievement(header, text)
 
