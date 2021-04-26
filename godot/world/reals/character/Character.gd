@@ -26,6 +26,7 @@ func _process(_delta):
 	if((position - step_pos).length() > 10):
 		step_pos = position
 		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
+		EffectsManager.play_video("slash", get_parent().get_parent(), position)
 
 func _on_Area2D_body_entered(body):
 	if body is Item:

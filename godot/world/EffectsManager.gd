@@ -6,7 +6,6 @@ func _ready():
 	pass
 
 static func play_sound(sound_name : String, sound_parent : Node, sound_position : Vector2):
-	print(sound_name)
 	var sfx = load("res://Assets/SFX/"+ sound_name + ".wav")
 	sfx.set_stereo(true)
 	var player : AudioTimer = AudioTimer.new(sfx.get_length())
@@ -17,6 +16,11 @@ static func play_sound(sound_name : String, sound_parent : Node, sound_position 
 
 static func play_video(video_name : String, video_parent : Node, video_position : Vector2):
 	var vfx = load("res://Assets/VFX/"+ video_name + ".tres")
-	var player : VideoTimer = VideoTimer.new(vfx.get_length())
+	var player : AnimatedSprite = AnimatedSprite.new()#vfx.get_frame_count("anim") /
+			#5)
+	print("vfx")
+	player.frames = vfx
+	#player.scale = Vector2.ONE*100
+	player.play()
 	video_parent.add_child(player)
 	player.position = video_position
