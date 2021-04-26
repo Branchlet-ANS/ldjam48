@@ -14,9 +14,7 @@ func _init(id : String, name: String = "", resistance=100, sense_radius=64, atta
 var sense_area : Area2D
 var target_object : Character = null
 
-
 func _ready():
-	speed = 50
 	sense_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
 	var _shape = CircleShape2D.new()

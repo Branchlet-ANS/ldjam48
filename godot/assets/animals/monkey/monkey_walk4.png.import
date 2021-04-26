@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/monkey.png-5336935943fba05bc902c89d9fedd981.stex"
+path="res://.import/monkey_walk4.png-bf31c3c4d9af0accc78e7c278d32d14f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/monkey.png"
-dest_files=[ "res://.import/monkey.png-5336935943fba05bc902c89d9fedd981.stex" ]
+source_file="res://assets/animals/monkey/monkey_walk4.png"
+dest_files=[ "res://.import/monkey_walk4.png-bf31c3c4d9af0accc78e7c278d32d14f.stex" ]
 
 [params]
 
