@@ -76,7 +76,7 @@ func _physics_process(delta):
 	if get_state() == STATE.target:
 		var velocity_prev = velocity
 		move_towards(_target)
-		if transform.origin.distance_to(_target) < speed_max * delta * (1 if velocity == velocity_prev else 8):
+		if transform.origin.distance_to(_target) < speed_max * delta:
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
