@@ -36,7 +36,7 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	dict["sense_radius"] = sense_radius
 	dict["attack_radius"] = attack_radius
 	dict["power"] = power
-	dict["chance"] = 0.25
+	dict["chance"] = chance
 	return dict
 
 ## hello
@@ -71,9 +71,9 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, true, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10, 0.1),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
-	 3, 1, 128, 32, 25),
+	 3, 1, 128, 32, 25, 0.1),
 	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
 	0, 7, 23, ["Bow"], 0.1)
 ]
