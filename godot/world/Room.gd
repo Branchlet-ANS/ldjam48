@@ -24,7 +24,7 @@ func _init(width, height, corruption=0):
 	h = _height
 	x0 = -w/2
 	y0 = -h/2
-
+	
 func place_real(i : int, j : int, info):
 
 	if reals.has(Vector2(i, j)) and info["object"] != RoomPortal:
@@ -68,12 +68,12 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-#	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
-#	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
-#	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
-#	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
-#	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
-#	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
+	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
+	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
+	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
+	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
+	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
+	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
 	#place_real(x0 + 12, y0 + 8, register.get_object("o:tree"))
 	#place_real(x0 + 14, y0 + 8, register.get_object("o:tree"))
 
@@ -157,7 +157,7 @@ func prettify_tiles():
 					place_tile(x, y, TILE.jungle_lb if x % 2 == 0 else TILE.jungle_rb)
 				if jungles.has(tile) and jungles.has(top) and jungle_bottoms.has(bottom):
 					place_tile(x, y, TILE.jungle_lt if x % 2 == 0 else TILE.jungle_rt)
-
+	
 	for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
 		for y in range(y0-PADDING, y0 + h+PADDING):
 			var tile = tiles[Vector2(x, y)]
@@ -171,14 +171,10 @@ func prettify_tiles():
 				place_tile(x, y, TILE.jungle_dark)
 
 func tiles_set_corruption(corruption):
-	var w = _width
-	var h = _height
-	var x0 = -w/2
-	var y0 = -h/2
-	for x in range(x0-8, x0 + w+8): # PADDING
-			for y in range(y0-8, y0 + h+8):
-				var tile = tiles[Vector2(x, y)] % 11
-				place_tile(x, y, tile + 11 * corruption)
+	for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
+		for y in range(y0-PADDING, y0 + h+PADDING):
+			var tile = tiles[Vector2(x, y)] % 11
+			place_tile(x, y, tile + 11 * corruption)
 
 func foraging_room():
 	walls()
@@ -186,11 +182,11 @@ func foraging_room():
 	two_snakes(start_end[0], start_end[1])
 	populate_room(
 		register.less_corrupt_than(_corruption,
-			register.get_objects_by("subtype", ["berry", "foliage", "decoration", "enemy", "character", "weapon"])
+			register.get_objects_by("subtype", ["berry", "foliage", "decoration", "enemy", "character"])
 		), 0.07
 	)
 	prettify_tiles()
-	tiles_set_corruption(  floor(_corruption/4)   )
+	tiles_set_corruption(floor(_corruption/4))
 
 func bland_room():
 	walls()

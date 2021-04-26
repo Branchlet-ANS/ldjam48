@@ -80,7 +80,6 @@ func _physics_process(delta):
 		var target_width = 0
 		if is_instance_valid(job):
 			if job is StaticReal:
-				print(job._name)
 				target_width = 2*(job.collision_shape.shape.extents.length() + \
 				self.collision_shape.shape.extents.length())
 			else:
@@ -95,7 +94,9 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	velocity *= damp
 
-
+func set_sprite(spriteframes):
+	sprite.frames = load("res://assets/" + spriteframes)
+	
 func move_towards(pos):
 	if velocity.length() < speed_max:
 		var direction = transform.origin.direction_to(pos)
@@ -138,7 +139,6 @@ func attack_cycle(delta):
 	if !is_instance_valid(attack_target):
 		set_state(STATE.idle)
 	attack_timer -= delta
-	print(attack_timer)
 	if attack_timer <= 0:
 		strike(attack_target)
 		attack_timer = 1

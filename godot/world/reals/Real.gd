@@ -23,6 +23,7 @@ func set_sprite(path : String):
 	sprite.animation = "idle"
 	print(_name + ": " + str(sprite_offset))
 	sprite.set_position(sprite.get_position() + sprite_offset)
+	
 func get_sprite():
 	return sprite
 	
@@ -34,5 +35,4 @@ func get_name() -> String:
 
 func interact(character):
 	print(character.get_id() + " has completed an interaction with " + _id)
-	
-	
+

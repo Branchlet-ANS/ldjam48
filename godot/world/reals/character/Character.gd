@@ -14,25 +14,10 @@ func _init(id : String, name: String = "").(id, name):
 
 func _ready():
 	weapon = weapon_list["Fists"]
-	
-	sprite.frames = SpriteFrames.new()
-	_add_animation("idle")
-	_add_animation("right")
-	_add_animation("up")
-	_add_animation("left")
-	_add_animation("down")
-	sprite.animation = "idle"
-	
+	sprite.frames = load("res://assets/characters/player_anim.tres")
 	sprite.set_position(Vector2(0, -8))
-	
 	step_dist *= rand_range(0.8, 1.2)
 
-
-func _add_animation(animation):
-	sprite.frames.add_animation(animation)
-	for i in range(4):
-		sprite.frames.add_frame(animation, load("res://assets/characters/character_" + animation + str(i+1) + ".png"))
-	
 func _process(_delta):
 	if (position - step_pos).length() > 10:
 		step_pos = position
@@ -48,7 +33,7 @@ func _process(_delta):
 	if get_state() == STATE.target:
 		var angle = 2 * PI - get_position().angle_to_point(get_position() + velocity)
 		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
-		sprite.animation = ["right", "up", "left", "down"][index]
+		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
 
 func _physics_process(delta):
