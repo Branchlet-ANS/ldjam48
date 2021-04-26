@@ -34,10 +34,10 @@ func _init(id : String, name: String = "").(id, name):
 	weapon_list["Bow"] = Weapon.new("", "", 10, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
 	weapon_list["Crossbow"] = Weapon.new("", "", 20, 1.5, true, 300, "arrow", true, 0.05, 50, "Crossbow")
 	weapon_list["Gun"] = Weapon.new("", "", 30, 2, true, 400, "bullet", false, 0.7, 50, "Gun")
-	weapon_list["Sword"] = Weapon.new("", "", 5, 0.25, false, 0, "", false, 0, 10, "Sword")
-	weapon_list["Pike"] = Weapon.new("", "", 10, 0.2, false, 0, "", false, 0, 25, "Pike")
-	weapon_list["Halberd"] = Weapon.new("", "", 13, 0.4, false, 0, "", false, 0, 20, "Halberd")
-	weapon_list["Fists"] = Weapon.new("", "", 2, 0.25, false, 0, "", false, 0, 10, "Fists")
+	weapon_list["Sword"] = Weapon.new("", "", 10, 0.6, false, 0, "", false, 0, 10, "Sword")
+	weapon_list["Pike"] = Weapon.new("", "", 13, 0.7, false, 0, "", false, 0, 25, "Pike")
+	weapon_list["Halberd"] = Weapon.new("", "", 17, 1, false, 0, "", false, 0, 20, "Halberd")
+	weapon_list["Fists"] = Weapon.new("", "", 2, 0.6, false, 0, "", false, 0, 10, "Fists")
 	pass
 
 func _ready():
@@ -82,7 +82,7 @@ func _physics_process(delta):
 				self.collision_shape.shape.extents.length())
 			else:
 				target_width = self.collision_shape.shape.extents.length()
-				
+		
 		if transform.origin.distance_to(_target) <= velocity.length() * delta + target_width:
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
@@ -140,6 +140,9 @@ func strike(at):
 		# skytelyd
 		if(weapon.get_weapon_name() == "Gun"):
 			EffectsManager.play_video("flash", get_parent().get_parent(), position)
+			EffectsManager.play_sound("gun", get_parent().get_parent(), position)
+		if(weapon.get_weapon_name() == "Bow" || weapon.get_weapon_name() == "Crossbow"):
+			EffectsManager.play_sound("bow", get_parent().get_parent(), position)
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)

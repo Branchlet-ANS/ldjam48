@@ -46,12 +46,26 @@ func _physics_process(delta):
 		var margin = 10
 		if(attack_moving):
 			margin = 5
-		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
-			attack_moving = true
-			var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
-			move_towards(wanted_pos)
-			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
-				attack_moving = false
+		if(!weapon.get_has_projectile()):
+			if transform.origin.distance_to(attack_target.position) > weapon.get_desired_distance():
+				attack_moving = true
+				var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
+				move_towards(wanted_pos)
+			else:
+				var angle = 2 * PI - get_position().angle_to_point(attack_target.position)
+				var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
+				sprite.set_animation(["right", "up", "left", "down"][index])
+		else:
+			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+				attack_moving = true
+				var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
+				move_towards(wanted_pos)
+				if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
+					attack_moving = false
+#			if(!attack_moving):
+#				var angle = 2 * PI - get_position().angle_to_point(attack_target.position)
+#				var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
+#				sprite.set_animation(["right", "up", "left", "down"][index])
 
 func attack_cycle(delta):
 	if !is_instance_valid(attack_target):

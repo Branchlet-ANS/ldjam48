@@ -89,33 +89,32 @@ var objects_json =  [
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, true, StaticReal, "decoration"),
-	register_real("o:skeleton1", "Skeleton1", "terrain/dead party/skeleton_man.png", 1, true, StaticReal, "decoration"),
-	register_real("o:skeleton2", "Skeleton2", "terrain/dead party/skeleton_man2.png", 1, true, StaticReal, "decoration"),
-	register_real("o:skeleton3", "Skeleton3", "terrain/dead party/skeleton_man3.png", 1, true, StaticReal, "decoration"),
-	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, true, StaticReal, "decoration"),
-	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
+	register_real("o:skeleton1", "Skeleton1", "terrain/dead party/skeleton_man.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton2", "Skeleton2", "terrain/dead party/skeleton_man2.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton3", "Skeleton3", "terrain/dead party/skeleton_man3.png", 1, false, StaticReal, "decoration"),
+	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
+	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration", Vector2.UP*8),
-	
-	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 4, 10, 45, 0.4),
-	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 4, 10, 45, 0.4),
-	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
-	 3, 1, 128, 32, 25, 0.1),
-	
+
+	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird", "Bird", "animals/bird/bird_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+
 	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
 	0, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.17),
-	
+
 	register_character("o:gentleman", "Gentleman", "characters/char_shirt_anim.tres", \
 	0, 30, 40, ["Fists"], 0.14),
-	
+
 	register_character("o:gentleman_gun", "Gentleman with gun", "characters/char_shirt_anim.tres", \
 	5, 1, 5, ["Gun"], 0.05),
-	
+
 	register_character("o:armored", "Armored Fella", "characters/char_armor_anim.tres", \
 	5, 20, 60, ["Crossbow", "Sword", "Fists", "Fists"], 0.09),
-	
+
 	register_character("o:armored_halberd", "Armored Fella with halberd", "characters/char_armor_anim.tres", \
 	7, 60, 80, ["Halberd"], 0.06),
-	
+
 	register_character("o:armored_gun", "Armored Fella with gun", "characters/char_armor_anim.tres", \
 	8, 100, 100, ["Gun"], 0.01)
 ]

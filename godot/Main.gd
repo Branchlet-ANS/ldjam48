@@ -26,7 +26,6 @@ func _ready():
 		if child is Character and child.tame:
 			god.selected_characters.append(child)
 	
-	
 
 func get_characters():
 	return roomManager.get_characters()

@@ -45,7 +45,6 @@ func _process(delta):
 			set_state(STATE.idle)
 		elif distance < _attack_radius:
 			attack_cycle(delta)
-
 		else:
 			move_towards(attack_target.get_position())
 	else:
@@ -57,6 +56,8 @@ func _process(delta):
 		if(get_state() == STATE.idle and last_anim != "idle"):
 			last_anim = "idle"
 			sprite.animation = "idle"
+			sprite.play()
+	sprite.set_scale(Vector2(sign(velocity.x), 1))
 
 func attack_cycle(delta):
 	if !is_instance_valid(attack_target):
@@ -77,8 +78,20 @@ func strike(at):
 func add_health(var amount):
 	.add_health(amount)
 	if(amount < 0):
-		var string_sfx = "monke" + str(randi()%3+1)
-		EffectsManager.play_sound(string_sfx, get_parent().get_parent(), position)
+		if("Mini Monkey" == get_name()):
+			var string_sfx = "mini_monke" + str(randi()%3+1)
+			EffectsManager.play_sound(string_sfx, get_parent().get_parent(), position)
+		elif("Monkey" == get_name()):
+			var string_sfx = "monke" + str(randi()%3+1)
+			EffectsManager.play_sound(string_sfx, get_parent().get_parent(), position)
+		elif("Bird" == get_name()):
+			EffectsManager.play_sound("bird1", get_parent().get_parent(), position)
 	if _health <= 0:
 		#get_parent().remove_child(self)
+		if("Mini Monkey" == get_name()):
+			EffectsManager.play_sound("mini_monke4", get_parent().get_parent(), position)
+		elif("Monkey" == get_name()):
+			EffectsManager.play_sound("monke4", get_parent().get_parent(), position)
+		elif("Bird" == get_name()):
+			EffectsManager.play_sound("bird1", get_parent().get_parent(), position)
 		queue_free()
