@@ -10,6 +10,9 @@ func _init(id : String, name: String = "").(id, name):
 func _ready():
 	collision_shape = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
-	shape.set_extents(Vector2(8, 8))
+	shape.set_extents(Vector2(5, 5))
 	collision_shape.set_shape(shape)
 	add_child(collision_shape)	
+	
+func interact(character):
+	queue_free()

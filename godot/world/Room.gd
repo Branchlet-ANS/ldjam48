@@ -91,13 +91,13 @@ var objects_json =  [
 	register_weapon("o:halberd", "Halberd", "items/halberd.png", 7, "weapon", 0.6, 2),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
-	register_real("o:rock", "Rock", "items/rock.png", 1, false, StaticReal, "decoration"),
+	register_real("o:rock", "Rock", "items/rock.png", 1, true, StaticReal, "decoration"),
 	register_real("o:skeleton1", "Skeleton1", "terrain/dead party/skeleton_man.png", 1, false, StaticReal, "decoration"),
 	register_real("o:skeleton2", "Skeleton2", "terrain/dead party/skeleton_man2.png", 1, false, StaticReal, "decoration"),
 	register_real("o:skeleton3", "Skeleton3", "terrain/dead party/skeleton_man3.png", 1, false, StaticReal, "decoration"),
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
-	register_real("o:tree", "Tree", "terrain/tree.png", 0, false, StaticReal, "decoration"),
+	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
 	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 10, 64, 8)
 ]
 

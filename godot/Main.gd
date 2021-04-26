@@ -14,7 +14,7 @@ var characters : Array = []
 static func grid_entities(entities, around_position : Vector2, character_space):
 	var n = float(entities.size())
 	for i in range(n):
-		entities[i].set_target(around_position +
+		entities[i].set_target(around_position - Vector2(character_space*sqrt(n)/2, character_space*sqrt(n)/2) +
 		(fmod(i, float(floor(sqrt(n)))) -
 		fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
 		(float(i) / float(floor(sqrt(n))) -

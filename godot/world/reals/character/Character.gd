@@ -17,7 +17,7 @@ func _ready():
 	weapon = weapon_list["Fists"]
 	
 	set_sprite("characters/character.png")
-
+	sprite.set_position(Vector2(0, -8))
 	player_step = AudioStreamPlayer2D.new()
 	add_child(player_step)
 	player_step.set_stream(sfx_step)

@@ -64,7 +64,6 @@ func _ready():
 	melee_area.add_child(_collision_shape_melee)
 	interact_area.connect("body_entered", self, "_on_Area2D_body_entered")
 	melee_area.connect("body_entered", self, "_on_melee_Area2D_body_entered")
-	melee_area.connect("body_exited", self, "_on_melee_Area2D_body_exited")
 	add_child(melee_area)
 	add_child(interact_area)
 

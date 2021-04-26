@@ -22,7 +22,6 @@ func get_weapon_name() -> String:
 	return _weapon_name
 	
 func interact(character):
-	print("HELLO")
 	print(character.weapon.get_weapon_name())
 	if character.weapon != character.weapon_list["Fists"]:
 		player_food.play()
@@ -32,6 +31,7 @@ func interact(character):
 		set_sprite("items/" + get_weapon_name().to_lower() + ".png")
 	else:
 		character.weapon = character.weapon_list[_weapon_name]
-		get_parent().remove_child(self)
-		queue_free()
-	print(character.weapon.get_weapon_name())
+		if is_instance_valid(get_parent()):
+			get_parent().remove_child(self)
+			queue_free()
+	print(character.weapon.get_weapon_name()) 
