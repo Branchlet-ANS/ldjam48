@@ -23,7 +23,11 @@ func _unhandled_input(event):
 					return
 				var closest_interactable = get_closest(get_parent().roomManager.get_interactables(), mouse_pos)
 				if (closest_interactable.get_position() - mouse_pos).length() < 16:
-					interact(closest_interactable)
+					var closest_fella = get_closest(get_parent().roomManager.get_characters(), mouse_pos)
+					for fella in get_parent().roomManager.get_characters():
+						if !(fella == closest_fella):
+							fella.set_state(fella.STATE.idle)
+					interact(closest_fella, closest_interactable)
 					return
 			else:
 				left_down = true
@@ -85,9 +89,9 @@ func set_selection_target():
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
 
-func interact(interactable):
-	if selected_characters.size() > 0:
-		selected_characters[0].set_job(interactable)
+func interact(character, interactable):
+	if is_instance_valid(character):
+		character.set_job(interactable)
 
 func contact(monster):
 	for character in selected_characters:
