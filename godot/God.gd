@@ -11,6 +11,7 @@ var player_selected1 : AudioStreamPlayer2D
 var sfx_selected1 = preload("res://Assets/SFX/selected1.wav")
 var player_selected2 : AudioStreamPlayer2D
 var sfx_selected2 = preload("res://Assets/SFX/selected2.wav")
+var left_down = false
 
 func _ready():
 	player_selected1 = AudioStreamPlayer2D.new()
@@ -27,6 +28,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.get_button_index() == 1:
 			if !event.is_pressed():
+				left_down = false
 				var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
 				if closest_monster != null and (closest_monster.get_position() - mouse_pos).length() < 16:
 					contact(closest_monster)
@@ -35,10 +37,9 @@ func _unhandled_input(event):
 				if (closest_interactable.get_position() - mouse_pos).length() < 16:
 					interact(closest_interactable)
 					return
-				for character in selected_characters:
-					character.set_job(null)
-					character.set_state(character.STATE.idle)
-				grid_entities(selected_characters, mouse_pos, character_space)
+			else:
+				left_down = true
+				set_selection_target()
 				player_selected1.play()			
 		elif event.get_button_index() == 2:
 			if(event.is_pressed()):
@@ -86,6 +87,13 @@ static func get_closest(objects, position):
 			closest = object
 	return closest
 
+func set_selection_target():
+	var mouse_pos = get_parent().camera.mouse_world_position()
+	for character in selected_characters:
+		character.set_job(null)
+		character.set_state(character.STATE.idle)
+	grid_entities(selected_characters, mouse_pos, character_space)
+	
 func interact(interactable):
 	for character in selected_characters:
 		character.set_job(interactable)
@@ -95,6 +103,8 @@ func contact(monster):
 		character.attack(monster)
 
 func _process(_delta):
+	if left_down:
+		set_selection_target()
 	update()
 
 func _draw():
