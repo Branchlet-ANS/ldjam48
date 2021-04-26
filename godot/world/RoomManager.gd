@@ -14,9 +14,28 @@ var _index : int
 func _ready():
 	tile_map = TileMap.new()
 	add_child(tile_map)
+	
 	tile_map.set_cell_size(Vector2(TILE_SIZE, TILE_SIZE))
+	
 	room_container = YSort.new()
 	add_child(room_container)
+	
+	var _room
+	for i in range(1):
+		_room = Room.new(48, 32, 10)#randi() % 32 + 32, randi() % 46 + 32, i)
+		_room.foraging_room()
+#		var r = randi() % 3
+#		if r == 0:
+#			_room.monster_room()
+#		elif r == 1:
+#			_room.foraging_room()
+#		else:
+#			_room.bland_room()	
+		add(_room)
+	for i in range(9):
+		add_character()
+	select(0)
+
 
 func add(room : Room):
 	_rooms.append(room)
@@ -30,12 +49,6 @@ func next():
 	_index += 1
 	rebuild()
 	
-func previous():
-	
-	assert(_index > 0)
-	_index -= 1
-	rebuild()
-
 func rebuild():
 	for child in room_container.get_children():
 		if child is Entity:
@@ -63,9 +76,9 @@ func rebuild():
 		
 	for object in room_container.get_children():
 		if object.get_id() == "o:room_entrance":
-			for character in get_parent().characters:
+			for character in get_characters():
 				character.set_position(object.get_position())
-			get_parent().grid_entities(get_parent().characters, object.get_position(), 15)
+			God.grid_entities(get_characters(), object.get_position(), 15)
 			break
 
 func instance_object(info):
@@ -98,12 +111,19 @@ func get_interactables():
 			interactables.append(object)
 	return interactables
 
-func get_monsters():
-	var monsters = []
+func get_enemies():
+	var enemies = []
 	for object in room_container.get_children():
 		if object is Enemy:
-			monsters.append(object)
-	return monsters
+			enemies.append(object)
+	return enemies
+
+func get_characters():
+	var characters = []
+	for object in room_container.get_children():
+		if object is Character:
+			characters.append(object)
+	return characters
 
 func current():
 	return _rooms[_index]
@@ -113,3 +133,7 @@ func get_width():
 
 func get_height():
 	return current().get_height() * TILE_SIZE
+
+func add_character():
+	var character = Character.new("o:character")
+	room_container.add_child(character)

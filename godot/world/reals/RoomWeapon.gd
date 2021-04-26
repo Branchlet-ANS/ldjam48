@@ -34,4 +34,3 @@ func interact(character):
 		if is_instance_valid(get_parent()):
 			get_parent().remove_child(self)
 			queue_free()
-	print(character.weapon.get_weapon_name()) 

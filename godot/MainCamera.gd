@@ -14,23 +14,32 @@ func _ready():
 	zoom = Vector2(0.25, 0.25)
 
 func _process(delta):
-#	if Input.is_action_pressed("ui_left"):
-#		velocity.x = -CAMERA_SPEED*delta
-#	if Input.is_action_pressed("ui_right"):
-#		velocity.x = CAMERA_SPEED*delta
-#	if Input.is_action_pressed("ui_up"):
-#		velocity.y = -CAMERA_SPEED*delta
-#	if Input.is_action_pressed("ui_down"):
-#		velocity.y = CAMERA_SPEED*delta
-#	velocity *= DEACCELERATION
-#	if (velocity.length() < STOP_THRESHOLD):
-#		velocity = Vector2.ZERO
-#	if velocity.length() == CAMERA_SPEED:
-#		velocity *= sqrt(1/2*pow(CAMERA_SPEED, 2))
-#	pos += velocity
+	var characters = get_parent().get_characters()
+	var roomManager = get_parent().roomManager
+	var god = get_parent().god
+	var target = Vector2.ZERO
+	if god.selected_characters.size() > 0:
+		var max_dis = 0
+		for character in god.selected_characters:
+			target += character.get_position()
+			for other in characters:
+				max_dis = max(max_dis, (other.get_position() - character.get_position()).length())
+		target /= god.selected_characters.size()
+	elif characters.size() > 0:
+		var character = God.get_closest(characters, get_position())
+		target = character.get_position()
+		
+	var mouse_position = (get_viewport().get_mouse_position() - get_viewport().size/2) * zoom
+	
+	target += mouse_position / get_viewport().size.normalized() * 0.2
+	
+	if (roomManager.get_width() > get_viewport().size.x and roomManager.get_height() > get_viewport().size.y):
+		var view_size = get_viewport().size * zoom
+		var tx = clamp(target.x, - roomManager.get_width() / 2 + view_size.x / 2 - 16, + roomManager.get_width() / 2 - view_size.x / 2 + 16)
+		var ty = clamp(target.y, - roomManager.get_height() / 2 + view_size.y / 2 - 16, + roomManager.get_height() / 2 - view_size.y / 2 + 16)
+		target = Vector2(tx, ty)
+
 	pos += (target - pos) * 0.05
-	
-	
 	offset = pos
 
 func mouse_world_position():

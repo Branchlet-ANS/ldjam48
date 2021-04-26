@@ -5,6 +5,7 @@ class_name Room
 var _width : int
 var _height : int
 var _corruption : float
+var register = Register.new()
 
 var reals = {}
 var tiles = {}
@@ -14,16 +15,16 @@ func _init(width, height, corruption=0):
 	_height = height
 	_corruption = corruption
 
-func place_real(i : int, j : int, object):
+func place_real(i : int, j : int, info):
 
-	if reals.has(Vector2(i, j)) and object["object"] != RoomPortal:
+	if reals.has(Vector2(i, j)) and info["object"] != RoomPortal:
 		return
 	if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
 		return
 	if i < -_width/2 or j < -_height/2 or i >= _width/2 or j >= _height/2:
 		return
 
-	reals[Vector2(i, j)] = object
+	reals[Vector2(i, j)] = info
 
 func place_tile(i : int, j : int, tile):
 	tiles[Vector2(i, j)] = tile
@@ -41,89 +42,6 @@ enum TILE {
 	water,
 }
 
-
-func register_real(id, _name, sprite, corruption, interactable, object, subtype=""):
-	return {
-		"id": id,
-		"name": _name,
-		"sprite": sprite,
-		"corruption": corruption,
-		"interactable": interactable,
-		"object": object,
-		"subtype": subtype,
-		"chance": 1
-	}
-
-func register_food_plant(id, _name, sprite, corruption, subtype="", chance=1, value=0):
-	var dict = register_real(id, _name, sprite, corruption, true, FoodPlant)
-	dict["subtype"] = subtype
-	dict["chance"] = chance
-	dict["value"] = value
-	return dict
-
-func register_weapon(id, _name, sprite, corruption, subtype="", chance=1, value=0):
-	var dict = register_real(id, _name, sprite, corruption, true, RoomWeapon)
-	dict["subtype"] = subtype
-	dict["chance"] = chance
-	dict["value"] = value
-	return dict
-
-func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power):
-	var dict = register_real(id, _name, sprite, corruption, false, Enemy)
-	dict["resistance"] = resistance
-	dict["sense_radius"] = sense_radius
-	dict["attack_radius"] = attack_radius
-	dict["power"] = power
-	dict["chance"] = 0.25
-	return dict
-
-
-var objects_json =  [
-	register_real("o:room_entrance", "Room Entrance", "blank_box.png", 0, true, RoomPortal),
-	register_real("o:room_exit", "Room Exit", "blank_box.png", 0, true, RoomPortal),
-	register_food_plant("o:wangu_berry", "Wangu", "items/wangu.png", 0, "berry", 0.8, 1),
-	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
-	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
-	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
-	register_weapon("o:bow", "Bow", "items/bow.png", 7, "weapon", 0.6, 2),
-	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 7, "weapon", 0.6, 2),
-	register_weapon("o:gun", "Gun", "items/gun.png", 7, "weapon", 0.6, 2),
-	register_weapon("o:sword", "Sword", "items/sword.png", 7, "weapon", 0.6, 2),
-	register_weapon("o:pike", "Pike", "items/pike.png", 7, "weapon", 0.6, 2),
-	register_weapon("o:halberd", "Halberd", "items/halberd.png", 7, "weapon", 0.6, 2),
-	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
-	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
-	register_real("o:rock", "Rock", "items/rock.png", 1, true, StaticReal, "decoration"),
-	register_real("o:skeleton1", "Skeleton1", "terrain/dead party/skeleton_man.png", 1, false, StaticReal, "decoration"),
-	register_real("o:skeleton2", "Skeleton2", "terrain/dead party/skeleton_man2.png", 1, false, StaticReal, "decoration"),
-	register_real("o:skeleton3", "Skeleton3", "terrain/dead party/skeleton_man3.png", 1, false, StaticReal, "decoration"),
-	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, false, StaticReal, "decoration"),
-	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, false, StaticReal, "decoration"),
-	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
-	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png", 3, 1, 128, 32, 25)
-]
-
-func get_objects_by(attribute, term):
-	var objects = []
-	for object in objects_json:
-		if object.has(attribute):
-			if str(object[attribute]) == str(term):
-				objects.append(object)
-	return objects
-
-func less_corrupt_than(corruption : float, list : Array):
-	var return_list = []
-	for object in list:
-		if object["corruption"] <= corruption:
-			return_list.append(object)
-	return return_list
-
-func get_object(id):
-	for object in objects_json:
-		if object["id"] == id:
-			return object
-
 # Add walls
 func walls():
 	var x0 = -_width/2
@@ -137,14 +55,14 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-	place_real(x0 + 16, y0 + 16, get_object("o:bow"))
-	place_real(x0 + 17, y0 + 16, get_object("o:crossbow"))
-	place_real(x0 + 18, y0 + 16, get_object("o:gun"))
-	place_real(x0 + 16, y0 + 17, get_object("o:pike"))
-	place_real(x0 + 17, y0 + 17, get_object("o:halberd"))
-	place_real(x0 + 18, y0 + 17, get_object("o:sword"))
-	#place_real(x0 + 12, y0 + 8, get_object("o:tree"))
-	#place_real(x0 + 14, y0 + 8, get_object("o:tree"))
+	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
+	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
+	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
+	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
+	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
+	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
+	#place_real(x0 + 12, y0 + 8, register.get_object("o:tree"))
+	#place_real(x0 + 14, y0 + 8, register.get_object("o:tree"))
 
 
 # Add entrance and exit for procedurally generated room
@@ -163,7 +81,7 @@ func proc_room_controls():
 		var x1 = sx + [-1, 0, 1, 0][side]
 		var y1 = sy + [0, 1, 0, -1][side]
 		place_tile(sx, sy, [TILE.sand, TILE.water][i])
-		place_real(x1, y1, get_object(["o:room_entrance", "o:room_entrance"][i]))
+		place_real(x1, y1, register.get_object(["o:room_entrance", "o:room_entrance"][i]))
 		side = (side + 2) % 4
 		result.append(Vector2(x1, y1))
 	return result
@@ -220,11 +138,11 @@ func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
 	two_snakes(start_end[0], start_end[1])
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "berry") + get_objects_by("subtype", "foliage") + get_objects_by("subtype", "decoration") + get_objects_by("id", "o:monkey") + get_objects_by("id", "o:skeleton_horse")), 0.07)
+	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") + register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") + register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse")), 0.07)
 
 func bland_room():
 	walls()
-	populate_room(less_corrupt_than(_corruption, get_objects_by("subtype", "foliage") ), 0.06)
+	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "foliage") ), 0.06)
 	proc_room_controls()
 
 func monster_room():

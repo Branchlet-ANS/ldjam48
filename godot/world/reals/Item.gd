@@ -27,6 +27,3 @@ func remove(count : int) -> void:
 
 func _to_string() -> String:
 	return "{" + str(get_count()) + " "+ str(get_id()) + "}"
-
-func get_class():
-	return "Item"

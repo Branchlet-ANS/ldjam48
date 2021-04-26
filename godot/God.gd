@@ -33,12 +33,12 @@ func _unhandled_input(event):
 				select_pressed = false
 				var select_pos_end = mouse_pos
 				if (select_pos_end - select_pos_start).length() < 12:
-					var closest_character = get_closest(get_parent().characters, mouse_pos)
+					var closest_character = get_closest(get_parent().get_characters(), mouse_pos)
 					if (closest_character.get_position() - mouse_pos).length() < 16:
 						selected_characters = [closest_character]
 						player_selected1.play()
 						return
-					var closest_monster = get_closest(get_parent().roomManager.get_monsters(), mouse_pos)
+					var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
 					if closest_monster != null:
 						if (closest_monster.get_position() - mouse_pos).length() < 16:
 							contact(closest_monster)
@@ -51,11 +51,11 @@ func _unhandled_input(event):
 					for character in selected_characters:
 						character.set_job(null)
 						character.set_state(character.STATE.idle)
-					get_parent().grid_entities(selected_characters, mouse_pos, character_space)
+					grid_entities(selected_characters, mouse_pos, character_space)
 					player_selected1.play()
 				else:
 					var new_selection = []
-					for character in get_parent().characters:
+					for character in get_parent().get_characters():
 						if(Rect2(min(select_pos_start.x, select_pos_end.x), # if character in mouse rect
 								min(select_pos_start.y, select_pos_end.y),
 								max(select_pos_start.x, select_pos_end.x) - min(select_pos_start.x, select_pos_end.x),
@@ -71,7 +71,7 @@ func _unhandled_input(event):
 		if(event.get_button_index() == 2):
 			selected_characters.clear()
 	elif event is InputEventMouseMotion:
-		var all = get_parent().roomManager.get_monsters() + get_parent().roomManager.get_interactables()
+		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables()
 		var closest = get_closest(all, mouse_pos)
 		if (closest.get_position() - mouse_pos).length() < 16:
 			clickable = closest
@@ -108,9 +108,7 @@ func _draw():
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
 
-	for character in (get_parent().characters + get_parent().roomManager.get_monsters()):
-		if !is_instance_valid(character):
-			get_parent().characters.erase(character)
+	for character in (get_parent().get_characters() + get_parent().roomManager.get_enemies()):
 		if character._health < 100:
 			var pos = character.transform.origin
 			var bg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(10, -12), pos + Vector2(10, -14)])
@@ -128,3 +126,12 @@ func _draw():
 		var pos = clickable.transform.origin
 		var points = PoolVector2Array([pos + Vector2(5, -20), pos + Vector2(-5, -20), pos + Vector2(0, -15)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
+
+static func grid_entities(entities, around_position : Vector2, character_space):
+	var n = float(entities.size())
+	for i in range(n):
+		entities[i].set_target(around_position - Vector2(character_space*sqrt(n)/2, character_space*sqrt(n)/2) +
+		(fmod(i, float(floor(sqrt(n)))) -
+		fmod(n, float(floor(sqrt(n)))) ) * character_space * Vector2.RIGHT +
+		(float(i) / float(floor(sqrt(n))) -
+		float(n) / float(floor(sqrt(n))) ) * character_space * Vector2.UP)

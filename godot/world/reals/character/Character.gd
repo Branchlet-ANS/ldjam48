@@ -53,7 +53,7 @@ func add_health(var amount):
 	.add_health(amount)
 	if _health <= 0:
 		player_dead.play()
-		get_parent().get_parent().get_parent().characters.erase(self)
+		get_parent().get_parent().get_parent().get_characters().erase(self)
 		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
 			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
 		get_parent().remove_child(self)
