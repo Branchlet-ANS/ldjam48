@@ -12,7 +12,7 @@ enum STATE {
 var _state : int
 var velocity : Vector2 = Vector2(0, 0)
 var _target : Vector2 = Vector2(0, 0)
-var speed : float = 100
+var speed : float = 80
 var job : Real = null
 var job_timer : int = 0
 var interact_area : Area2D
