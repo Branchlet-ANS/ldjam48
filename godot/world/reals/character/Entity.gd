@@ -10,9 +10,11 @@ enum STATE {
 }
 
 var _state : int
-var velocity : Vector2 = Vector2(0, 0)
-var _target : Vector2 = Vector2(0, 0)
-var speed : float = 80
+var velocity : Vector2 = Vector2.ZERO
+var _target : Vector2 = Vector2.ZERO
+var speed_max : float = 80
+var acceleration : float = 20
+var damp = 0.8
 var job : Real = null
 var job_timer : int = 0
 var interact_area : Area2D
@@ -38,6 +40,7 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
+	speed_max = 50
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
@@ -72,30 +75,8 @@ func _process(_delta):
 func _physics_process(delta):
 	if get_state() == STATE.target:
 		var velocity_prev = velocity
-		velocity = transform.origin.direction_to(_target) * speed
-		velocity = move_and_slide(velocity)
-#		if (is_instance_valid(collision)):
-#			collider = collision.get_collider()
-#			var dir_collision
-#			var dir_target =  transform.origin.direction_to(_target).normalized()
-#			if collider is TileMap:
-#				var coll_pos  = transform.origin + velocity
-#				var tile_pos = Vector2(int(coll_pos.x) /16, int(coll_pos.y) /16) * 16
-#				var tile_center = tile_pos + Vector2(16, 16)/2
-#				dir_collision = transform.origin.direction_to(tile_center).normalized()
-#				print(dir_collision)
-#			else:
-#				dir_collision = transform.origin.direction_to(collider.transform.origin).normalized()
-#			var length = abs(dir_target.dot(dir_collision))
-#
-#			velocity = (dir_target - dir_collision*length).normalized()*speed
-#		else:
-#			velocity = transform.origin.direction_to(_target) * speed
-		
-		
-		
-		
-		if transform.origin.distance_to(_target) < speed * delta * (1 if velocity == velocity_prev else 8):
+		move_towards(_target)
+		if transform.origin.distance_to(_target) < speed_max * delta * (1 if velocity == velocity_prev else 8):
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
 			else:
@@ -110,11 +91,17 @@ func _physics_process(delta):
 			margin = 5
 		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
 			attack_moving = true
-			velocity = transform.origin.direction_to(attack_target.position - (transform.origin.direction_to(attack_target.position) * weapon.get_desired_distance())) * speed
-			velocity = move_and_slide(velocity)
+			move_towards(_target)
 			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
 				attack_moving = false
+	velocity = move_and_slide(velocity)
+	velocity *= damp
 
+func move_towards(pos):
+	if velocity.length() < speed_max:
+		var direction = transform.origin.direction_to(pos)
+		velocity += direction * acceleration
+		
 func set_job(interactable):
 	job = interactable
 

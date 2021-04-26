@@ -39,7 +39,6 @@ func _process(_delta):
 func is_selected():
 	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
 
-
 func _on_Area2D_body_entered(body):
 	if body is Item:
 		inventory.add(body)
