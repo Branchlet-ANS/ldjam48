@@ -15,18 +15,30 @@ func _init(id : String, name: String = "").(id, name):
 func _ready():
 	weapon = weapon_list["Fists"]
 	
-	set_sprite("characters/character.png")
+	sprite.frames = SpriteFrames.new()
+	sprite.frames.add_animation("idle")
+	for i in range(4):
+		sprite.frames.add_frame("idle", load("res://assets/characters/character_idle_" + str(i) + ".png"))
+	sprite.animation = "idle"
+	
 	sprite.set_position(Vector2(0, -8))
 	
-
 	step_dist *= rand_range(0.8, 1.2)
 	
 
 func _process(_delta):
-	if((position - step_pos).length() > 10):
+	if (position - step_pos).length() > 10:
 		step_pos = position
 		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
 		EffectsManager.play_video("slash", get_parent().get_parent(), position)
+	if get_state() == STATE.idle and is_selected():
+		var mouse_pos = get_parent().get_parent().get_parent().camera.mouse_world_position()
+		var angle = 2 * PI - get_position().angle_to_point(mouse_pos)
+		sprite.frame = int(angle / (PI / 2.0) - PI / 2.0) % 4
+
+func is_selected():
+	return get_parent().get_parent().get_parent().god.selected_characters.has(self)
+
 
 func _on_Area2D_body_entered(body):
 	if body is Item:
