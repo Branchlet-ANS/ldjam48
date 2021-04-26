@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bird_sheet.png-7de8111aa648c722516a9ac633a3200e.stex"
+path="res://.import/bird_pink_sheet.png-bd1e244c43b827ace42deefe72e71c77.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/bird/bird_sheet.png"
-dest_files=[ "res://.import/bird_sheet.png-7de8111aa648c722516a9ac633a3200e.stex" ]
+source_file="res://assets/animals/bird/bird_pink_sheet.png"
+dest_files=[ "res://.import/bird_pink_sheet.png-bd1e244c43b827ace42deefe72e71c77.stex" ]
 
 [params]
 
