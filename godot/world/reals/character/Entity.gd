@@ -82,7 +82,7 @@ func _physics_process(delta):
 				self.collision_shape.shape.extents.length())
 			else:
 				target_width = self.collision_shape.shape.extents.length()
-				
+		
 		if transform.origin.distance_to(_target) <= velocity.length() * delta + target_width:
 			if is_instance_valid(job) and job.transform.origin == get_target():
 				set_state(STATE.job)
