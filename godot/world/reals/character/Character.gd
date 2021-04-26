@@ -13,7 +13,7 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	weapon = weapon_list["Halberd"]
+	weapon = weapon_list["Gun"]
 	sprite.frames = load("res://assets/characters/char_player_anim.tres")
 	sprite.set_position(Vector2(0, -8))
 	step_dist *= rand_range(0.8, 1.2)

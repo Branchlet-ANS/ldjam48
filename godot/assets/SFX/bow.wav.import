@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bow.wav-987ceda7eb1f452f9768e3f7a0b8cf82.sample"
+
+[deps]
+
+source_file="res://assets/SFX/bow.wav"
+dest_files=[ "res://.import/bow.wav-987ceda7eb1f452f9768e3f7a0b8cf82.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

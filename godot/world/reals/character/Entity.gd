@@ -140,6 +140,9 @@ func strike(at):
 		# skytelyd
 		if(weapon.get_weapon_name() == "Gun"):
 			EffectsManager.play_video("flash", get_parent().get_parent(), position)
+			EffectsManager.play_sound("gun", get_parent().get_parent(), position)
+		if(weapon.get_weapon_name() == "Bow" || weapon.get_weapon_name() == "Crossbow"):
+			EffectsManager.play_sound("bow", get_parent().get_parent(), position)
 		var p = weapon.get_projectile()
 		var projectile = Projectile.new("", "", p._speed, p._rotating,
 				p._dmg, p._inaccuracy, p._sprite_name, false, Vector2.ZERO, Vector2.ZERO)
