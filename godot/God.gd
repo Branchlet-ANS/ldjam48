@@ -122,15 +122,10 @@ func _draw():
 		var points = PoolVector2Array([pos1, Vector2(pos1.x, pos2.y),
 				pos2, Vector2(pos2.x, pos1.y)])
 		draw_polygon(points, PoolColorArray([Color(0.7, 0.7, 0.7, 0.6)]))
-
-	for character in (get_parent().get_characters() + get_parent().roomManager.get_enemies()):
-		if character._health < 100:
-			var pos = character.transform.origin
-			var bg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(10, -12), pos + Vector2(10, -14)])
-			var fg_points = PoolVector2Array([pos + Vector2(-10, -14), pos + Vector2(-10, -12), pos + Vector2(-10+character._health/5, -12), pos + Vector2(-10+character._health/5, -14)])
-			draw_colored_polygon(bg_points, Color.darkred)
-			draw_colored_polygon(fg_points, Color.red)
-
+	
+	for enemy in get_parent().roomManager.get_enemies():
+		draw_healthbar(enemy, -16) 
+	
 	for character in selected_characters:
 		if !is_instance_valid(character):
 			selected_characters.erase(character)
@@ -151,7 +146,17 @@ func _draw():
 		else:	
 			var points = PoolVector2Array([pos + Vector2(-5, -20), pos + Vector2(0, -15), pos + Vector2(5, -20)])
 			draw_colored_polygon(points, Color.lightgreen)
-
+	
+	for character in get_parent().get_characters():
+		draw_healthbar(character, -25)
+		
+func draw_healthbar(character, offset):
+	if character._health < 100:
+		var pos = character.transform.origin
+		var bg_points = PoolVector2Array([pos + Vector2(-10, offset-2), pos + Vector2(-10, offset), pos + Vector2(10, offset), pos + Vector2(10, offset-2)])
+		var fg_points = PoolVector2Array([pos + Vector2(-10, offset-2), pos + Vector2(-10, offset), pos + Vector2(-10+character._health/5, offset), pos + Vector2(-10+character._health/5, offset-2)])
+		draw_colored_polygon(bg_points, Color.darkred)
+		draw_colored_polygon(fg_points, Color.red)
 
 static func grid_entities(entities, around_position : Vector2, character_space):
 	var n = float(entities.size())
