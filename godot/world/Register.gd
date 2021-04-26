@@ -36,7 +36,7 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	dict["sense_radius"] = sense_radius
 	dict["attack_radius"] = attack_radius
 	dict["power"] = power
-	dict["chance"] = 0.25
+	dict["chance"] = chance
 	return dict
 
 ## hello
@@ -56,12 +56,12 @@ var objects_json =  [
 	register_food_plant("o:blue_banana", "Blue Banana", "items/blue_banana.png", 3, "berry", 0.6, 2),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "items/cherry_berry.png", 0,"berry", 0.6, 3),
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
-	register_weapon("o:bow", "Bow", "items/bow.png", 7, 0.6, 2),
-	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 7, 0.6, 2),
-	register_weapon("o:gun", "Gun", "items/gun.png", 7, 0.6, 2),
-	register_weapon("o:sword", "Sword", "items/sword.png", 7, 0.6, 2),
-	register_weapon("o:pike", "Pike", "items/pike.png", 7, 0.6, 2),
-	register_weapon("o:halberd", "Halberd", "items/halberd.png", 7, 0.6, 2),
+	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.12),
+	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.07),
+	register_weapon("o:gun", "Gun", "items/gun.png", 7, 0.02),
+	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.12),
+	register_weapon("o:pike", "Pike", "items/pike.png", 3, 0.07),
+	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.03),
 	register_real("o:grass", "Grass", "items/grass.png", 0, false, Real, "foliage"),
 	register_real("o:haygrass", "Haygrass", "items/haygrass.png", 1, false, Real, "foliage"),
 	register_real("o:rock", "Rock", "items/rock.png", 1, true, StaticReal, "decoration"),
@@ -71,11 +71,11 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, true, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10, 0.1),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
-	 3, 1, 128, 32, 25),
+	 3, 1, 128, 32, 25, 0.1),
 	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
-	0, 7, 23, ["Bow"], 1)
+	0, 7, 23, ["Bow"], 0.1)
 ]
 
 func get_objects_by(attribute, terms):

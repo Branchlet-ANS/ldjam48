@@ -68,12 +68,12 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
-	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
-	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
-	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
-	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
-	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
+#	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
+#	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
+#	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
+#	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
+#	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
+#	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
 	#place_real(x0 + 12, y0 + 8, register.get_object("o:tree"))
 	#place_real(x0 + 14, y0 + 8, register.get_object("o:tree"))
 
@@ -186,7 +186,7 @@ func foraging_room():
 	two_snakes(start_end[0], start_end[1])
 	populate_room(
 		register.less_corrupt_than(_corruption,
-			register.get_objects_by("subtype", ["berry", "foliage", "decoration", "enemy", "character"])
+			register.get_objects_by("subtype", ["berry", "foliage", "decoration", "enemy", "character", "weapon"])
 		), 0.07
 	)
 	prettify_tiles()
