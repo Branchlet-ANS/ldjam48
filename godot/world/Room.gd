@@ -26,16 +26,17 @@ func _init(width, height, corruption=0):
 	y0 = -h/2
 	
 func place_real(i : int, j : int, info):
-
-	if reals.has(Vector2(i, j)) and info["object"] != RoomPortal:
-		return
-	if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
-		return
-	if i < -_width/2 or j < -_height/2 or i >= _width/2 or j >= _height/2:
-		return
-
-	reals[Vector2(i, j)] = info
-
+	if info["object"] == RoomPortal:
+		reals[Vector2(i, j)] = info
+	else:
+		if reals.has(Vector2(i, j)) and info["object"] != RoomPortal:
+			return
+		if tiles.has(Vector2(i, j)) and tiles[Vector2(i, j)] == TILE.jungle:
+			return
+		if i < x0 or j < y0 or i >= x0 + w or j >= y0 + h:
+			return
+		reals[Vector2(i, j)] = info
+		
 func place_tile(i : int, j : int, tile):
 	tiles[Vector2(i, j)] = tile
 
@@ -115,7 +116,7 @@ func two_snakes(start: Vector2, end: Vector2):
 		var s = 4 + randi() % 4 # SNAKE WIDTH
 		set_tile_rect(tile.x, tile.y, s, TILE.grass)
 	
-	set_tile_rect(start.x, start.y, 8, TILE.grass) # SPAWN WIDTH
+	set_tile_rect(start.x, start.y, 4, TILE.grass) # SPAWN WIDTH
 	place_real(start.x, start.y, register.get_object("o:place_characters_here"))
 	#set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
 	#
