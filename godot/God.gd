@@ -108,9 +108,9 @@ func _process(_delta):
 			character_size+=1
 	if(character_size<= 0):
 		if(!dead):
-			get_parent().get_node("GUI/Achievement").achievement("You died", "You'll forever be a part of the jungle")
+			get_parent().get_node("GUI/Achievement").achievement("You died", "You will forever be a part of the jungle")
 			dead = true
-			yield(get_tree().create_timer(3.0), "timeout")
+			yield(get_tree().create_timer(7.0), "timeout")
 			get_tree().reload_current_scene()
 			
 	if left_down:

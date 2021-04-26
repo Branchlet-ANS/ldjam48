@@ -21,11 +21,14 @@ func _ready():
 	add_child(room_container)
 	
 	var _room
-	for i in range(15):
-		_room = Room.new(randi() % 32 + 32, randi() % 32 + 32, i)
+	
+	# Change constants in Main
+	for i in range(get_parent().NUMBER_ROOMS):
+		_room = Room.new(randi() % (get_parent().MAX_ROOM_SIZE-get_parent().MIN_ROOM_SIZE) + get_parent().MIN_ROOM_SIZE, \
+		randi() % (get_parent().MAX_ROOM_SIZE-get_parent().MIN_ROOM_SIZE) + get_parent().MIN_ROOM_SIZE, i)
 		_room.foraging_room()
 		add(_room)
-	for i in range(1):
+	for i in range(get_parent().NUMBER_CHARACTERS_START):
 		add_character()
 	select(0)
 
@@ -37,9 +40,12 @@ func select(index):
 	rebuild()
 	
 func next():
-	assert(_index < _rooms.size()-1)
-	_index += 1
-	rebuild()
+	if !(_index < _rooms.size()-1):
+		get_parent().get_node("GUI/Achievement").achievement("You won?", "Congratulations, you have reached the \ngrotesque depths of the jungle.\n\n...Or perhaps, have you lost?")
+	else:
+		_index += 1
+		get_parent().set_room_counter(_index)
+		rebuild()
 	
 func rebuild():
 	for child in room_container.get_children():
