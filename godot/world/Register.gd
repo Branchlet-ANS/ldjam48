@@ -71,7 +71,7 @@ var objects_json =  [
 	register_real("o:skeleton4", "Skeleton4", "terrain/dead party/skeleton_horse.png", 1, true, StaticReal, "decoration"),
 	register_real("o:cart", "Cart", "terrain/dead party/cart.png", 1, true, StaticReal, "decoration"),
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
-	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10, 0.1),
+	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10, 1),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
 	 3, 1, 128, 32, 25, 0.1),
 	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
