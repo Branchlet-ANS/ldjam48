@@ -16,11 +16,9 @@ static func play_sound(sound_name : String, sound_parent : Node, sound_position 
 
 static func play_video(video_name : String, video_parent : Node, video_position : Vector2):
 	var vfx = load("res://Assets/VFX/"+ video_name + ".tres")
-	var player : AnimatedSprite = AnimatedSprite.new()#vfx.get_frame_count("anim") /
-			#5)
-	print("vfx")
+	var player : VideoTimer = VideoTimer.new(vfx.get_frame_count ("anim")/vfx.get_animation_speed("anim"))
 	player.frames = vfx
-	#player.scale = Vector2.ONE*100
+	player.animation = "anim"
 	player.play()
 	video_parent.add_child(player)
 	player.position = video_position

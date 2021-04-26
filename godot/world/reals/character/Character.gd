@@ -30,7 +30,6 @@ func _process(_delta):
 	if (position - step_pos).length() > 10:
 		step_pos = position
 		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
-		EffectsManager.play_video("slash", get_parent().get_parent(), position)
 	if get_state() == STATE.idle and is_selected():
 		var mouse_pos = get_parent().get_parent().get_parent().camera.mouse_world_position()
 		var angle = 2 * PI - get_position().angle_to_point(mouse_pos)
