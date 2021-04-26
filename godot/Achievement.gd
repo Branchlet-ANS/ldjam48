@@ -1,6 +1,6 @@
 extends PanelContainer
 
-var ACHIEVEMENT_DISPLAY_TIME = 2.5
+var ACHIEVEMENT_DISPLAY_TIME = 4.0
 var achievements = []
 var berries_eaten = []
 var display_queue = []
@@ -44,9 +44,21 @@ func next_text():
 		visible = true
 		display_queue.remove(0)
 		$Timer.start()
+		EffectsManager.play_sound("powerup", get_parent().get_parent().camera, get_global_mouse_position())
 	if display_queue.size() == 0 and $Timer.get_time_left() == 0:
 		visible = false
 
 
 func _on_Timer_timeout():
 	next_text()
+
+
+func _on_Achievement_mouse_entered():
+	$Timer.paused = true
+
+
+func _on_Achievement_mouse_exited():
+	$Timer.paused = false
+	$Timer.stop()
+	next_text()
+	

@@ -51,4 +51,19 @@ one_shot = true
 [node name="Music" type="Node" parent="."]
 script = ExtResource( 4 )
 
+[node name="RoomCounter" type="Label" parent="GUI"]
+margin_left = 1515.0
+margin_top = 3.0
+margin_right = 1598.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 2 )
+text = "Room 0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="GUI/Achievement" to="GUI/Achievement" method="_on_Achievement_mouse_entered"]
+[connection signal="mouse_exited" from="GUI/Achievement" to="GUI/Achievement" method="_on_Achievement_mouse_exited"]
 [connection signal="timeout" from="GUI/Achievement/Timer" to="GUI/Achievement" method="_on_Timer_timeout"]
