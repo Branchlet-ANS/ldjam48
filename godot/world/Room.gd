@@ -81,7 +81,7 @@ func proc_room_controls():
 		var x1 = sx + [-1, 0, 1, 0][side]
 		var y1 = sy + [0, 1, 0, -1][side]
 		place_tile(sx, sy, [TILE.sand, TILE.water][i])
-		place_real(x1, y1, register.get_object(["o:room_entrance", "o:room_entrance"][i]))
+		place_real(x1, y1, register.get_object(["o:room_entrance", "o:room_exit"][i]))
 		side = (side + 2) % 4
 		result.append(Vector2(x1, y1))
 	return result
@@ -138,7 +138,11 @@ func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
 	two_snakes(start_end[0], start_end[1])
-	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") + register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") + register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse") + register.get_objects_by("id", "o:scruffy_character")), 0.07)
+	populate_room(
+		register.less_corrupt_than(_corruption, 
+			register.get_objects_by("subtype", ["berry", "foliage", "decoration", "enemy", "character"])
+		), 0.07
+	)
 
 func bland_room():
 	walls()

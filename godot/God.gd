@@ -98,8 +98,7 @@ func set_selection_target():
 	grid_entities(selected_characters, mouse_pos, character_space)
 	
 func interact(interactable):
-	for character in selected_characters:
-		character.set_job(interactable)
+	selected_characters[0].set_job(interactable)
 
 func contact(monster):
 	for character in selected_characters:
