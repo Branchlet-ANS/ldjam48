@@ -10,10 +10,20 @@ var register = Register.new()
 var reals = {}
 var tiles = {}
 
+var w = _width
+var h = _height
+var x0 = -w/2
+var y0 = -h/2
+var PADDING = 32
+
 func _init(width, height, corruption=0):
 	_width = width
 	_height = height
 	_corruption = corruption
+	w = _width
+	h = _height
+	x0 = -w/2
+	y0 = -h/2
 
 func place_real(i : int, j : int, info):
 
@@ -51,10 +61,6 @@ enum TILE {
 
 # Add walls
 func walls():
-	var x0 = -_width/2
-	var y0 = -_height/2
-	var w = _width
-	var h = _height
 	for x in range(x0, x0 + w):
 		for y in range(y0, y0 + h):
 			if (x == x0 or x == x0 + w - 1 or y == y0 or y == y0 + h - 1):
@@ -75,10 +81,6 @@ func walls():
 # Add entrance and exit for procedurally generated room
 func proc_room_controls():
 	var result = []
-	var w = _width
-	var h = _height
-	var x0 = -w/2
-	var y0 = -h/2
 	var side = randi() % 4
 	for i in range(2):
 		var rx = 1 + randi() % (w - 2)
@@ -94,12 +96,8 @@ func proc_room_controls():
 	return result
 
 func two_snakes(start: Vector2, end: Vector2):
-	var w = _width
-	var h = _height
-	var x0 = -w/2
-	var y0 = -h/2
-	for x in range(x0-8, x0 + w+8): # PADDING
-		for y in range(y0-8, y0 + h+8):
+	for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
+		for y in range(y0-PADDING, y0 + h+PADDING):
 			place_tile(x, y, TILE.jungle)
 
 	var snake_0_positions = []
@@ -146,14 +144,10 @@ func prettify_tiles():
 	var jungle_bottoms = [TILE.jungle_lb, TILE.jungle_rb]
 	var jungle_leaves = [TILE.jungle, TILE.jungle_dark]
 	var grasses = [TILE.grass, TILE.grass1, TILE.grass2]
-	var w = _width
-	var h = _height
-	var x0 = -w/2
-	var y0 = -h/2
 
 	for i in range(2):
-		for x in range(x0-8, x0 + w+8): # PADDING
-			for y in range(y0-8, y0 + h+8):
+		for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
+			for y in range(y0-PADDING, y0 + h+PADDING):
 				var tile = tiles[Vector2(x, y)]
 				var right = tiles[Vector2(x+1, y)] if tiles.has(Vector2(x+1, y)) else -1
 				var top = tiles[Vector2(x, y-1)] if tiles.has(Vector2(x, y-1)) else -1
@@ -163,8 +157,9 @@ func prettify_tiles():
 					place_tile(x, y, TILE.jungle_lb if x % 2 == 0 else TILE.jungle_rb)
 				if jungles.has(tile) and jungles.has(top) and jungle_bottoms.has(bottom):
 					place_tile(x, y, TILE.jungle_lt if x % 2 == 0 else TILE.jungle_rt)
-	for x in range(x0-8, x0 + w+8): # PADDING
-		for y in range(y0-8, y0 + h+8):
+
+	for x in range(x0-PADDING, x0 + w+PADDING): # PADDING
+		for y in range(y0-PADDING, y0 + h+PADDING):
 			var tile = tiles[Vector2(x, y)]
 			var right = tiles[Vector2(x+1, y)] if tiles.has(Vector2(x+1, y)) else -1
 			var top = tiles[Vector2(x, y-1)] if tiles.has(Vector2(x, y-1)) else -1
