@@ -50,10 +50,13 @@ func _unhandled_input(event):
 				var select_pos_end = mouse_pos
 				if (select_pos_end - select_pos_start).length() < 12:
 					var closest_character = get_closest(get_parent().get_characters(), mouse_pos)
-					if (closest_character.get_position() - mouse_pos).length() < 16:
-						selected_characters = [closest_character]
-						player_selected1.play()
-						return
+					if closest_character != null:
+						if (closest_character.get_position() - mouse_pos).length() < 16:
+							selected_characters = [closest_character]
+							player_selected1.play()
+							return
+						else:
+							selected_characters.clear()
 				else:
 					var new_selection = []
 					for character in get_parent().get_characters():
