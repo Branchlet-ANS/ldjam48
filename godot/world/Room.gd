@@ -24,7 +24,8 @@ func _init(width, height, corruption=0):
 	h = _height
 	x0 = -w/2
 	y0 = -h/2
-	
+
+
 func place_real(i : int, j : int, info):
 
 	if reals.has(Vector2(i, j)) and info["object"] != RoomPortal:

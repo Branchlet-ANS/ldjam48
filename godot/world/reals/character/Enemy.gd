@@ -25,6 +25,10 @@ func _ready():
 	sense_area.add_child(_collision_shape)
 	sense_area.connect("body_entered", self, "_on_sense_area_body_entered")
 	add_child(sense_area)
+	
+	last_anim = "idle"
+	sprite.animation = "idle"
+	sprite.play()
 
 func _on_sense_area_body_entered(body):
 	if body is Character:

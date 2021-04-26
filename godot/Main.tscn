@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Achievement.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Music.gd" type="Script" id=4]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 2 )
@@ -46,5 +47,8 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="GUI/Achievement"]
 wait_time = 5.0
 one_shot = true
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [connection signal="timeout" from="GUI/Achievement/Timer" to="GUI/Achievement" method="_on_Timer_timeout"]
