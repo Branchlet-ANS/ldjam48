@@ -37,7 +37,13 @@ func get_tiles():
 
 enum TILE {
 	jungle,
+	jungle_lt,
+	jungle_rt,
+	jungle_lb,
+	jungle_rb,
 	grass,
+	grass1,
+	grass2,
 	sand,
 	water,
 }
@@ -129,16 +135,50 @@ func two_snakes(start: Vector2, end: Vector2):
 	set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
 	place_tile(end.x, end.y, TILE.water)
 
-func set_tile_rect(x, y, size, tile):
-	for x0 in range(x - size/2, x + size/2):
-		for y0 in range(y - size/2, y + size/2):
-			place_tile(x0, y0, tile)
+func set_tile_rect(sx, sy, size, tile):
+	for x in range(sx - size/2, sx + size/2):
+		for y in range(sy - size/2, sy + size/2):
+			place_tile(x, y, tile)
 
+func prettify_tiles():
+	var jungles = [TILE.jungle, TILE.jungle_rt, TILE.jungle_lt, TILE.jungle_lb, TILE.jungle_rb]
+	var jungle_bottoms = [TILE.jungle_lb, TILE.jungle_rb]
+	var grasses = [TILE.grass, TILE.grass, TILE.grass, TILE.grass1, TILE.grass2]
+	var w = _width
+	var h = _height
+	var x0 = -w/2
+	var y0 = -h/2
+	for i in range(2):
+		for x in range(x0-8, x0 + w+8): # PADDING
+			for y in range(y0-8, y0 + h+8):
+				var tile = tiles[Vector2(x, y)]
+				var right = tiles[Vector2(x+1, y)] if tiles.has(Vector2(x+1, y)) else -1
+				var top = tiles[Vector2(x, y-1)] if tiles.has(Vector2(x, y-1)) else -1
+				var left = tiles[Vector2(x-1, y)] if tiles.has(Vector2(x-1, y)) else -1
+				var bottom = tiles[Vector2(x, y+1)] if tiles.has(Vector2(x, y+1)) else -1
+				if jungles.has(tile) and jungles.has(top) and grasses.has(bottom):
+					place_tile(x, y, TILE.jungle_lb if x % 2 == 0 else TILE.jungle_rb)
+				if jungles.has(tile) and jungles.has(top) and jungle_bottoms.has(bottom):
+					place_tile(x, y, TILE.jungle_lt if x % 2 == 0 else TILE.jungle_rt)
+	for x in range(x0-8, x0 + w+8): # PADDING
+		for y in range(y0-8, y0 + h+8):
+			var tile = tiles[Vector2(x, y)]
+			var right = tiles[Vector2(x+1, y)] if tiles.has(Vector2(x+1, y)) else -1
+			var top = tiles[Vector2(x, y-1)] if tiles.has(Vector2(x, y-1)) else -1
+			var left = tiles[Vector2(x-1, y)] if tiles.has(Vector2(x-1, y)) else -1
+			var bottom = tiles[Vector2(x, y+1)] if tiles.has(Vector2(x, y+1)) else -1
+			if tile == TILE.grass:
+				place_tile(x, y, grasses[randi() % 5])
+				
 func foraging_room():
 	walls()
 	var start_end = proc_room_controls()
 	two_snakes(start_end[0], start_end[1])
-	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") + register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") + register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse") + register.get_objects_by("id", "o:scruffy_character")), 0.07)
+	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "berry") \
+	+ register.get_objects_by("subtype", "foliage") + register.get_objects_by("subtype", "decoration") \
+	+ register.get_objects_by("id", "o:monkey") + register.get_objects_by("id", "o:skeleton_horse") \
+	+ register.get_objects_by("id", "o:scruffy_character")), 0.07)
+	prettify_tiles()
 
 func bland_room():
 	walls()

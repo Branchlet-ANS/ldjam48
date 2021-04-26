@@ -74,7 +74,7 @@ var objects_json =  [
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration"),
 	register_enemy("o:monkey", "Monkey", "animals/monkey.png", 3, 2, 64, 8, 10),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png", 3, 1, 128, 32, 25),
-	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", 2, 7, 23, ["Fists", "Sword"], 0.12)
+	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", 2, 7, 23, ["Fists", "Sword"], 0.62)
 ]
 
 func get_objects_by(attribute, term):
