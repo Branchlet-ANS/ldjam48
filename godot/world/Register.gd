@@ -81,7 +81,7 @@ var objects_json =  [
 	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 4, 10, 45, 0.4),
 	register_enemy("o:skeleton_horse", "Skeleton Horse", "terrain/dead party/skeleton_horse.png",\
 	 3, 1, 128, 32, 25, 0.1),
-	register_character("o:scruffy_character", "Scruffy Character", "characters/character_scruffy.png", \
+	register_character("o:scruffy_character", "Scruffy Character", "characters/char_basic_anim.tres", \
 	0, 7, 23, ["Bow"], 0.1)
 ]
 
