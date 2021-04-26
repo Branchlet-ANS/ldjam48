@@ -59,7 +59,6 @@ enum TILE {
 	water,
 }
 
-# Add walls
 func walls():
 	for x in range(x0, x0 + w):
 		for y in range(y0, y0 + h):
@@ -68,17 +67,6 @@ func walls():
 			else:
 				place_tile(x, y, TILE.grass)
 
-#	place_real(x0 + 16, y0 + 16, register.get_object("o:bow"))
-#	place_real(x0 + 17, y0 + 16, register.get_object("o:crossbow"))
-#	place_real(x0 + 18, y0 + 16, register.get_object("o:gun"))
-#	place_real(x0 + 16, y0 + 17, register.get_object("o:pike"))
-#	place_real(x0 + 17, y0 + 17, register.get_object("o:halberd"))
-#	place_real(x0 + 18, y0 + 17, register.get_object("o:sword"))
-	#place_real(x0 + 12, y0 + 8, register.get_object("o:tree"))
-	#place_real(x0 + 14, y0 + 8, register.get_object("o:tree"))
-
-
-# Add entrance and exit for procedurally generated room
 func proc_room_controls():
 	var result = []
 	var side = randi() % 4
@@ -89,7 +77,6 @@ func proc_room_controls():
 		var sy = y0 + [ry, 0, ry, h - 1][side]
 		var x1 = sx + [-1, 0, 1, 0][side]
 		var y1 = sy + [0, 1, 0, -1][side]
-		place_real(x1, y1, register.get_object(["o:room_entrance", "o:room_exit"][i]))
 		side = (side + 2) % 4
 		result.append(Vector2(x1, y1))
 	return result
@@ -122,17 +109,36 @@ func two_snakes(start: Vector2, end: Vector2):
 		snake_0 = Vector2(clamp((snake_0.x + snake_0_dir.x), x0, x0 + w), clamp((snake_0.y + snake_0_dir.y), y0, y0 + h))
 		snake_1 = Vector2(clamp((snake_1.x + snake_1_dir.x), x0, x0 + w), clamp((snake_1.y + snake_1_dir.y), y0, y0 + h))
 
-	var tiles = snake_0_positions + snake_1_positions
+	var snake_tiles = snake_0_positions + snake_1_positions
 
-	for tile in tiles:
+	for tile in snake_tiles:
 		var s = 4 + randi() % 4 # SNAKE WIDTH
 		set_tile_rect(tile.x, tile.y, s, TILE.grass)
-
+	
 	set_tile_rect(start.x, start.y, 8, TILE.grass) # SPAWN WIDTH
-	#place_tile(start.x, start.y, TILE.sand)
-	set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
-	#place_tile(end.x, end.y, TILE.water)
-
+	place_real(start.x, start.y, register.get_object("o:place_characters_here"))
+	#set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
+	#
+	
+	var i = 0
+	while tiles[Vector2(start.x, start.y)] == TILE.grass:
+		if i % 2 == 0:
+			start.x += sign(start.x)
+		else:
+			start.y += sign(start.y)
+		i += 1
+	while tiles[Vector2(end.x, end.y)] == TILE.grass:
+		if i % 2 == 0:
+			end.x += sign(end.x)
+		else:
+			end.y += sign(end.y)
+		i += 1
+	
+	place_real(start.x, start.y, register.get_object("o:room_entrance"))
+	place_real(end.x, end.y, register.get_object("o:room_exit"))
+	place_tile(start.x, start.y, -1)
+	place_tile(end.x, end.y, -1)
+	
 func set_tile_rect(sx, sy, size, tile):
 	for x in range(sx - size/2, sx + size/2):
 		for y in range(sy - size/2, sy + size/2):
@@ -186,14 +192,14 @@ func foraging_room():
 	)
 	prettify_tiles()
 	tiles_set_corruption(floor(_corruption/3))
-
-func bland_room():
-	walls()
-	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "foliage") ), 0.06)
-	proc_room_controls()
-
-func monster_room():
-	bland_room()
+#
+#func bland_room():
+#	walls()
+#	populate_room(register.less_corrupt_than(_corruption, register.get_objects_by("subtype", "foliage") ), 0.06)
+#	proc_room_controls()
+#
+#func monster_room():
+#	bland_room()
 
 func populate_room(collection : Array, chance : float):
 	for i in range(-_width/2, _width/2):

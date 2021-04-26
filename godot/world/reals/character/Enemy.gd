@@ -5,7 +5,6 @@ class_name Enemy
 var _sense_radius
 var _attack_radius
 
-
 func _init(id : String, name: String = "", resistance=100, sense_radius=64, attack_radius=8, power=2, speed=80).(id, name):
 	_resistance = resistance
 	_sense_radius = sense_radius
