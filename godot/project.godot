@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AudioStreamPlayer2D",
+"class": "AudioTimer",
+"language": "GDScript",
+"path": "res://world/AudioTimer.gd"
+}, {
 "base": "Entity",
 "class": "Character",
 "language": "GDScript",
 "path": "res://world/reals/character/Character.gd"
+}, {
+"base": "Node",
+"class": "EffectsManager",
+"language": "GDScript",
+"path": "res://world/EffectsManager.gd"
 }, {
 "base": "Entity",
 "class": "Enemy",
@@ -99,13 +109,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://world/reals/StaticReal.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "VideoTimer",
+"language": "GDScript",
+"path": "res://world/VideoTimer.gd"
+}, {
 "base": "StaticReal",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://world/reals/Weapon.gd"
 } ]
 _global_script_class_icons={
+"AudioTimer": "",
 "Character": "",
+"EffectsManager": "",
 "Enemy": "",
 "Entity": "",
 "FoodPlant": "",
@@ -123,6 +140,7 @@ _global_script_class_icons={
 "RoomPortal": "",
 "RoomWeapon": "",
 "StaticReal": "",
+"VideoTimer": "",
 "Weapon": ""
 }
 

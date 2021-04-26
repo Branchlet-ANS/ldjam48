@@ -27,11 +27,6 @@ var _resistance : float = 1.0
 var melee_in_range : Array = []
 var _power = 2
 
-var player_dead : AudioStreamPlayer2D
-var sfx_dead = preload("res://Assets/SFX/dead.wav")
-var player_hurt : AudioStreamPlayer2D
-var sfx_hurt = preload("res://Assets/SFX/hurt.wav")
-
 func _init(id : String, name: String = "").(id, name):
 	weapon_list["Bow"] = Weapon.new("", "", 10, 100, true, 200, "arrow", true, 0.3, 100, "Bow")
 	weapon_list["Crossbow"] = Weapon.new("", "", 20, 150, true, 300, "arrow", true, 0.05, 100, "Crossbow")
@@ -43,11 +38,6 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	player_dead = AudioStreamPlayer2D.new()
-	add_child(player_dead)
-	player_hurt = AudioStreamPlayer2D.new()
-	add_child(player_hurt)
-
 	melee_area = Area2D.new()
 	interact_area = Area2D.new()
 	var _collision_shape = CollisionShape2D.new()
@@ -168,11 +158,10 @@ func add_health(amount):
 		_health += amount * 1.0/_resistance
 	else:
 		_health = 100.0
-	if(amount < 0):
-		player_hurt.play()
-		print(sfx_hurt)
 	if(_health <= 0):
-		player_dead.play()
+		EffectsManager.play_sound("dead", get_parent().get_parent(), position)
+	elif(amount < 0):
+		EffectsManager.play_sound("hurt", get_parent().get_parent(), position)
 
 
 func _on_Area2D_body_entered(body):

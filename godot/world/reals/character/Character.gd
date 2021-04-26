@@ -4,8 +4,6 @@ class_name Character
 
 var inventory : Inventory = Inventory.new()
 
-var player_step : AudioStreamPlayer2D
-var sfx_step = preload("res://Assets/SFX/walk1.wav")
 var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 var enemy_script = load("res://world/reals/character/Enemy.gd")
@@ -19,23 +17,15 @@ func _ready():
 	
 	set_sprite("characters/character.png")
 	sprite.set_position(Vector2(0, -8))
-	player_step = AudioStreamPlayer2D.new()
-	add_child(player_step)
-	player_step.set_stream(sfx_step)
-	sfx_step.set_stereo(true)
+	
 
 	step_dist *= rand_range(0.8, 1.2)
 	
-	player_hurt.set_stream(sfx_hurt)
-	sfx_hurt.set_stereo(true)
-	player_dead.set_stream(sfx_dead)
-	sfx_dead.set_stereo(true)
 
 func _process(_delta):
 	if((position - step_pos).length() > 10):
 		step_pos = position
-		if(!player_step.playing):
-			player_step.play()
+		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
 
 func _on_Area2D_body_entered(body):
 	if body is Item:
@@ -53,7 +43,7 @@ func _on_melee_Area2D_body_exited(body):
 func add_health(var amount):
 	.add_health(amount)
 	if _health <= 0:
-		player_dead.play()
+		EffectsManager.play_sound("dead", get_parent().get_parent(), position)
 		get_parent().get_parent().get_parent().get_characters().erase(self)
 		if get_parent().get_parent().get_parent().god.selected_characters.has(self):
 			get_parent().get_parent().get_parent().god.selected_characters.erase(self)
