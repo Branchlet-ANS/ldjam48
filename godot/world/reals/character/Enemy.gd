@@ -30,15 +30,17 @@ func _on_sense_area_body_entered(body):
 		sensed_characters.append(body)
 
 func _process(delta):
-	if is_instance_valid(attack_target):
+	if get_state() == STATE.idle:
+		sprite.set_animation("idle")
+		sprite.frame = 0
+		sprite.stop()
+	if attack_target != null and is_instance_valid(attack_target):
 		var distance = get_position().distance_to(attack_target.get_position())
 		if(distance < _attack_radius and last_anim != "attack"):
 			sprite.animation = "attack"
-			last_anim = "attack"
 			sprite.play()
 		elif(distance >= _attack_radius and last_anim != "walk"):
 			sprite.animation = "walk"
-			last_anim = "walk"
 			sprite.play()
 		if distance > _sense_radius:
 			set_state(STATE.idle)
@@ -52,11 +54,8 @@ func _process(delta):
 				set_state(STATE.attack)
 				attack_target = character
 				break
-		if(get_state() == STATE.idle and last_anim != "idle"):
-			last_anim = "idle"
-			sprite.animation = "idle"
-			sprite.play()
-	sprite.set_scale(Vector2(sign(velocity.x), 1))
+	if velocity.x != 0:
+		sprite.set_scale(Vector2(sign(velocity.x), 1))
 
 func attack_cycle(delta):
 	if !is_instance_valid(attack_target):

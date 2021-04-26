@@ -8,12 +8,13 @@ var step_pos : Vector2 = Vector2.ZERO
 var step_dist : float = 10
 var enemy_script = load("res://world/reals/character/Enemy.gd")
 var tame = false
+var player_anim = preload("res://assets/characters/char_player_anim.tres")
 
 func _init(id : String, name: String = "").(id, name):
 	weapon = weapon_list["Fists"]
 
 func _ready():
-	sprite.frames = load("res://assets/characters/char_player_anim.tres")
+	sprite.frames = player_anim
 	sprite.set_position(Vector2(0, -8))
 	step_dist *= rand_range(0.8, 1.2)
 
@@ -22,7 +23,7 @@ func _process(_delta):
 		step_pos = position
 		EffectsManager.play_sound("walk1", get_parent().get_parent(), position)
 	if get_state() == STATE.idle:
-		sprite.animation = "idle"
+		sprite.set_animation("idle")
 		sprite.frame = 3
 		sprite.stop()
 	if get_state() == STATE.idle and is_selected():

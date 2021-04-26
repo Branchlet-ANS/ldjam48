@@ -104,7 +104,7 @@ func instance_object(info):
 		return_value = character
 	return_value.sprite_offset = info["offset"]
 	return return_value
-
+	
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
 	
