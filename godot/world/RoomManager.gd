@@ -66,7 +66,7 @@ func rebuild():
 	for key in tiles:
 		var tile = tiles[key]
 		tile_map.set_cell(key.x, key.y, tile)
-		
+
 	for object in room_container.get_children():
 		if object.get_id() == "o:place_characters_here":
 			var characters = []

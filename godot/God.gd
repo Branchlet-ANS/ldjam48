@@ -8,6 +8,7 @@ var character_space = 15
 var clickable = null
 var left_down = false
 var dead = false
+var texture : Texture
 
 func _ready():
 	pass
@@ -32,7 +33,9 @@ func _unhandled_input(event):
 					return
 			else:
 				left_down = true
-				set_selection_target()
+				var closest_monster = get_closest(get_parent().roomManager.get_enemies(), mouse_pos)
+				if closest_monster == null or (closest_monster.get_position() - mouse_pos).length() >= 16:
+					set_selection_target()
 		elif event.get_button_index() == 2:
 			if(event.is_pressed()):
 				select_pos_start = mouse_pos
@@ -139,7 +142,7 @@ func _draw():
 			var weapon_name = clickable.weapon.get_weapon_name().to_lower()
 			if weapon_name != "fists":
 				pos += Vector2.UP * 35
-				var texture : Texture = load("res://assets/items/" + weapon_name + ".png")
+				texture = load("res://assets/items/" + weapon_name + ".png")
 				var points = PoolVector2Array([pos + Vector2(-10, -10), pos + Vector2(10, -10), pos + Vector2(10, 10), pos + Vector2(-10, 10)])
 				draw_colored_polygon(points, Color.lightgreen)
 				draw_texture(texture, pos + Vector2(-8, -8))
