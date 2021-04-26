@@ -69,7 +69,7 @@ func rebuild():
 		tile_map.set_cell(key.x, key.y, tile)
 
 	for object in room_container.get_children():
-		if object.get_id() == "o:room_entrance":
+		if object.get_id() == "o:place_characters_here":
 			var characters = []
 			for character in get_characters():
 				if character.tame:
