@@ -64,7 +64,7 @@ var objects_json =  [
 	register_food_plant("o:penis_berry", "Penis Berry", "items/penis_berry.png", 7, "berry", 0.6, -20),
 	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.12),
 	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.07),
-	register_weapon("o:gun", "Gun", "items/gun.png", 7, 0.02),
+	register_weapon("o:gun", "Gun", "items/gun.png", 0, 1),
 	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.12),
 	register_weapon("o:pike", "Pike", "items/pike.png", 3, 0.07),
 	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.03),
