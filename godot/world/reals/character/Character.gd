@@ -33,7 +33,6 @@ func _process(_delta):
 	if get_state() == STATE.target:
 		var angle = 2 * PI - get_position().angle_to_point(get_position() + velocity)
 		var index = int(angle / (PI / 2.0) - PI / 2.0) % 4
-		print(index)
 		sprite.set_animation(["right", "up", "left", "down"][index])
 		sprite.play()
 
@@ -47,8 +46,10 @@ func _physics_process(delta):
 		if(attack_moving):
 			margin = 5
 		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+			print("ai")
 			attack_moving = true
-			move_towards(_target)
+			var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
+			move_towards(wanted_pos)
 			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
 				attack_moving = false
 
