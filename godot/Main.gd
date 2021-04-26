@@ -6,6 +6,12 @@ var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
+var NUMBER_ROOMS = 2
+var NUMBER_CHARACTERS_START = 1
+
+var MIN_ROOM_SIZE = 32
+var MAX_ROOM_SIZE = 64
+
 
 func _ready():
 	randomize() # butterfly effect
@@ -29,4 +35,7 @@ func _ready():
 
 func get_characters():
 	return roomManager.get_characters()
-	
+
+func set_room_counter(i):
+	$GUI/RoomCounter.text = "Room: " + str(i+1)	
+

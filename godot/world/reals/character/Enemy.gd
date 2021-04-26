@@ -94,4 +94,5 @@ func add_health(var amount):
 			EffectsManager.play_sound("monke4", get_parent().get_parent(), position)
 		elif("Bird" == get_name()):
 			EffectsManager.play_sound("bird1", get_parent().get_parent(), position)
+		achievement("Monster Hunter", "You killed a monster, keep doing that!")
 		queue_free()

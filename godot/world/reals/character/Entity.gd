@@ -29,6 +29,7 @@ var _resistance : float = 1.0
 var melee_in_range : Array = []
 var _power = 2
 var last_anim : String = ""
+var _sprite
 
 func _init(id : String, name: String = "").(id, name):
 	weapon_list["Bow"] = Weapon.new("", "", 10, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
