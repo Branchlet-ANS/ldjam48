@@ -97,6 +97,9 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	velocity *= damp
 
+func set_sprite(spriteframes):
+	sprite.frames = load(spriteframes)
+	
 func move_towards(pos):
 	if velocity.length() < speed_max:
 		var direction = transform.origin.direction_to(pos)
