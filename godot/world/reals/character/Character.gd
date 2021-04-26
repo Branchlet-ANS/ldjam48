@@ -13,7 +13,7 @@ func _init(id : String, name: String = "").(id, name):
 	pass
 
 func _ready():
-	weapon = weapon_list["Fists"]
+	weapon = weapon_list["Gun"]
 	sprite.frames = load("res://assets/characters/player_anim.tres")
 	sprite.set_position(Vector2(0, -8))
 	step_dist *= rand_range(0.8, 1.2)
@@ -46,8 +46,10 @@ func _physics_process(delta):
 		if(attack_moving):
 			margin = 5
 		if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) > margin:
+			print("ai")
 			attack_moving = true
-			move_towards(_target)
+			var wanted_pos : Vector2 = attack_target.position - weapon.get_desired_distance() * transform.origin.direction_to(attack_target.position)
+			move_towards(wanted_pos)
 			if abs(transform.origin.distance_to(attack_target.position) - weapon.get_desired_distance()) < margin/2:
 				attack_moving = false
 

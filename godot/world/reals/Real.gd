@@ -21,7 +21,6 @@ func set_sprite(path : String):
 	sprite.frames.add_animation("idle")
 	sprite.frames.add_frame("idle", load("res://assets/" + path))
 	sprite.animation = "idle"
-	print(_name + ": " + str(sprite_offset))
 	sprite.set_position(sprite.get_position() + sprite_offset)
 	
 func get_sprite():
