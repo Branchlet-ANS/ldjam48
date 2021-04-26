@@ -63,8 +63,7 @@ func _unhandled_input(event):
 								max(select_pos_start.y, select_pos_end.y) - min(select_pos_start.y, select_pos_end.y)).intersects(
 									Rect2(character.position, character.collision_shape.shape.get_extents()))):
 							new_selection.append(character)
-					if new_selection.size() > 0:
-						selected_characters = new_selection
+					selected_characters = new_selection
 					if(new_selection.size() >= 2):
 						player_selected2.play()
 					elif(new_selection.size() >= 1):
