@@ -9,7 +9,7 @@ func _init(death_timer : float = 1):
 
 func _ready():
 	z_index = 100
-	print(position)
+	#print(position)
 
 func _process(delta):
 	_death_timer -= delta

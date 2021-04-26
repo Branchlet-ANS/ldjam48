@@ -40,7 +40,7 @@ func select(index):
 func next():
 	assert(_index < _rooms.size()-1)
 	_index += 1
-	print("next room..")
+	#print("next room..")
 	rebuild()
 	
 func rebuild():

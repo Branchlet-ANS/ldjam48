@@ -1,19 +1,39 @@
 extends PanelContainer
 
+var ACHIEVEMENT_DISPLAY_TIME = 4
+var timer : Timer = Timer.new()
 var achievements = []
+
+var display_queue = []
+
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
-func achievement(achievement_text : String):
-	if achievements.has(achievement_text):
+func _ready():
+	timer.connect("timeout" ,self, "_on_timer_timeout") 
+	
+	add_child(timer) #to process
+	timer.set_wait_time(ACHIEVEMENT_DISPLAY_TIME)
+
+func achievement(header : String, achievement_text : String):
+	if achievements.has(header):
 		return
-	achievements.append(achievement_text)
-	$Label.text = "Achievement!\n" + achievement_text
-	visible = true
-	print("HELLO")
-	
-	$Timer.start()
-	
-func _on_Timer_timeout():
-	visible = false
+	achievements.append(header)
+	display_queue.append([header, achievement_text])
+	if timer.get_time_left() == 0:
+		next_text()
+
+func next_text():
+	if display_queue.size() > 0:
+		visible = true
+		$Label.text = display_queue[0][0].to_upper() + "\n" + display_queue[0][1]
+		timer.start()
+		display_queue.pop_front()
+	else:
+		visible = false
+
+
+func _on_timer_timeout():
+	next_text()
