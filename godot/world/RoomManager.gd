@@ -105,7 +105,7 @@ func instance_object(info):
 
 func set_tileset(tile_set):
 	tile_map.set_tileset(tile_set)
-
+	
 func get_interactables():
 	var interactables = []
 	for object in room_container.get_children():

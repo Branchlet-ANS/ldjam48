@@ -7,21 +7,10 @@ var select_pos_start : Vector2 = Vector2.ZERO
 var select_pressed = false
 var character_space = 15
 var clickable = null
-var player_selected1 : AudioStreamPlayer2D
-var sfx_selected1 = preload("res://Assets/SFX/selected1.wav")
-var player_selected2 : AudioStreamPlayer2D
-var sfx_selected2 = preload("res://Assets/SFX/selected2.wav")
 var left_down = false
 
 func _ready():
-	player_selected1 = AudioStreamPlayer2D.new()
-	add_child(player_selected1)
-	player_selected1.set_stream(sfx_selected1)
-	sfx_selected1.set_stereo(true)
-	player_selected2 = AudioStreamPlayer2D.new()
-	add_child(player_selected2)
-	player_selected2.set_stream(sfx_selected2)
-	sfx_selected2.set_stereo(true)
+	pass
 
 func _unhandled_input(event):
 	var mouse_pos = get_parent().camera.mouse_world_position()
@@ -40,7 +29,6 @@ func _unhandled_input(event):
 			else:
 				left_down = true
 				set_selection_target()
-				player_selected1.play()			
 		elif event.get_button_index() == 2:
 			if(event.is_pressed()):
 				select_pos_start = mouse_pos
@@ -53,7 +41,6 @@ func _unhandled_input(event):
 					if closest_character != null:
 						if (closest_character.get_position() - mouse_pos).length() < 16:
 							selected_characters = [closest_character]
-							player_selected1.play()
 							return
 						else:
 							selected_characters.clear()
@@ -68,9 +55,9 @@ func _unhandled_input(event):
 							new_selection.append(character)
 					selected_characters = new_selection
 					if(new_selection.size() >= 2):
-						player_selected2.play()
+						EffectsManager.play_sound("selected2", self, position)
 					elif(new_selection.size() >= 1):
-						player_selected1.play()
+						EffectsManager.play_sound("selected1", self, position)
 	elif event is InputEventMouseMotion:
 		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables()
 		var closest = get_closest(all, mouse_pos)
@@ -96,7 +83,7 @@ func set_selection_target():
 		character.set_job(null)
 		character.set_state(character.STATE.idle)
 	grid_entities(selected_characters, mouse_pos, character_space)
-	
+
 func interact(interactable):
 	selected_characters[0].set_job(interactable)
 

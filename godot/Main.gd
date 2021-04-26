@@ -16,6 +16,7 @@ func _ready():
 	roomManager = RoomManager.new()
 	add_child(roomManager)
 	roomManager.set_tileset(load("res://world/tileset.tres"))
+	roomManager.tile_map.tile_set
 	
 	god = God.new()
 	add_child(god)

@@ -38,7 +38,7 @@ func register_enemy(id, _name, sprite, corruption, resistance, sense_radius, att
 	dict["power"] = power
 	dict["chance"] = 0.25
 	return dict
-	
+
 ## hello
 func register_character(id, _name, sprite, corruption, health_min, health_max, weapons, chance=1):
 	var dict = register_real(id, _name, sprite, corruption, false, Character, "Character")
@@ -84,8 +84,8 @@ func get_objects_by(attribute, terms):
 		terms = [terms]
 	for i in range(len(terms)):
 		terms[i] = str(terms[i])
-		
-		
+
+
 	var objects = []
 	for object in objects_json:
 		if object.has(attribute):
