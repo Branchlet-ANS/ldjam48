@@ -99,22 +99,25 @@ var objects_json =  [
 
 	#register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, speed, chance=1, offset:Vector2=Vector2.ZERO):
 	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
-	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 60, 0.4),
-	register_enemy("o:bird", "Bird", "animals/bird/bird_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_green", "Green Bird", "animals/bird/bird_anim_green.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_red", "Red Bird", "animals/bird/bird_anim_red.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_blue", "Blue Bird", "animals/bird/bird_anim_blue.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_pink", "Pink Bird", "animals/bird/bird_anim_pink.tres", 0, 2, 64, 8, 10, 45, 0.4),
 
 	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
 	1, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.13),
 
 	register_character("o:gentleman", "Gentleman", "characters/char_shirt_anim.tres", \
 	1, 30, 40, ["Fists"], 0.11),
-	
+
 	register_character("o:novice_character", "Novice Character", "characters/char_basic_anim.tres", \
 	4, 1, 50, ["Bow", "Sword", "Pike", "Fists"], 0.17),
 
 	register_character("o:gentleman_gun", "Gentleman with gun", "characters/char_shirt_anim.tres", \
 	5, 1, 5, ["Gun"], 0.05),
-	
-	
+
+
 
 	register_character("o:armored", "Armored Fella", "characters/char_armor_anim.tres", \
 	5, 20, 60, ["Crossbow", "Sword", "Fists", "Fists"], 0.09),
