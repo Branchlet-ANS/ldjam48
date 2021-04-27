@@ -101,7 +101,7 @@ var objects_json =  [
 
 	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 5, 2, 100, 8, 4, 60, 0.3),
 
-	register_enemy("o:bird_blue", "Blue Bird", "animals/bird/bird_blue_anim.tres", 0, 0.1, 128, 24, 2, 90, 0.4),
+	register_enemy("o:bird_blue", "Blue Bird", "animals/bird/bird_blue_anim.tres", 0, 0.1, 128, 24, 1, 90, 0.4),
 
 	register_enemy("o:bird_green", "Green Bird", "animals/bird/bird_green_anim.tres", 3, 0.6, 128, 24, 5, 90, 0.3),
 
