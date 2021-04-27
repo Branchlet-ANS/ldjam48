@@ -128,7 +128,7 @@ func set_state(state):
 	if state == STATE.idle:
 		_target = transform.origin
 	elif state == STATE.job:
-		job_timer = 1
+		job_timer = 0.5
 	elif state == STATE.attack:
 		attack_timer = 1
 
