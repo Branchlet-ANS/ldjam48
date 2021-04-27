@@ -83,6 +83,7 @@ func strike(at):
 	if !is_instance_valid(at):
 		return
 	at.add_health(-_power)
+	EffectsManager.play_video("slash", get_parent().get_parent(), at.position)
 
 func add_health(var amount):
 	.add_health(amount)
