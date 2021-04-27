@@ -73,16 +73,16 @@ var objects_json =  [
 	register_food_plant("o:bat_berry", "Bat Berry", "bushes/wasp_berry.png", 7, "berry", 0.3, 25),
 
 	register_food_plant("o:purple_wangu", "Purple Wangu", "bushes/purple_wangu.png", 9, "berry", 0.8, 35),
-	register_food_plant("o:prickled_wangu", "Prickled Wangu", "bushes/prickled_wangu.png", 10, "berry", 0.8, -100),
+	register_food_plant("o:prickled_wangu", "Prickled Wangu", "bushes/prickled_wangu.png", 10, "berry", 0.8, -120),
 	register_food_plant("o:purple_cherry", "Purple Cherry", "bushes/purple_cherry.png", 9, "berry", 0.45, 30),
 
 	register_food_plant("o:thorn_berry", "Thorn Berry", "bushes/thorn_berry.png", 10, "berry", 0.02, 200),
 
 
-	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.13),
-	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.1),
+	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.15),
+	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.09),
 	register_weapon("o:gun", "Gun", "items/gun.png", 0, 0.03),
-	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.13),
+	register_weapon("o:sword", "Sword", "items/sword.png", 1, 0.17),
 	register_weapon("o:pike", "Pike", "items/pike.png", 3, 0.07),
 	register_weapon("o:halberd", "Halberd", "items/halberd.png", 5, 0.06),
 
@@ -97,18 +97,24 @@ var objects_json =  [
 	register_real("o:tree", "Tree", "terrain/tree.png", 0, true, StaticReal, "decoration", Vector2.UP*8),
 	register_real("o:place_characters_here", "", "", 0, false, Real),
 
+	#register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, speed, chance=1, offset:Vector2=Vector2.ZERO):
 	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
-	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 60, 0.4),
 	register_enemy("o:bird", "Bird", "animals/bird/bird_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
 
 	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
-	0, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.17),
+	1, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.13),
 
 	register_character("o:gentleman", "Gentleman", "characters/char_shirt_anim.tres", \
-	0, 30, 40, ["Fists"], 0.14),
+	1, 30, 40, ["Fists"], 0.11),
+	
+	register_character("o:novice_character", "Novice Character", "characters/char_basic_anim.tres", \
+	4, 1, 50, ["Bow", "Sword", "Pike", "Fists"], 0.17),
 
 	register_character("o:gentleman_gun", "Gentleman with gun", "characters/char_shirt_anim.tres", \
 	5, 1, 5, ["Gun"], 0.05),
+	
+	
 
 	register_character("o:armored", "Armored Fella", "characters/char_armor_anim.tres", \
 	5, 20, 60, ["Crossbow", "Sword", "Fists", "Fists"], 0.09),

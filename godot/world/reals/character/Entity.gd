@@ -12,9 +12,9 @@ enum STATE {
 var _state : int
 var velocity : Vector2 = Vector2.ZERO
 var _target : Vector2 = Vector2.ZERO
-var speed_max : float = 70
+var speed_max : float = 150
 var acceleration : float = 20
-var damp = 0.8
+var damp = 0.9
 var job : Real = null
 var job_timer : float = 0
 var interact_area : Area2D
@@ -30,6 +30,17 @@ var melee_in_range : Array = []
 var _power = 2
 var last_anim : String = ""
 var _sprite
+
+
+#Construct item (id : String, name: String, dmg : float = 10,
+#		attack_timer : float = 100,
+#		has_projectile : bool = false,
+#		projectile_speed : float = 200,
+#		projectile_sprite_name : String = "bullet",
+#		projectile_rotating : bool = false,
+#		projectile_inaccuracy : float = 0,
+#		desired_distance : float = 100,
+#		weapon_name : String = "")
 
 func _init(id : String, name: String = "").(id, name):
 	weapon_list["Bow"] = Weapon.new("", "", 10, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
