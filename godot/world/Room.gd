@@ -119,16 +119,8 @@ func two_snakes(start: Vector2, end: Vector2):
 	
 	set_tile_rect(start.x, start.y, 4, TILE.grass) # SPAWN WIDTH
 	place_real(start.x, start.y, register.get_object("o:place_characters_here"))
-	#set_tile_rect(end.x, end.y, 8, TILE.grass) # END WIDTH
-	#
 	
 	var i = 0
-	while tiles[Vector2(start.x, start.y)] == TILE.grass:
-		if i % 2 == 0:
-			start.x += sign(start.x)
-		else:
-			start.y += sign(start.y)
-		i += 1
 	while tiles[Vector2(end.x, end.y)] == TILE.grass:
 		if i % 2 == 0:
 			end.x += sign(end.x)
@@ -136,14 +128,12 @@ func two_snakes(start: Vector2, end: Vector2):
 			end.y += sign(end.y)
 		i += 1
 	
-	place_real(start.x, start.y, register.get_object("o:room_entrance"))
 	place_real(end.x, end.y, register.get_object("o:room_exit"))
-	place_tile(start.x, start.y, -1)
-	place_tile(end.x, end.y, -1)
+	set_tile_rect(end.x, end.y, 2, TILE.grass)
 	
 func set_tile_rect(sx, sy, size, tile):
-	for x in range(sx - size/2, sx + size/2):
-		for y in range(sy - size/2, sy + size/2):
+	for x in range(sx - size/2, sx + size/2 + 1):
+		for y in range(sy - size/2, sy + size/2 + 1):
 			place_tile(x, y, tile)
 
 func prettify_tiles():
