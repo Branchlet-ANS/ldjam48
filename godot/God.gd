@@ -71,6 +71,11 @@ func _unhandled_input(event):
 	elif event is InputEventMouseMotion:
 		var all = get_parent().roomManager.get_enemies() + get_parent().roomManager.get_interactables() + get_parent().roomManager.get_characters()
 		var closest = get_closest(all, mouse_pos)
+		
+		if closest is Character:
+			if !closest.tame and closest.position.distance_to(get_global_mouse_position()) < 32:
+				get_parent().get_node("GUI/Achievement").achievement("New friend", "Right click and drag to select this character\nand add him to your party!")
+		
 		if (closest.get_position() - mouse_pos).length() < 16:
 			clickable = closest
 		else:
