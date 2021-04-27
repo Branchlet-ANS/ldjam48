@@ -26,7 +26,6 @@ func _ready():
 	add_child(sense_area)
 	
 	last_anim = "idle"
-	sprite.animation = "idle"
 	sprite.play()
 
 func _on_sense_area_body_entered(body):
