@@ -26,15 +26,15 @@ func berry(bry):
 		berries_eaten.append(bry)
 
 	if berries_eaten.size() == 2:
-		achievement("Two berries eaten", "You are on your way to becoming a berry master")
+		achievement("Two unique berries eaten", "You are on your way to becoming a berry master")
 	elif berries_eaten.size() == 3:
-		achievement("Three berries eaten", "Further along the path to become a berry master, you are.")
+		achievement("Three unique berries eaten", "Further along the path to become a berry master, you are.")
 	elif berries_eaten.size() == 5:
-		achievement("Berry apprentice (5 berries)", "You are becoming recognized. \nBerry-eating dojos in the world are contacting you.")
+		achievement("Berry apprentice (5 unique berries)", "You are becoming recognized. \nBerry-eating dojos in the world are contacting you.")
 	elif berries_eaten.size() == 7:
-		achievement("Berry master (7 berries)", "You are being contacted by organizations who want you to\nbe in their ad campaigns")
+		achievement("Berry master (7 unique berries)", "You are being contacted by organizations who want you to\nbe in their ad campaigns")
 	elif berries_eaten.size() == 10:
-		achievement("Berry lord (10 berries)", "You are regarded as the most influental berry eater in \nthe world. Congratulations.")
+		achievement("Berry lord (10 unique berries)", "You are regarded as the most influental berry eater in \nthe world. Congratulations.")
 
 
 func next_text():

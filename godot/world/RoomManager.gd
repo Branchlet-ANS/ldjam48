@@ -10,6 +10,7 @@ var tile_map : TileMap
 var room_container : YSort
 var _rooms : Array = []
 var _index : int
+var next_achievement : int = 0
 
 func _ready():
 	tile_map = TileMap.new()
@@ -40,6 +41,27 @@ func select(index):
 	rebuild()
 	
 func next():
+	if(next_achievement == 0):
+		get_parent().get_node("GUI/Achievement").achievement("Finally on your way out!", "Or wait, maybe you're just going deeper?")
+	elif(next_achievement == 1):
+		get_parent().get_node("GUI/Achievement").achievement("Great, deeper into the jungle", "")
+	elif(next_achievement == 2):
+		get_parent().get_node("GUI/Achievement").achievement("Deeper and deeper", "That actually has a nice ring to it")
+	elif(next_achievement == 3):
+		get_parent().get_node("GUI/Achievement").achievement("You must be going somewhere", "right?")
+	elif(next_achievement == 4):
+		get_parent().get_node("GUI/Achievement").achievement("Found any good weapons yet?", "")
+	elif(next_achievement == 6):
+		get_parent().get_node("GUI/Achievement").achievement("It just keeps going", "")
+	elif(next_achievement == 8):
+		get_parent().get_node("GUI/Achievement").achievement("How many times have you died yet?", "")
+	elif(next_achievement == 10):
+		get_parent().get_node("GUI/Achievement").achievement("You must be near the exit", "")
+	elif(next_achievement == 12):
+		get_parent().get_node("GUI/Achievement").achievement("Surely this is the last bit", "")
+	elif(next_achievement == 15):
+		get_parent().get_node("GUI/Achievement").achievement("Almost there", "")
+	next_achievement+=1
 	if !(_index < _rooms.size()-1):
 		get_parent().get_node("GUI/Achievement").achievement("You won?", "Congratulations, you have reached the \ngrotesque depths of the jungle.\n\n...Or perhaps, have you lost?")
 	else:

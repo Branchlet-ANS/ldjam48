@@ -84,6 +84,7 @@ func strike(at):
 		return
 	at.add_health(-_power)
 	EffectsManager.play_video("slash", get_parent().get_parent(), at.position)
+	EffectsManager.play_sound("hit_arrow", get_parent().get_parent(), at.position)
 
 func add_health(var amount):
 	.add_health(amount)
@@ -94,7 +95,7 @@ func add_health(var amount):
 		elif("Monkey" == get_name()):
 			var string_sfx = "monke" + str(randi()%3+1)
 			EffectsManager.play_sound(string_sfx, get_parent().get_parent(), position)
-		elif("Bird" == get_name()):
+		elif("Bird" in get_name()):
 			EffectsManager.play_sound("bird1", get_parent().get_parent(), position)
 	if _health <= 0:
 		#get_parent().remove_child(self)
@@ -102,7 +103,8 @@ func add_health(var amount):
 			EffectsManager.play_sound("mini_monke4", get_parent().get_parent(), position)
 		elif("Monkey" == get_name()):
 			EffectsManager.play_sound("monke4", get_parent().get_parent(), position)
-		elif("Bird" == get_name()):
-			EffectsManager.play_sound("bird1", get_parent().get_parent(), position)
+		elif("Bird" in get_name()):
+			EffectsManager.play_sound("bird2", get_parent().get_parent(), position)
+		print(get_name())
 		achievement("Monster Hunter", "You killed a monster, keep doing that!")
 		queue_free()
