@@ -24,9 +24,9 @@ func interact(character):
 		EffectsManager.play_sound("food", get_parent().get_parent(), position)
 		get_parent().get_parent().get_parent().get_node("GUI/Achievement").berry(_name)
 		if _food_value < 0:
-			achievement("Bad move", "You ate poisonous fruit")
+			achievement("Bad luck!", "You were damaged by eating poisonous berries!")
 		else:
-			achievement("Delicious", "You were healed by eating berries!")
+			achievement("Delicious!", "You were healed by eating berries!")
 		
 		character.add_health(_food_value)
 		_fruits -= 1
