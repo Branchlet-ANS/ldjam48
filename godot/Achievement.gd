@@ -1,6 +1,6 @@
 extends PanelContainer
 
-var ACHIEVEMENT_DISPLAY_TIME = 4.0
+var ACHIEVEMENT_DISPLAY_TIME = 6.0
 var achievements = []
 var berries_eaten = []
 var display_queue = []
@@ -39,7 +39,7 @@ func berry(bry):
 func next_text():
 	if display_queue.size() > 0 and $Timer.get_time_left() == 0:
 		print(display_queue[0])
-		$Label.text = display_queue[0][0].to_upper() + "\n" + display_queue[0][1]
+		$HBoxContainer/Label.text = display_queue[0][0].to_upper() + "\n" + display_queue[0][1]
 		visible = true
 		display_queue.remove(0)
 		$Timer.start()
@@ -54,9 +54,11 @@ func _on_Timer_timeout():
 
 func _on_Achievement_mouse_entered():
 	$Timer.paused = true
+	$HBoxContainer/info.text = "[Remove mouse to efface.]    "
 
 
 func _on_Achievement_mouse_exited():
 	$Timer.paused = false
 	$Timer.stop()
+	$HBoxContainer/info.text = "[Drag mouse here to persist.]    "
 	next_text()
