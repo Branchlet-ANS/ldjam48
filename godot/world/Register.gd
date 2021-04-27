@@ -57,7 +57,7 @@ func register_character(id, _name, sprite, corruption, health_min, health_max, w
 
 var objects_json =  [
 	register_real("o:room_entrance", "Room Entrance", "entrance.png", 0, true, RoomPortal),
-	register_real("o:room_exit", "Room Exit", "exit.png", 0, true, RoomPortal),
+	register_real("o:room_exit", "Room Exit", "exit.png", 0, true, RoomPortal, "", Vector2.UP*8),
 
 	register_food_plant("o:wangu_berry", "Wangu", "bushes/wangu.png", 0, "berry", 0.8, 5),
 	register_food_plant("o:cherry_berry", "Cherry Berry", "bushes/cherry_berry.png", 0,"berry", 0.6, -5),
@@ -122,8 +122,6 @@ var objects_json =  [
 
 	register_character("o:gentleman_gun", "Gentleman with gun", "characters/char_shirt_anim.tres", \
 	5, 1, 5, ["Gun"], 0.05),
-
-
 
 	register_character("o:armored", "Armored Fella", "characters/char_armor_anim.tres", \
 	5, 20, 60, ["Crossbow", "Sword", "Fists", "Fists"], 0.09),
