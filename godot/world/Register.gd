@@ -77,8 +77,7 @@ var objects_json =  [
 	register_food_plant("o:purple_cherry", "Purple Cherry", "bushes/purple_cherry.png", 9, "berry", 0.45, 30),
 
 	register_food_plant("o:thorn_berry", "Thorn Berry", "bushes/thorn_berry.png", 10, "berry", 0.02, 200),
-
-
+	
 	register_weapon("o:bow", "Bow", "items/bow.png", 1, 0.13),
 	register_weapon("o:crossbow", "Crossbow", "items/crossbow.png", 3, 0.1),
 	register_weapon("o:gun", "Gun", "items/gun.png", 0, 0.03),
@@ -99,7 +98,10 @@ var objects_json =  [
 
 	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
 	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
-	register_enemy("o:bird", "Bird", "animals/bird/bird_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_green", "Green Bird", "animals/bird/bird_anim_green.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_red", "Red Bird", "animals/bird/bird_anim_red.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_blue", "Blue Bird", "animals/bird/bird_anim_blue.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:bird_pink", "Pink Bird", "animals/bird/bird_anim_pink.tres", 0, 2, 64, 8, 10, 45, 0.4),
 
 	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
 	0, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.17),
