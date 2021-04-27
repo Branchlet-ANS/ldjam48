@@ -112,7 +112,7 @@ var objects_json =  [
 	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 11, 5, 64, 8, 2, 30, 0.3, Vector2.UP*16),
 
 	register_character("o:basic_character", "Basic Character", "characters/char_basic_anim.tres", \
-	1, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.13),
+	1, 1, 50, ["Bow", "Fists", "Fists", "Fists", "Fists", "Sword"], 0.22),
 
 	register_character("o:gentleman", "Gentleman", "characters/char_shirt_anim.tres", \
 	1, 30, 40, ["Fists"], 0.11),

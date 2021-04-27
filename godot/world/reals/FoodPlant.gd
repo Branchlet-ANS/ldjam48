@@ -26,7 +26,7 @@ func interact(character):
 		if _food_value < 0:
 			achievement("Bad move", "You ate poisonous fruit")
 		else:
-			achievement("Delicious", "You were healed by eating fruit")
+			achievement("Delicious", "You were healed by eating berries!")
 		
 		character.add_health(_food_value)
 		_fruits -= 1

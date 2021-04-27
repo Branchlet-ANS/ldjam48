@@ -88,6 +88,10 @@ static func get_closest(objects, position):
 
 func set_selection_target():
 	var mouse_pos = get_global_mouse_position()
+	
+	if selected_characters.size() > 0:
+		get_parent().get_node("GUI/Achievement").achievement("Given a job", "Why not try eating some berries or attacking a monster?", true)
+	
 	for character in selected_characters:
 		character.set_job(null)
 		character.set_state(character.STATE.idle)

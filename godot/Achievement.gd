@@ -13,11 +13,12 @@ var display_queue = []
 func _ready():
 	$Timer.set_wait_time(ACHIEVEMENT_DISPLAY_TIME)
 
-func achievement(header : String, achievement_text : String):
+func achievement(header : String, achievement_text : String, override=false):
 	if achievements.has(header):
 		return
 	achievements.append(header)
 	display_queue.append([header, achievement_text])
+	$Timer.stop()
 	next_text()
 
 
@@ -25,10 +26,8 @@ func berry(bry):
 	if !berries_eaten.has(bry):
 		berries_eaten.append(bry)
 
-	if berries_eaten.size() == 2:
-		achievement("Two unique berries eaten", "You are on your way to becoming a berry master")
 	elif berries_eaten.size() == 3:
-		achievement("Three unique berries eaten", "Further along the path to become a berry master, you are.")
+		achievement("Three unique berries eaten", "You are on your way to becoming a berry master")
 	elif berries_eaten.size() == 5:
 		achievement("Berry apprentice (5 unique berries)", "You are becoming recognized. \nBerry-eating dojos in the world are contacting you.")
 	elif berries_eaten.size() == 7:
@@ -61,4 +60,3 @@ func _on_Achievement_mouse_exited():
 	$Timer.paused = false
 	$Timer.stop()
 	next_text()
-	

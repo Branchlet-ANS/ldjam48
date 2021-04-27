@@ -15,4 +15,5 @@ func _ready():
 	add_child(collision_shape)	
 	
 func interact(character):
+	EffectsManager.play_sound("hit_arrow", get_parent().get_parent(), position)
 	queue_free()
