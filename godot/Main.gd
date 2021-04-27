@@ -6,7 +6,7 @@ var god : God
 var roomManager : RoomManager
 var camera : MainCamera
 
-var NUMBER_ROOMS = 20
+var NUMBER_ROOMS = 18
 var NUMBER_CHARACTERS_START = 1
 
 var MIN_ROOM_SIZE = 32

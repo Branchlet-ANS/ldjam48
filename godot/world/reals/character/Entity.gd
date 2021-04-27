@@ -12,9 +12,9 @@ enum STATE {
 var _state : int
 var velocity : Vector2 = Vector2.ZERO
 var _target : Vector2 = Vector2.ZERO
-var speed_max : float = 150
+var speed_max : float = 75
 var acceleration : float = 20
-var damp = 0.9
+var damp = 0.8
 var job : Real = null
 var job_timer : float = 0
 var interact_area : Area2D
