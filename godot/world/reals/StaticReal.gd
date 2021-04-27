@@ -16,4 +16,5 @@ func _ready():
 	
 func interact(character):
 	EffectsManager.play_sound("hit_arrow", get_parent().get_parent(), position)
+	achievement("Crazy strong?", "You just broke it like that?")
 	queue_free()
