@@ -106,6 +106,7 @@ func _physics_process(delta):
 
 func set_sprite(spriteframes):
 	sprite.frames = load("res://assets/" + spriteframes)
+	sprite.set_position(sprite.get_position() + sprite_offset)
 	
 func move_towards(pos):
 	if velocity.length() < speed_max:

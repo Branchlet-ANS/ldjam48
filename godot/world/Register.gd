@@ -98,7 +98,7 @@ var objects_json =  [
 	register_real("o:place_characters_here", "", "", 0, false, Real),
 
 	#register_enemy(id, _name, sprite, corruption, resistance, sense_radius, attack_radius, power, speed, chance=1, offset:Vector2=Vector2.ZERO):
-	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
+	register_enemy("o:monkey", "Monkey", "animals/monkey/monkey_anim.tres", 0, 2, 64, 8, 10, 45, 0.4, Vector2(0, -16)),
 	register_enemy("o:mini_monkey", "Mini Monkey", "animals/monkey_mini/monkey_mini_anim.tres", 0, 2, 64, 8, 10, 45, 0.4),
 	register_enemy("o:bird_green", "Green Bird", "animals/bird/bird_anim_green.tres", 0, 2, 64, 8, 10, 45, 0.4),
 	register_enemy("o:bird_red", "Red Bird", "animals/bird/bird_anim_red.tres", 0, 2, 64, 8, 10, 45, 0.4),
