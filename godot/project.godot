@@ -166,6 +166,7 @@ window/stretch/aspect="keep"
 [global]
 
 "mix rate"=false
+rcedit=true
 
 [importer_defaults]
 
