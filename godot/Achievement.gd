@@ -13,11 +13,13 @@ var display_queue = []
 func _ready():
 	$Timer.set_wait_time(ACHIEVEMENT_DISPLAY_TIME)
 
-func achievement(header : String, achievement_text : String):
+func achievement(header : String, achievement_text : String, override=false):
 	if achievements.has(header):
 		return
 	achievements.append(header)
 	display_queue.append([header, achievement_text])
+	if override:
+		$Timer.stop()
 	next_text()
 
 

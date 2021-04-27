@@ -19,7 +19,7 @@ func _process(delta):
 	var god = get_parent().god
 	var target = Vector2.ZERO
 	if god.selected_characters.size() > 0:
-		get_parent().get_node("GUI/Achievement").achievement("Select characters", "Now, take them for a walk.\nLeft click anywhere to command.")
+		get_parent().get_node("GUI/Achievement").achievement("Select characters", "Now, take them for a walk.\nLeft click anywhere to command.", true)
 		var max_dis = 0
 		for character in god.selected_characters:
 			target += character.get_position()
