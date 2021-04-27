@@ -17,6 +17,8 @@ func _ready():
 	sprite.frames = player_anim
 	sprite.set_position(Vector2(0, -8))
 	step_dist *= rand_range(0.8, 1.2)
+	
+	achievement("You wake up", "Right click and drag to select characters")
 
 func _process(_delta):
 	if (position - step_pos).length() > 10:
