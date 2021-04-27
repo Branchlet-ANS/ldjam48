@@ -24,8 +24,8 @@ func interact(character):
 		achievement("Gunman", "You picked up a gun!")
 	
 	#(character.weapon.get_weapon_name())
+	EffectsManager.play_sound("powerup", get_parent().get_parent(), position)
 	if character.weapon != character.weapon_list["Fists"]:
-		EffectsManager.play_sound("powerup", get_parent().get_parent(), position)
 		var weapon_old = character.weapon
 		character.weapon = character.weapon_list[_weapon_name]
 		set_weapon_name(weapon_old.get_weapon_name())

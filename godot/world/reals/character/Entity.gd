@@ -43,12 +43,12 @@ var _sprite
 #		weapon_name : String = "")
 
 func _init(id : String, name: String = "").(id, name):
-	weapon_list["Bow"] = Weapon.new("", "", 10, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
+	weapon_list["Bow"] = Weapon.new("", "", 5, 1, true, 200, "arrow", true, 0.3, 50, "Bow")
 	weapon_list["Crossbow"] = Weapon.new("", "", 20, 1.5, true, 300, "arrow", true, 0.05, 50, "Crossbow")
-	weapon_list["Gun"] = Weapon.new("", "", 30, 2, true, 400, "bullet", false, 0.7, 50, "Gun")
-	weapon_list["Sword"] = Weapon.new("", "", 10, 0.6, false, 0, "", false, 0, 10, "Sword")
+	weapon_list["Gun"] = Weapon.new("", "", 40, 2, true, 400, "bullet", false, 0.7, 50, "Gun")
+	weapon_list["Sword"] = Weapon.new("", "", 5, 0.6, false, 0, "", false, 0, 10, "Sword")
 	weapon_list["Pike"] = Weapon.new("", "", 13, 0.7, false, 0, "", false, 0, 25, "Pike")
-	weapon_list["Halberd"] = Weapon.new("", "", 17, 1, false, 0, "", false, 0, 20, "Halberd")
+	weapon_list["Halberd"] = Weapon.new("", "", 27, 1, false, 0, "", false, 0, 20, "Halberd")
 	weapon_list["Fists"] = Weapon.new("", "", 2, 0.6, false, 0, "", false, 0, 10, "Fists")
 	pass
 
@@ -162,6 +162,7 @@ func strike(at):
 		get_parent().add_child(projectile)
 		projectile.fire((at.position-position).normalized(), position)
 	else:
+		EffectsManager.play_sound("hit_sword2", get_parent().get_parent(), at.position)
 		EffectsManager.play_video("slash", get_parent().get_parent(), at.position)
 		for entity in melee_in_range:
 			entity.add_health(-weapon.get_dmg())

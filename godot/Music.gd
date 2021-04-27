@@ -19,8 +19,10 @@ func _process(delta):
 	pass
 
 func play_music(corruption : int):
+	var tmp = player.get_playback_position()
 	var sfx = tracks[min(floor(corruption/3),3)]
 	sfx.set_stereo(true)
 	player.set_stream(sfx)
 	player.play()
+	player.seek(tmp)
 
